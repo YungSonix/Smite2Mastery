@@ -1,4 +1,5 @@
-import { extractVariantMap, variantCount, variantLetter } from './triviaVariants';
+import { applyVariant, extractVariantMap, variantCount, variantLetter } from './triviaVariants';
+import { correctChoiceIndexes } from './correctAnswer';
 import { promptPlain } from './promptPlain';
 
 const SKIP_TYPES = new Set([
@@ -125,6 +126,16 @@ function timeBuckets(limitSec) {
   ];
 }
 
+/** Minimum takes on a single version before we trust its % correct. */
+export const MIN_VARIANT_N = 5;
+/** Gap (percentage points) between versions that counts as a real skew. */
+export const SKEW_THRESHOLD_PP = 20;
+/** Below this many submissions every percentage is noise, so we soften the UI. */
+export const LOW_SAMPLE_SUBMISSIONS = 10;
+const HARD_THRESHOLD_PCT = 40;
+const EASY_THRESHOLD_PCT = 90;
+const PASS_THRESHOLD_PCT = 70;
+
 export function buildQuizInsights({ questions, responses, timeLimitSeconds } = {}) {
   const scored = scoredInsightQuestions(questions);
   const rows = responses || [];
@@ -137,6 +148,7 @@ export function buildQuizInsights({ questions, responses, timeLimitSeconds } = {
     })
     .filter((x) => x != null);
   const avg = pcts.length ? Math.round(pcts.reduce((a, b) => a + b, 0) / pcts.length) : 0;
+  const medianPct = median(pcts);
 
   const bands = [
     { label: '0–20%', value: 0, color: '#f87171' },
@@ -206,11 +218,18 @@ export function buildQuizInsights({ questions, responses, timeLimitSeconds } = {
 
     for (const slot of byVariant) {
       slot.pct = slot.n ? Math.round((slot.ok / slot.n) * 100) : 0;
+      slot.lowSample = slot.n > 0 && slot.n < MIN_VARIANT_N;
       slot.avgMs = slot.times.length
         ? Math.round(slot.times.reduce((a, b) => a + b, 0) / slot.times.length)
         : null;
       delete slot.times;
     }
+
+    const reliableSlots = byVariant.filter((slot) => slot.n >= MIN_VARIANT_N);
+    const variantSkew =
+      reliableSlots.length >= 2
+        ? Math.max(...reliableSlots.map((s) => s.pct)) - Math.min(...reliableSlots.map((s) => s.pct))
+        : null;
 
     const avgMs = times.length ? Math.round(times.reduce((a, b) => a + b, 0) / times.length) : null;
     return {
@@ -219,10 +238,13 @@ export function buildQuizInsights({ questions, responses, timeLimitSeconds } = {
       label: `Q${i + 1}`,
       prompt: q.prompt || 'Question',
       pct: seen ? Math.round((ok / seen) * 100) : 0,
+      ok,
       n: seen,
       avgMs,
       variantCount: vCount,
       hasVariants,
+      variantSkew,
+      reliableVariantCount: reliableSlots.length,
       variants: byVariant.filter((slot) => slot.n > 0 || hasVariants),
     };
   });
@@ -264,14 +286,23 @@ export function buildQuizInsights({ questions, responses, timeLimitSeconds } = {
     }).length,
   }));
 
-  const passCount = pcts.filter((p) => p >= 70).length;
+  const passCount = pcts.filter((p) => p >= PASS_THRESHOLD_PCT).length;
   const failCount = Math.max(0, pcts.length - passCount);
+
+  const uniqueDiscord = new Set(rows.map(r => String(r.discord_username || '').toLowerCase().trim()).filter(Boolean)).size;
 
   return {
     n,
     avg,
+    medianPct,
+    uniqueDiscord,
+    passCount,
+    passPct: pcts.length ? Math.round((passCount / pcts.length) * 100) : 0,
     scoredCount: scored.length,
     variantQuestionCount,
+    correctCount: correct,
+    wrongCount: wrong,
+    lowSample: n > 0 && n < LOW_SAMPLE_SUBMISSIONS,
     bands,
     passFail: [
       { label: 'Pass (≥70%)', value: passCount, color: '#2dd4bf' },
@@ -296,106 +327,229 @@ export function buildQuizInsights({ questions, responses, timeLimitSeconds } = {
   };
 }
 
-const MIN_VARIANT_N = 5;
-const SKEW_THRESHOLD_PP = 20;
-const HARD_THRESHOLD_PCT = 40;
-const EASY_THRESHOLD_PCT = 90;
+const MAX_ACTIONS = 8;
 
+/** `62% (18/29)` — percentage with the raw counts behind it. */
+export function pctWithCounts(pct, ok, n) {
+  if (pct == null) return '—';
+  if (ok == null || n == null || !n) return `${pct}%`;
+  return `${pct}% (${ok}/${n})`;
+}
+
+function skewSlots(q) {
+  return (q.variants || []).filter((s) => s.n >= MIN_VARIANT_N);
+}
+
+/**
+ * One ranked to-do list for the next event instead of four parallel columns.
+ * Each question appears at most once, tagged REWRITE / REBALANCE / SWAP.
+ */
 export function buildNextEventInsights(perQuestion, submissionCount) {
-  const rewrite = [];
-  const skewed = [];
-  const keep = [];
-  const trim = [];
-
-  const timed = perQuestion.filter((q) => q.avgMs != null);
+  const timed = (perQuestion || []).filter((q) => q.avgMs != null);
   const medianQMs = timed.length
     ? timed.map((q) => q.avgMs).sort((a, b) => a - b)[Math.floor(timed.length / 2)]
     : null;
 
-  for (const q of perQuestion) {
-    if (q.n < 5) continue;
-    const label = q.label;
-    const prompt = q.prompt;
+  const actions = [];
+
+  for (const q of perQuestion || []) {
+    if (q.n < MIN_VARIANT_N) continue;
+    const base = { id: q.id, label: q.label, prompt: q.prompt, pct: q.pct, ok: q.ok, n: q.n };
+    const candidates = [];
 
     if (q.pct < HARD_THRESHOLD_PCT) {
-      rewrite.push({
-        id: q.id,
-        label,
-        prompt,
-        pct: q.pct,
-        n: q.n,
-        severity: 'high',
-        reason: `Only ${q.pct}% correct — clarify wording or ease difficulty`,
+      candidates.push({
+        ...base,
+        tag: 'REWRITE',
+        tone: 'high',
+        rank: 200 + (HARD_THRESHOLD_PCT - q.pct),
+        reason: `Only ${pctWithCounts(q.pct, q.ok, q.n)} got it — clarify the wording or ease the difficulty.`,
       });
     } else if (
-      q.pct >= HARD_THRESHOLD_PCT &&
       q.pct <= 55 &&
       medianQMs != null &&
       q.avgMs != null &&
       q.avgMs > medianQMs * 1.5
     ) {
-      rewrite.push({
-        id: q.id,
-        label,
-        prompt,
-        pct: q.pct,
-        n: q.n,
-        severity: 'medium',
-        reason: 'Slow and middling accuracy — may be confusing',
+      candidates.push({
+        ...base,
+        tag: 'REWRITE',
+        tone: 'medium',
+        rank: 100 + (55 - q.pct),
+        reason: `Slow (${formatDuration(q.avgMs)}) and only ${pctWithCounts(
+          q.pct,
+          q.ok,
+          q.n
+        )} correct — likely confusing, not hard.`,
       });
-    }
-
-    if (q.pct > EASY_THRESHOLD_PCT) {
-      trim.push({
-        id: q.id,
-        label,
-        prompt,
-        pct: q.pct,
-        reason: 'Very high correct rate — consider swapping for harder content',
-      });
-    } else if (q.pct >= 55 && q.pct <= 80) {
-      const slots = (q.variants || []).filter((s) => s.n >= MIN_VARIANT_N);
-      const delta =
-        slots.length >= 2
-          ? Math.max(...slots.map((s) => s.pct)) - Math.min(...slots.map((s) => s.pct))
-          : 0;
-      if (delta < 10) {
-        keep.push({ id: q.id, label, prompt, pct: q.pct });
-      }
     }
 
     if (q.hasVariants) {
-      const slots = (q.variants || []).filter((s) => s.n >= MIN_VARIANT_N);
+      const slots = skewSlots(q);
       if (slots.length >= 2) {
-        const delta = Math.max(...slots.map((s) => s.pct)) - Math.min(...slots.map((s) => s.pct));
+        const sorted = [...slots].sort((a, b) => b.pct - a.pct);
+        const easiest = sorted[0];
+        const hardest = sorted[sorted.length - 1];
+        const delta = easiest.pct - hardest.pct;
         if (delta >= SKEW_THRESHOLD_PP) {
-          skewed.push({
-            id: q.id,
-            label,
-            prompt,
+          candidates.push({
+            ...base,
+            tag: 'REBALANCE',
+            tone: 'high',
             delta,
-            slots,
-            reason: 'Variant difficulty skew — rebalance or retire the harder version',
+            rank: 150 + delta,
+            reason: `Version ${easiest.letter} (${easiest.pct}%) is ${delta}pp easier than version ${hardest.letter} (${hardest.pct}%) — even them out or retire one.`,
           });
         }
       }
     }
+
+    if (q.pct > EASY_THRESHOLD_PCT) {
+      candidates.push({
+        ...base,
+        tag: 'SWAP',
+        tone: 'low',
+        rank: 40 + (q.pct - EASY_THRESHOLD_PCT),
+        reason: `${pctWithCounts(q.pct, q.ok, q.n)} correct — a giveaway. Swap in harder content.`,
+      });
+    }
+
+    if (candidates.length) {
+      candidates.sort((a, b) => b.rank - a.rank);
+      actions.push(candidates[0]);
+    }
   }
 
-  rewrite.sort((a, b) => a.pct - b.pct);
-  skewed.sort((a, b) => b.delta - a.delta);
+  actions.sort((a, b) => b.rank - a.rank);
+  const items = actions.slice(0, MAX_ACTIONS);
+
+  const counts = { REWRITE: 0, REBALANCE: 0, SWAP: 0 };
+  for (const a of actions) counts[a.tag] += 1;
 
   return {
-    rewrite: rewrite.slice(0, 8),
-    skewed: skewed.slice(0, 8),
-    keep: keep.slice(0, 8),
-    trim: trim.slice(0, 8),
+    items,
+    totalActions: actions.length,
+    hidden: Math.max(0, actions.length - items.length),
     summary: {
-      rewrite: rewrite.length,
-      skewed: skewed.length,
-      keep: keep.length,
-      trim: trim.length,
+      rewrite: counts.REWRITE,
+      rebalance: counts.REBALANCE,
+      swap: counts.SWAP,
       submissions: submissionCount,
+      minSampleN: MIN_VARIANT_N,
     },
+  };
+}
+
+function ordinalList(labels) {
+  const list = labels.filter(Boolean);
+  if (!list.length) return '';
+  if (list.length === 1) return list[0];
+  if (list.length === 2) return `${list[0]} and ${list[1]}`;
+  return `${list.slice(0, -1).join(', ')}, and ${list[list.length - 1]}`;
+}
+
+/**
+ * 2–4 plain-English sentences describing what the numbers say.
+ * Reads only from the object returned by buildQuizInsights().
+ */
+export function buildInsightsTakeaway(stats) {
+  if (!stats || !stats.n) return [];
+  const out = [];
+  const takers = `${stats.n} ${stats.n === 1 ? 'person' : 'people'}`;
+  const center =
+    stats.medianPct != null
+      ? `The median score was ${stats.medianPct}% (average ${stats.avg}%)`
+      : `The average score was ${stats.avg}%`;
+  out.push(
+    `${takers} finished this quiz. ${center}, and ${stats.passPct}% cleared the ${PASS_THRESHOLD_PCT}% pass line.`
+  );
+
+  const scoredQs = (stats.perQuestion || []).filter((q) => q.n >= MIN_VARIANT_N);
+  const hardest = [...scoredQs].sort((a, b) => a.pct - b.pct).slice(0, 2);
+  if (hardest.length && hardest[0].pct < 60) {
+    const worst = hardest.filter((q) => q.pct < 60);
+    const parts = worst.map((q) => `${q.label} at ${pctWithCounts(q.pct, q.ok, q.n)}`);
+    out.push(`Hardest question${worst.length === 1 ? '' : 's'}: ${ordinalList(parts)}.`);
+  } else if (hardest.length) {
+    const weakest = hardest[0];
+    out.push(
+      `Nothing tripped people up badly — even the weakest question, ${weakest.label}, landed at ${pctWithCounts(
+        weakest.pct,
+        weakest.ok,
+        weakest.n
+      )}.`
+    );
+  }
+
+  const skewed = scoredQs
+    .filter((q) => q.variantSkew != null && q.variantSkew >= SKEW_THRESHOLD_PP)
+    .sort((a, b) => b.variantSkew - a.variantSkew);
+  if (skewed.length) {
+    const worst = skewed[0];
+    const rest = skewed.length - 1;
+    out.push(
+      `${worst.label} is unbalanced across versions — a ${worst.variantSkew}pp gap between the easiest and hardest version${
+        rest > 0 ? `, plus ${rest} other question${rest === 1 ? '' : 's'} with the same problem` : ''
+      }.`
+    );
+  }
+
+  if (stats.lowSample) {
+    out.push(
+      `With only ${stats.n} submission${
+        stats.n === 1 ? '' : 's'
+      }, treat every percentage as a rough signal — one more take can move them 10 points or more.`
+    );
+  } else if (stats.medianDurationMs != null) {
+    out.push(`Half of everyone finished within ${formatDuration(stats.medianDurationMs)}.`);
+  }
+
+  return out.slice(0, 4);
+}
+
+const CHOICE_TYPES = new Set(['multiple_choice', 'true_false', 'dropdown', 'multiple_selection']);
+
+/**
+ * Per-choice pick rate for one question version, from raw responses.
+ * Answers store original option indexes, so this needs no re-grading.
+ */
+export function buildChoiceDistribution({ question, variantIndex = 0, responses } = {}) {
+  if (!question || !CHOICE_TYPES.has(question.type)) return null;
+  const resolved = applyVariant(question, variantIndex);
+  const options = Array.isArray(resolved.options) ? resolved.options.map(String) : [];
+  if (!options.length) return null;
+
+  const counts = new Array(options.length).fill(0);
+  let answered = 0;
+
+  for (const r of responses || []) {
+    const variantMap = extractVariantMap(r?.answers) || {};
+    const vi = Number(variantMap[question.id]) || 0;
+    if (vi !== Number(variantIndex)) continue;
+    const raw = r?.answers?.[question.id];
+    if (raw == null || raw === '') continue;
+    const picks = Array.isArray(raw) ? raw : [raw];
+    let counted = false;
+    for (const pick of picks) {
+      const idx = Number(pick);
+      if (Number.isInteger(idx) && idx >= 0 && idx < counts.length) {
+        counts[idx] += 1;
+        counted = true;
+      }
+    }
+    if (counted) answered += 1;
+  }
+
+  if (!answered) return null;
+  const correct = new Set(correctChoiceIndexes(resolved));
+  return {
+    n: answered,
+    rows: options.map((label, i) => ({
+      label,
+      index: i,
+      count: counts[i],
+      pct: Math.round((counts[i] / answered) * 100),
+      correct: correct.has(i),
+    })),
   };
 }

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import AddItemModal from '../components/AddItemModal';
+import EditQuestionSearch from '../components/EditQuestionSearch';
 import InstructionsEditor from '../components/InstructionsEditor';
 import QuestionCard from '../components/QuestionCard';
 import InsightsPanel from '../components/InsightsPanel';
@@ -20,7 +21,7 @@ import { resolveBannerUrl } from '../lib/mediaUrl';
 import { mergeQuizSettings, mergeDraftQuizSettings, stripAssignSettings, quizWindowState } from '../lib/quizSettings';
 import { quizThemeProps } from '../lib/quizThemes';
 import { randomizeQuestion } from '../lib/triviaRemix';
-import { applyPromptTextStyle } from '../lib/richText';
+import { applyPromptTextStyle, htmlToPlainText } from '../lib/richText';
 import { withGeneratedHints } from '../lib/triviaHints';
 import { presenceStatus } from '../lib/triviaPresence';
 import { scoredInsightQuestions } from '../lib/triviaInsights';
@@ -34,6 +35,34 @@ import {
   shouldPreferServerOverDraft,
 } from '../lib/editorDraftStorage';
 import { localTimeZoneLabel } from '../lib/formatWhen';
+import { searchQuestions } from '../lib/questionSearch';
+
+/** How long a deleted question stays recoverable from the Undo banner. */
+const UNDO_WINDOW_MS = 25000;
+const UNDO_STACK_LIMIT = 3;
+
+const isGateQuestion = (q) => Boolean(q?.meta?.is_discord_gate || q?.meta?.is_ingame_gate);
+
+/** Insert payload shared by Undo-restore and Duplicate — keeps every version in meta. */
+function questionInsertPatch(snapshot, sortOrder) {
+  return {
+    sort_order: sortOrder,
+    type: snapshot.type,
+    prompt: snapshot.prompt ?? '',
+    points: snapshot.points ?? 1,
+    required: Boolean(snapshot.required),
+    options: snapshot.options ?? [],
+    correct: snapshot.correct ?? {},
+    image_url: snapshot.image_url ?? null,
+    meta: snapshot.meta ?? {},
+  };
+}
+
+function questionLabel(q, max = 52) {
+  const text = htmlToPlainText(q?.prompt || '').replace(/\s+/g, ' ').trim();
+  if (!text) return '';
+  return text.length > max ? `${text.slice(0, max - 1)}…` : text;
+}
 
 const MORE_ITEMS = [
   { id: 'join', label: 'Join instructions', wire: true },
@@ -135,6 +164,15 @@ export default function Activity() {
   const [titleDraft, setTitleDraft] = useState('');
   const [titleEditAt, setTitleEditAt] = useState(null); // 'top' | 'cover'
   const [activeQuestionId, setActiveQuestionId] = useState(null);
+  const [insightsPreviewId, setInsightsPreviewId] = useState(null);
+  const [editSearchQuery, setEditSearchQuery] = useState('');
+  const [editSearchDebounced, setEditSearchDebounced] = useState('');
+  const [searchFocus, setSearchFocus] = useState(null);
+  const [undoStack, setUndoStack] = useState([]);
+  const [, bumpUndoTick] = useState(0);
+  const [reordering, setReordering] = useState(false);
+  const [pendingScrollId, setPendingScrollId] = useState(null);
+  const [highlightId, setHighlightId] = useState(null);
   const instructionsLiveRef = useRef('');
   const indexNavRef = useRef(null);
   const jumpLockUntil = useRef(0);
@@ -223,6 +261,7 @@ export default function Activity() {
     next.set('tab', t);
     setParams(next);
     if (t !== 'responses') setSelectedResponse(null);
+    if (t !== 'insights') setInsightsPreviewId(null);
   };
 
   const load = useCallback(async () => {
@@ -563,12 +602,178 @@ export default function Activity() {
     }
   };
 
+  const persistOrder = useCallback(
+    async (list) => {
+      const orders = (list || [])
+        .map((q, i) => ({ id: q.id, sort_order: i }))
+        .filter((row) => row.id);
+      if (!orders.length) return;
+      await hostApi('/api/trivia/host', {
+        method: 'PUT',
+        body: { action: 'reorder', quizId, orders },
+      });
+    },
+    [quizId]
+  );
+
+  /** Bring a just-added/just-restored card into view and flash it so the host sees where it landed. */
+  const focusQuestionCard = useCallback((id) => {
+    if (!id) return;
+    setActiveQuestionId(id);
+    setPendingScrollId(id);
+    setHighlightId(id);
+  }, []);
+
+  useEffect(() => {
+    if (!pendingScrollId) return undefined;
+    const el = document.getElementById(`host-q-${pendingScrollId}`);
+    if (!el) return undefined;
+    jumpLockUntil.current = Date.now() + 900;
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setPendingScrollId(null);
+    return undefined;
+  }, [pendingScrollId, questions, tab]);
+
+  useEffect(() => {
+    if (!highlightId) return undefined;
+    const t = setTimeout(() => setHighlightId(null), 2400);
+    return () => clearTimeout(t);
+  }, [highlightId]);
+
+  useEffect(() => {
+    if (!undoStack.length) return undefined;
+    const id = setInterval(() => {
+      setUndoStack((prev) => prev.filter((entry) => entry.expiresAt > Date.now()));
+      bumpUndoTick((n) => n + 1);
+    }, 1000);
+    return () => clearInterval(id);
+  }, [undoStack.length]);
+
   const deleteQuestion = async (id) => {
+    const index = questions.findIndex((q) => q.id === id);
+    if (index < 0) return;
+    const snapshot = questions[index];
+    if (isGateQuestion(snapshot)) return;
+    const label = questionLabel(snapshot);
+    const seconds = Math.round(UNDO_WINDOW_MS / 1000);
+    const ok = window.confirm(
+      `Delete question ${index + 1}${label ? ` — “${label}”` : ''}?\n\n` +
+        `You can undo for ${seconds} seconds. Answers students already submitted for it stay ` +
+        `in Responses but no longer match a question.`
+    );
+    if (!ok) return;
     try {
       await hostApi(`/api/trivia/host?action=question&id=${id}`, { method: 'DELETE' });
       setQuestions((prev) => prev.filter((q) => q.id !== id));
+      setDirtyIds((ids) => ids.filter((x) => x !== id));
+      setUndoStack((prev) =>
+        [
+          {
+            token: `${id}-${Date.now()}`,
+            question: snapshot,
+            index,
+            label,
+            expiresAt: Date.now() + UNDO_WINDOW_MS,
+          },
+          ...prev,
+        ].slice(0, UNDO_STACK_LIMIT)
+      );
     } catch (e) {
       setError(e.message);
+    }
+  };
+
+  const dismissUndo = (token) => setUndoStack((prev) => prev.filter((e) => e.token !== token));
+
+  const undoDeleteQuestion = async (token) => {
+    const entry = undoStack.find((e) => e.token === token);
+    if (!entry) return;
+    dismissUndo(token);
+    const snapshot = entry.question;
+    setSaving(true);
+    setError('');
+    try {
+      const data = await hostApi('/api/trivia/host', {
+        method: 'POST',
+        body: {
+          action: 'add_question',
+          quizId,
+          type: snapshot.type,
+          patch: questionInsertPatch(snapshot, entry.index),
+        },
+      });
+      const restored = data.question;
+      if (!restored?.id) throw new Error('Restore did not return a question');
+      const next = [...questions];
+      next.splice(Math.min(entry.index, next.length), 0, restored);
+      setQuestions(next.map((q, i) => (q.sort_order === i ? q : { ...q, sort_order: i })));
+      focusQuestionCard(restored.id);
+      await persistOrder(next);
+    } catch (e) {
+      setError(e.message || 'Could not restore the question');
+      // Put the snapshot back so the host can retry instead of losing it.
+      setUndoStack((prev) =>
+        [{ ...entry, expiresAt: Date.now() + UNDO_WINDOW_MS }, ...prev].slice(0, UNDO_STACK_LIMIT)
+      );
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const duplicateQuestion = async (id) => {
+    if (reordering || saving) return;
+    const index = questions.findIndex((q) => q.id === id);
+    if (index < 0) return;
+    const source = questions[index];
+    if (isGateQuestion(source)) return;
+    setSaving(true);
+    setError('');
+    try {
+      const data = await hostApi('/api/trivia/host', {
+        method: 'POST',
+        body: {
+          action: 'add_question',
+          quizId,
+          type: source.type,
+          patch: questionInsertPatch(source, index + 1),
+        },
+      });
+      const copy = data.question;
+      if (!copy?.id) throw new Error('Duplicate did not return a question');
+      const next = [...questions];
+      next.splice(index + 1, 0, copy);
+      const reindexed = next.map((q, i) => (q.sort_order === i ? q : { ...q, sort_order: i }));
+      setQuestions(reindexed);
+      focusQuestionCard(copy.id);
+      await persistOrder(reindexed);
+    } catch (e) {
+      setError(e.message || 'Could not duplicate the question');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const moveQuestion = async (id, direction) => {
+    if (reordering) return;
+    const from = questions.findIndex((q) => q.id === id);
+    const to = from + direction;
+    if (from < 0 || to < 0 || to >= questions.length) return;
+    // Identity gates stay pinned to the top of the quiz.
+    if (isGateQuestion(questions[from]) || isGateQuestion(questions[to])) return;
+    const previous = questions;
+    const next = [...questions];
+    [next[from], next[to]] = [next[to], next[from]];
+    const reindexed = next.map((q, i) => (q.sort_order === i ? q : { ...q, sort_order: i }));
+    setQuestions(reindexed);
+    setActiveQuestionId(id);
+    setReordering(true);
+    try {
+      await persistOrder(reindexed);
+    } catch (e) {
+      setQuestions(previous);
+      setError(e.message || 'Could not reorder questions');
+    } finally {
+      setReordering(false);
     }
   };
 
@@ -624,11 +829,31 @@ export default function Activity() {
     }
   };
 
-  const jumpToHostQuestion = (id) => {
+  const jumpToHostQuestion = (id, variantIndex = null) => {
     jumpLockUntil.current = Date.now() + 700;
     setActiveQuestionId(id);
-    document.getElementById(`host-q-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (variantIndex != null && Number.isFinite(Number(variantIndex))) {
+      setSearchFocus({ id, variantIndex: Number(variantIndex), token: Date.now() });
+    }
+    setTimeout(() => {
+      document.getElementById(`host-q-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 10);
   };
+
+  useEffect(() => {
+    const t = setTimeout(() => setEditSearchDebounced(editSearchQuery), 175);
+    return () => clearTimeout(t);
+  }, [editSearchQuery]);
+
+  const editSearchActive = editSearchDebounced.trim().length > 0;
+  const editSearchResult = useMemo(
+    () => searchQuestions(questions, editSearchDebounced),
+    [questions, editSearchDebounced]
+  );
+  const visibleEditQuestions = useMemo(() => {
+    if (!editSearchActive) return questions;
+    return questions.filter((q) => editSearchResult.matchedIds.has(String(q.id)));
+  }, [questions, editSearchActive, editSearchResult.matchedIds]);
 
   const updateActiveFromScroll = useCallback(() => {
     if (Date.now() < jumpLockUntil.current) return;
@@ -846,26 +1071,99 @@ export default function Activity() {
         </div>
       ) : null}
       {quiz?.is_assigned && assignWindow.status === 'closed' ? (
-        <div className="f-banner-warn" role="status">
-          Quiz window closed
-          {assignWindow.closesAt
-            ? ` at ${new Date(assignWindow.closesAt).toLocaleString()} (${localTimeZoneLabel()})`
-            : ''}
-          . Open Assign and extend or clear the close time so take links work again.
+        <div className="f-banner-warn" role="status" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
+          <div>
+            Quiz window closed
+            {assignWindow.closesAt
+              ? ` at ${new Date(assignWindow.closesAt).toLocaleString()} (${localTimeZoneLabel()})`
+              : ''}
+            . Open Assign and extend or clear the close time so take links work again.
+          </div>
+          {assignWindow.closesAt ? (
+            <button
+              type="button"
+              className="f-outline-btn"
+              style={{ flexShrink: 0, background: 'rgba(255,255,255,0.1)' }}
+              onClick={() => {
+                const next = new Date(new Date(assignWindow.closesAt).getTime() + 24 * 3600 * 1000);
+                patchSettings({ closes_at: next.toISOString() });
+              }}
+            >
+              Extend 24h
+            </button>
+          ) : null}
         </div>
       ) : null}
       {quiz?.is_assigned && assignWindow.status === 'open' && assignWindow.closesAt ? (
-        <div className="f-banner-info" role="status">
-          Closes {new Date(assignWindow.closesAt).toLocaleString()} ({localTimeZoneLabel()}). After that,
-          students cannot submit until you extend the window.
+        <div className="f-banner-info" role="status" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
+          <div>
+            Closes {new Date(assignWindow.closesAt).toLocaleString()} ({localTimeZoneLabel()}). After that,
+            students cannot submit until you extend the window.
+          </div>
+          <button
+            type="button"
+            className="f-outline-btn"
+            style={{ flexShrink: 0, background: 'rgba(255,255,255,0.1)' }}
+            onClick={() => {
+              const next = new Date(new Date(assignWindow.closesAt).getTime() + 24 * 3600 * 1000);
+              patchSettings({ closes_at: next.toISOString() });
+            }}
+          >
+            Extend 24h
+          </button>
+        </div>
+      ) : null}
+      {undoStack.length ? (
+        <div className="f-banner-undo" role="status" aria-live="polite">
+          {undoStack.map((entry) => {
+            const left = Math.max(0, Math.ceil((entry.expiresAt - Date.now()) / 1000));
+            return (
+              <div className="f-undo-row" key={entry.token}>
+                <span className="f-undo-text">
+                  Deleted question {entry.index + 1}
+                  {entry.label ? ` — “${entry.label}”` : ''}
+                </span>
+                <span className="f-undo-timer">{left}s</span>
+                <button
+                  type="button"
+                  className="f-undo-btn"
+                  onClick={() => undoDeleteQuestion(entry.token)}
+                >
+                  Undo
+                </button>
+                <button
+                  type="button"
+                  className="f-icon-btn f-undo-dismiss"
+                  title="Dismiss"
+                  aria-label="Dismiss undo"
+                  onClick={() => dismissUndo(entry.token)}
+                >
+                  ×
+                </button>
+              </div>
+            );
+          })}
         </div>
       ) : null}
 
       {tab === 'edit' && (
-        <div className="f-edit-layout">
-          {questions.length ? (
+        <>
+          <EditQuestionSearch
+            questions={questions}
+            query={editSearchQuery}
+            onQueryChange={(next) => {
+              setEditSearchQuery(next);
+              if (!next.trim()) setSearchFocus(null);
+            }}
+            onJump={jumpToHostQuestion}
+            totalCount={questions.length}
+          />
+          <div className="f-edit-layout">
+          {visibleEditQuestions.length ? (
             <nav className="f-q-index" aria-label="Jump to question" ref={indexNavRef}>
-              {questions.map((q, idx) => (
+              {visibleEditQuestions.map((q) => {
+                const idx = questions.findIndex((item) => item.id === q.id);
+                return (
                 <button
                   key={q.id}
                   type="button"
@@ -877,7 +1175,8 @@ export default function Activity() {
                 >
                   {idx + 1}
                 </button>
-              ))}
+                );
+              })}
             </nav>
           ) : null}
           <div className="f-edit-scroll">
@@ -1117,7 +1416,19 @@ export default function Activity() {
             }}
           />
 
-          {questions.map((q, idx) => (
+          {editSearchActive && !visibleEditQuestions.length ? (
+            <p className="f-edit-search-list-empty" role="status">
+              No questions match &ldquo;{editSearchDebounced.trim()}&rdquo;
+            </p>
+          ) : null}
+
+          {visibleEditQuestions.map((q) => {
+            const idx = questions.findIndex((item) => item.id === q.id);
+            const focusVariantIndex =
+              searchFocus?.id === q.id ? searchFocus.variantIndex : undefined;
+            // Filtered list hides neighbours, so reordering is only offered on the full list.
+            const canReorder = !editSearchActive && !isGateQuestion(q);
+            return (
             <QuestionCard
               key={q.id}
               question={q}
@@ -1126,8 +1437,23 @@ export default function Activity() {
               quizPartialCreditMs={Boolean(settings.partial_credit_multiple_selection)}
               onChange={saveQuestion}
               onDelete={() => deleteQuestion(q.id)}
+              onDuplicate={isGateQuestion(q) ? undefined : () => duplicateQuestion(q.id)}
+              highlight={highlightId === q.id}
+              onMove={canReorder ? (dir) => moveQuestion(q.id, dir) : undefined}
+              canMoveUp={
+                canReorder && idx > 0 && !isGateQuestion(questions[idx - 1]) && !reordering
+              }
+              canMoveDown={
+                canReorder &&
+                idx < questions.length - 1 &&
+                !isGateQuestion(questions[idx + 1]) &&
+                !reordering
+              }
+              focusVariantIndex={focusVariantIndex}
+              focusVariantToken={searchFocus?.id === q.id ? searchFocus.token : undefined}
             />
-          ))}
+            );
+          })}
 
           <div className="f-quickbar" style={{ marginTop: 16 }}>
             <button type="button" className="plus" onClick={() => setAddOpen(true)} aria-label="Add item">
@@ -1151,6 +1477,7 @@ export default function Activity() {
           </div>
           </div>
         </div>
+        </>
       )}
 
       {tab === 'responses' && (
@@ -1268,6 +1595,10 @@ export default function Activity() {
                 setSelectedResponse(null);
                 setTab('edit');
               }}
+              onJumpToInsights={(qId) => {
+                setInsightsPreviewId(qId);
+                setTab('insights');
+              }}
               onGrade={async (responseId, questionId, earned, maxPts, perQuestionPatch) => {
                 try {
                   const body = perQuestionPatch
@@ -1316,9 +1647,10 @@ export default function Activity() {
           questions={questions}
           responses={responses}
           timeLimitSeconds={settings.time_limit_seconds}
-          onJumpToEditor={(id) => {
+          initialPreviewId={insightsPreviewId}
+          onJumpToEditor={(id, variantIndex) => {
             setTab('edit');
-            jumpToHostQuestion(id);
+            jumpToHostQuestion(id, variantIndex);
           }}
         />
       )}

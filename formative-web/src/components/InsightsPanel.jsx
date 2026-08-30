@@ -1,15 +1,17 @@
 import { useCallback, useMemo, useState } from 'react';
 import InsightQuestionPreview from './InsightQuestionPreview';
-import {
-  BarChart,
-  ColumnHistogram,
-  Donut,
-  KpiStrip,
-  NextEventSection,
-  VariantStackChart,
-} from './HostCharts';
+import { ColumnHistogram, Donut, KpiStrip, NextEventSection, VariantStackChart } from './HostCharts';
 import { promptPlain } from '../lib/promptPlain';
-import { buildQuizInsights, formatDuration, scoredInsightQuestions } from '../lib/triviaInsights';
+import {
+  buildInsightsTakeaway,
+  buildQuizInsights,
+  formatDuration,
+  pctWithCounts,
+  scoredInsightQuestions,
+  LOW_SAMPLE_SUBMISSIONS,
+  MIN_VARIANT_N,
+  SKEW_THRESHOLD_PP,
+} from '../lib/triviaInsights';
 import { buildSubmissionIntegrity, integrityPairsCount } from '../lib/submissionIntegrity';
 
 const SORT_COLS = [
@@ -19,23 +21,37 @@ const SORT_COLS = [
   { id: 'time', label: 'Time' },
 ];
 
+function shortPrompt(prompt, max = 70) {
+  const text = promptPlain(prompt) || '';
+  return text.length > max ? `${text.slice(0, max - 1).trimEnd()}…` : text;
+}
+
 function nextSort(prev, col) {
   if (prev.col === col) return { col, dir: prev.dir * -1 };
   const dir = col === 'num' ? 1 : col === 'pct' ? 1 : -1;
   return { col, dir };
 }
 
-export default function InsightsPanel({ questions, responses, timeLimitSeconds, onJumpToEditor }) {
+export default function InsightsPanel({ questions, responses, timeLimitSeconds, onJumpToEditor, initialPreviewId }) {
   const [preview, setPreview] = useState(null);
   const [sort, setSort] = useState({ col: 'pct', dir: 1 });
 
   const scored = useMemo(() => scoredInsightQuestions(questions), [questions]);
-  const questionById = useMemo(() => new Map(scored.map((q, i) => [q.id, { q, i }])), [scored]);
+  const indexById = useMemo(() => new Map(scored.map((q, i) => [q.id, i])), [scored]);
+
+  useEffect(() => {
+    if (initialPreviewId) {
+      const i = indexById.get(initialPreviewId);
+      if (i != null) setPreview({ i, variantIndex: 0 });
+    }
+  }, [initialPreviewId, indexById]);
 
   const stats = useMemo(
     () => buildQuizInsights({ questions, responses, timeLimitSeconds }),
     [questions, responses, timeLimitSeconds]
   );
+
+  const takeaway = useMemo(() => buildInsightsTakeaway(stats), [stats]);
 
   const integrityIndex = useMemo(() => buildSubmissionIntegrity(responses), [responses]);
   const reviewPairs = useMemo(
@@ -53,74 +69,23 @@ export default function InsightsPanel({ questions, responses, timeLimitSeconds, 
 
   const openInsightQuestion = useCallback(
     (insightRow, variantIndex = 0) => {
-      const hit = questionById.get(insightRow?.id);
-      if (!hit) return;
-      setPreview({
-        question: hit.q,
-        questionIndex: hit.i,
-        variantIndex,
-        pct: insightRow.pct,
-        n: insightRow.n,
+      const i = indexById.get(insightRow?.id);
+      if (i == null) return;
+      setPreview({ i, variantIndex });
+    },
+    [indexById]
+  );
+
+  const stepPreview = useCallback(
+    (delta) => {
+      setPreview((prev) => {
+        if (!prev) return prev;
+        const next = prev.i + delta;
+        if (next < 0 || next >= scored.length) return prev;
+        return { i: next, variantIndex: 0 };
       });
     },
-    [questionById]
-  );
-
-  const openById = useCallback(
-    (id) => {
-      const hit = questionById.get(id);
-      if (!hit) return;
-      const insight = stats.perQuestion.find((q) => q.id === id);
-      openInsightQuestion(insight || { id, pct: null, n: null });
-    },
-    [questionById, stats.perQuestion, openInsightQuestion]
-  );
-
-  const chartRow = useCallback(
-    (q) => ({
-      id: q.id,
-      questionId: q.id,
-      label: q.label,
-      title: promptPlain(q.prompt),
-      value: q.pct,
-      display: `${q.pct}%`,
-      insight: q,
-    }),
-    []
-  );
-
-  const questionBars = useMemo(
-    () =>
-      [...stats.perQuestion]
-        .filter((q) => q.n > 0)
-        .sort((a, b) => a.pct - b.pct)
-        .map(chartRow),
-    [stats.perQuestion, chartRow]
-  );
-
-  const hardestVariants = useMemo(
-    () =>
-      stats.hardestVariants.map((r) => {
-        const qid = String(r.id || '').split('-v')[0];
-        return { ...r, questionId: qid, insight: stats.perQuestion.find((q) => q.id === qid) };
-      }),
-    [stats.hardestVariants, stats.perQuestion]
-  );
-
-  const timeToAnswer = useMemo(
-    () =>
-      stats.hasTimings
-        ? stats.perQuestion.map((q) => ({
-            id: q.id,
-            questionId: q.id,
-            label: q.label,
-            title: promptPlain(q.prompt),
-            value: q.avgMs != null ? Math.round(q.avgMs / 1000) : 0,
-            display: q.avgMs != null ? formatDuration(q.avgMs) : '—',
-            insight: q,
-          }))
-        : [],
-    [stats.hasTimings, stats.perQuestion]
+    [scored.length]
   );
 
   const finishHistogram = useMemo(
@@ -156,36 +121,28 @@ export default function InsightsPanel({ questions, responses, timeLimitSeconds, 
   }, [stats.perQuestion, sort]);
 
   const kpis = [
-    { label: 'Submissions', value: stats.n, tone: 'cyan' },
-    { label: 'Avg score', value: `${stats.avg}%`, tone: 'gold' },
-    {
-      label: 'Pass rate',
-      value: `${stats.n ? Math.round((stats.passFail[0].value / stats.n) * 100) : 0}%`,
-      tone: 'teal',
-    },
-    { label: 'Avg finish', value: formatDuration(stats.avgDurationMs), tone: 'violet' },
-    { label: 'Median finish', value: formatDuration(stats.medianDurationMs), tone: 'rose' },
+    { label: 'Submissions', value: stats.n, hint: stats.uniqueDiscord != null ? `${stats.uniqueDiscord} unique Discord` : undefined, tone: 'cyan' },
+    stats.medianPct != null
+      ? { label: 'Median score', value: `${stats.medianPct}%`, hint: `avg ${stats.avg}%`, tone: 'gold' }
+      : { label: 'Avg score', value: `${stats.avg}%`, tone: 'gold' },
+    { label: 'Pass rate', value: `${stats.passPct}%`, hint: `${stats.passCount} of ${stats.n} at 70%+`, tone: 'teal' },
+    { label: 'Median finish', value: formatDuration(stats.medianDurationMs), tone: 'violet' },
   ];
 
-  if (stats.variantQuestionCount > 0) {
-    kpis.push({
-      label: 'Variant Qs',
-      value: stats.variantQuestionCount,
-      hint: 'with A/B/C versions',
-      tone: 'cyan',
-    });
-  }
+  const versionCaption = stats.variantQuestionCount
+    ? `${stats.variantQuestionCount} question${
+        stats.variantQuestionCount === 1 ? ' has' : 's have'
+      } multiple versions · ${
+        stats.variantUsageParts.length
+          ? stats.variantUsageParts.map((p) => `${p.label}: ${p.value} takes`).join(' · ')
+          : 'no version assignments recorded yet'
+      }`
+    : null;
 
-  if (stats.n > 0) {
-    kpis.push({
-      label: 'Review flags',
-      value: flaggedCount,
-      hint: reviewPairs ? `${reviewPairs} linked pair${reviewPairs === 1 ? '' : 's'}` : 'alt-account signals',
-      tone: 'gold',
-    });
-  }
+  const previewQuestion = preview ? scored[preview.i] : null;
+  const previewStats = preview ? stats.perQuestion[preview.i] : null;
 
-  const clickHint = 'Click a question label (Q1, Q2, …) to preview what students saw.';
+  const clickHint = 'Click any question to preview exactly what players saw.';
 
   return (
     <div className="f-insights f-insights-v2 f-insights-v3 f-insights-full">
@@ -201,94 +158,95 @@ export default function InsightsPanel({ questions, responses, timeLimitSeconds, 
         </div>
       </header>
 
+      {takeaway.length ? (
+        <div className="f-insights-takeaway">
+          <h3>What this says</h3>
+          <p>{takeaway.join(' ')}</p>
+        </div>
+      ) : null}
+
       <KpiStrip items={kpis} />
 
-      <div className="f-analytics-grid f-analytics-grid--insights f-insights-grid-12">
-        <div className="f-insights-span-4">
-          <Donut title="Score mix" parts={stats.bands} center={`${stats.avg}%`} glow size="lg" />
+      {stats.n > 0 && flaggedCount > 0 ? (
+        <div className="f-insights-alert">
+          <span className="f-insights-alert-icon" aria-hidden="true">
+            ⚑
+          </span>
+          <span>
+            <strong>
+              {flaggedCount} submission{flaggedCount === 1 ? '' : 's'} flagged for review
+            </strong>{' '}
+            — {reviewPairs ? `${reviewPairs} linked pair${reviewPairs === 1 ? '' : 's'}, ` : ''}
+            possible alt accounts. Check the Responses tab before awarding prizes.
+          </span>
         </div>
-        <div className="f-insights-span-4">
-          <Donut
-            title="Pass rate"
-            parts={stats.passFail}
-            center={`${stats.n ? Math.round((stats.passFail[0].value / stats.n) * 100) : 0}%`}
-            glow
-          />
-        </div>
-        {stats.variantUsageParts.length ? (
-          <div className="f-insights-span-4">
-            <Donut title="Version mix" parts={stats.variantUsageParts} glow empty="No variant assignments yet" />
-          </div>
-        ) : (
-          <div className="f-insights-span-4">
-            <Donut title="Answers" parts={stats.answerMix} glow />
-          </div>
-        )}
+      ) : null}
 
-        <div className="f-insights-span-6">
-          <BarChart
-            title="% correct by question (hardest first)"
-            rows={questionBars}
-            maxHint={100}
-            tone
-            glow
-            onRowClick={(r) => openInsightQuestion(r.insight)}
-          />
-        </div>
-        <div className="f-insights-span-6">
-          <ColumnHistogram
-            title="How long students took (finish time)"
-            rows={finishHistogram}
-            empty="Finish time starts with new submissions. Older takes have no clock."
-            glow
-            hint="Taller bar = more students finished in that time range"
-          />
-        </div>
+      {versionCaption ? <p className="f-insights-caption f-muted">{versionCaption}</p> : null}
 
-        {stats.hasTimings ? (
-          <div className="f-insights-span-6">
-            <BarChart
-              title="Time to first answer"
-              rows={timeToAnswer}
+      {stats.n > 0 && stats.lowSample ? (
+        <p className="f-insights-caption f-muted">
+          Charts stay hidden until {LOW_SAMPLE_SUBMISSIONS} submissions — with {stats.n}, every
+          percentage below will swing hard as more people play. Read the table as counts, not rates.
+        </p>
+      ) : null}
+
+      {stats.n > 0 && !stats.lowSample ? (
+        <div className="f-analytics-grid f-analytics-grid--insights f-insights-grid-12">
+          <div className="f-insights-span-5">
+            <Donut title="Score mix" parts={stats.bands} center={`${stats.medianPct ?? stats.avg}%`} glow size="lg" />
+          </div>
+          <div className="f-insights-span-7">
+            <ColumnHistogram
+              title="How long players took (finish time)"
+              rows={finishHistogram}
+              empty="Finish time starts with new submissions. Older takes have no clock."
               glow
-              onRowClick={(r) => openInsightQuestion(r.insight)}
+              hint="Taller bar = more players finished in that time range"
+              footNote={
+                stats.medianDurationMs != null
+                  ? `Median finish: ${formatDuration(stats.medianDurationMs)}`
+                  : null
+              }
             />
           </div>
-        ) : null}
-        {stats.hardestVariants.length ? (
-          <div className={stats.hasTimings ? 'f-insights-span-6' : 'f-insights-span-12'}>
-            <BarChart
-              title="Hardest versions"
-              rows={hardestVariants}
-              maxHint={100}
-              tone
-              glow
-              empty="No variant data yet"
-              onRowClick={(r) => openInsightQuestion(r.insight)}
-            />
-          </div>
-        ) : null}
+        </div>
+      ) : null}
 
-        {stats.variantQuestionCount > 0 ? (
-          <div className="f-insights-span-12">
-            <VariantStackChart
-              title="Variant breakdown (bar chart)"
-              questions={stats.perQuestion}
-              empty="No submissions mapped to question versions yet"
-              onQuestionClick={openInsightQuestion}
-              hint="Each row shows % correct per version — longer bar = easier version for that take"
-            />
-          </div>
-        ) : null}
+      {stats.n > 0 && stats.variantQuestionCount > 0 ? (
+        <div style={{ marginTop: 16 }}>
+          <VariantStackChart
+            title="Version balance"
+            questions={stats.perQuestion}
+            empty="No submissions mapped to question versions yet"
+            onQuestionClick={openInsightQuestion}
+            minN={MIN_VARIANT_N}
+            skewThreshold={SKEW_THRESHOLD_PP}
+            hint={`Showing only questions where one version is at least ${SKEW_THRESHOLD_PP}pp easier than another, counting versions with ${MIN_VARIANT_N}+ takes.`}
+          />
+        </div>
+      ) : null}
 
-        {stats.nextEvent ? (
-          <div className="f-insights-span-12">
-            <NextEventSection data={stats.nextEvent} onItemClick={(item) => openById(item.id)} />
-          </div>
-        ) : null}
-      </div>
+      {stats.n > 0 && stats.nextEvent ? (
+        <div style={{ marginTop: 16 }}>
+          <NextEventSection
+            data={stats.nextEvent}
+            onItemClick={openInsightQuestion}
+            promptText={(item) => shortPrompt(item.prompt)}
+          />
+        </div>
+      ) : null}
 
-      {stats.perQuestion.length ? (
+      {stats.n === 0 && stats.perQuestion.length > 0 ? (
+        <div className="f-insights-empty" style={{ padding: '32px 16px', textAlign: 'center', background: 'rgba(255,255,255,0.03)', borderRadius: 8, marginTop: 24 }}>
+          <h3 style={{ margin: '0 0 8px' }}>No submissions yet</h3>
+          <p className="f-muted" style={{ margin: 0 }}>
+            Share the take link with your community. Once people start playing, insights and charts will appear here.
+          </p>
+        </div>
+      ) : null}
+
+      {stats.n > 0 && stats.perQuestion.length ? (
         <div className="f-insights-list f-insights-question-table" style={{ marginTop: 20 }}>
           <div className="f-insights-table-head f-insights-table-head--sort">
             <button
@@ -342,9 +300,13 @@ export default function InsightsPanel({ questions, responses, timeLimitSeconds, 
                             <button
                               type="button"
                               key={`${q.id}-${slot.index}`}
-                              className="f-variant-chip f-variant-chip-btn"
+                              className={`f-variant-chip f-variant-chip-btn${
+                                slot.lowSample ? ' is-low-sample' : ''
+                              }`}
                               style={{ '--v-accent': slot.color }}
-                              title={`Version ${slot.letter}: ${slot.pct}% correct (${slot.n} takes)`}
+                              title={`Version ${slot.letter}: ${pctWithCounts(slot.pct, slot.ok, slot.n)}${
+                                slot.lowSample ? ' — too few takes to trust' : ''
+                              }`}
                               onClick={() => openInsightQuestion(q, slot.index)}
                             >
                               {slot.letter} {slot.pct}%
@@ -359,24 +321,33 @@ export default function InsightsPanel({ questions, responses, timeLimitSeconds, 
                 </div>
                 <div className="f-insight-stats f-insight-stats--table">
                   <strong>{q.pct}%</strong>
-                  <span className="f-muted">{q.n}</span>
+                  <span className="f-muted">
+                    {q.ok}/{q.n}
+                  </span>
                   <span className="f-muted">{q.avgMs != null ? formatDuration(q.avgMs) : '—'}</span>
                 </div>
               </div>
             );
           })}
         </div>
-      ) : (
+      ) : stats.perQuestion.length === 0 ? (
         <p className="f-muted">Add scored questions to see insights.</p>
-      )}
+      ) : null}
 
-      {preview ? (
+      {previewQuestion ? (
         <InsightQuestionPreview
-          question={preview.question}
-          questionIndex={preview.questionIndex}
+          key={`${preview.i}-${preview.variantIndex}`}
+          question={previewQuestion}
+          questionIndex={preview.i}
           initialVariantIndex={preview.variantIndex}
-          insightPct={preview.pct}
-          insightN={preview.n}
+          insightPct={previewStats?.pct}
+          insightOk={previewStats?.ok}
+          insightN={previewStats?.n}
+          responses={responses}
+          hasPrev={preview.i > 0}
+          hasNext={preview.i < scored.length - 1}
+          onPrev={() => stepPreview(-1)}
+          onNext={() => stepPreview(1)}
           onClose={() => setPreview(null)}
           onOpenInEditor={onJumpToEditor}
         />

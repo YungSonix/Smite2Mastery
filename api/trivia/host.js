@@ -402,14 +402,20 @@ module.exports = async function handler(req, res) {
           .eq('quiz_id', quiz.id);
         const type = body.type || 'multiple_choice';
         const defaults = defaultQuestion(type, count || 0);
+        const patch = { ...(body.patch || {}) };
+        delete patch.id;
+        delete patch.quiz_id;
+        const rewritten = rewriteQuestionMedia({ image_url: patch.image_url, meta: patch.meta });
+        if (patch.image_url !== undefined) patch.image_url = rewritten.image_url;
+        if (patch.meta !== undefined) patch.meta = rewritten.meta;
         const { data, error } = await sb
           .from('trivia_questions')
-          .insert({ ...defaults, quiz_id: quiz.id, ...(body.patch || {}) })
+          .insert({ ...defaults, quiz_id: quiz.id, ...patch })
           .select('*')
           .single();
         if (error) return send(res, 500, { error: error.message });
         await touchQuiz(sb, quiz.id);
-        return send(res, 200, { question: data });
+        return send(res, 200, { question: rewriteQuestionMedia(data) });
       }
     }
 
@@ -570,17 +576,36 @@ module.exports = async function handler(req, res) {
         });
       }
       if (body.action === 'reorder') {
-        const orders = Array.isArray(body.orders) ? body.orders : [];
-        for (const row of orders) {
-          await sb
-            .from('trivia_questions')
-            .update({ sort_order: row.sort_order, updated_at: new Date().toISOString() })
-            .eq('id', row.id);
+        const orders = (Array.isArray(body.orders) ? body.orders : []).filter(
+          (row) => row && row.id && Number.isFinite(Number(row.sort_order))
+        );
+        if (!orders.length) return send(res, 200, { ok: true });
+        const ids = [...new Set(orders.map((row) => String(row.id)))];
+        const { data: rows } = await sb.from('trivia_questions').select('id, quiz_id').in('id', ids);
+        const quizIds = [...new Set((rows || []).map((row) => row.quiz_id))];
+        if (!rows?.length || quizIds.length !== 1 || rows.length !== ids.length) {
+          return send(res, 400, { error: 'Questions must belong to one quiz' });
         }
-        if (body.quizId) {
-          const { data: owned } = await findOwnedQuiz(sb, username, body.quizId, 'id');
-          if (owned) await touchQuiz(sb, owned.id);
-        }
+        const { data: quiz } = await sb
+          .from('trivia_quizzes')
+          .select('id, owner_username')
+          .eq('id', quizIds[0])
+          .eq('owner_username', username)
+          .maybeSingle();
+        if (!quiz) return send(res, 403, { error: 'Not your quiz' });
+        const now = new Date().toISOString();
+        const results = await Promise.all(
+          orders.map((row) =>
+            sb
+              .from('trivia_questions')
+              .update({ sort_order: Number(row.sort_order), updated_at: now })
+              .eq('id', row.id)
+              .eq('quiz_id', quiz.id)
+          )
+        );
+        const failed = results.find((result) => result.error);
+        if (failed?.error) return send(res, 500, { error: failed.error.message });
+        await touchQuiz(sb, quiz.id);
         return send(res, 200, { ok: true });
       }
       if (body.action === 'update_response') {

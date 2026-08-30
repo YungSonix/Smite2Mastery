@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { liveSessionSummary } from '../lib/liveSessionStats';
 import { formatDuration, responseDurationMs, responseLeftPage, responseTabAwayCount, scoredInsightQuestions } from '../lib/triviaInsights';
 import { presenceLabel, presenceStatus } from '../lib/triviaPresence';
@@ -36,18 +36,28 @@ export default function ResponsesGrid({
   onQuestionSelect,
   selectedQuestionId,
 }) {
+  const [flaggedOnly, setFlaggedOnly] = useState(false);
+
   const scored = scoredInsightQuestions(questions);
 
-  const sorted = useMemo(() => sortResponses(responses, sortBy), [responses, sortBy]);
+  const integrityIndex = useMemo(() => buildSubmissionIntegrity(responses), [responses]);
+
+  const filteredResponses = useMemo(() => {
+    if (!flaggedOnly) return responses;
+    return (responses || []).filter((r) => {
+      const integrity = integrityFor(r.id, integrityIndex);
+      return integrity.level !== 'none';
+    });
+  }, [responses, flaggedOnly, integrityIndex]);
+
+  const sorted = useMemo(() => sortResponses(filteredResponses, sortBy), [filteredResponses, sortBy]);
   const { page, setPage, pageCount, slice, from, to, reset } = usePagination(sorted.length);
 
   useEffect(() => {
     reset();
-  }, [sortBy, responses?.length, reset]);
+  }, [sortBy, filteredResponses?.length, reset]);
 
   const visibleRows = slice(sorted);
-
-  const integrityIndex = useMemo(() => buildSubmissionIntegrity(responses), [responses]);
 
   const totalsAvg = (() => {
     if (!responses?.length) return 0;
@@ -165,9 +175,15 @@ export default function ResponsesGrid({
         </p>
       )}
       <div className="f-panel-card f-submissions-card">
-        <div className="f-panel-card-head">
-          <h3 className="f-panel-card-title">Submissions</h3>
-          <span className="f-live-count">{responses?.length || 0}</span>
+        <div className="f-panel-card-head" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <h3 className="f-panel-card-title">Submissions</h3>
+            <span className="f-live-count">{responses?.length || 0}</span>
+          </div>
+          <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, cursor: 'pointer', userSelect: 'none' }}>
+            <input type="checkbox" checked={flaggedOnly} onChange={(e) => setFlaggedOnly(e.target.checked)} />
+            Flagged only
+          </label>
         </div>
         <table className="f-grid">
           <thead>

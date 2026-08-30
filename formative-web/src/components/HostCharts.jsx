@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 function barTone(value, max = 100) {
   const pct = max > 0 ? (Number(value) / max) * 100 : 0;
   if (pct >= 70) return 'high';
@@ -65,36 +67,47 @@ export function BarChart({
   );
 }
 
-/** Vertical histogram for time buckets or counts. */
-export function ColumnHistogram({ title, rows, empty = 'No data yet', glow = false, hint }) {
-  const list = (rows || []).filter((r) => Number(r.value) > 0);
+/** Vertical histogram for time buckets or counts. Empty buckets stay visible so gaps read as gaps. */
+export function ColumnHistogram({ title, rows, empty = 'No data yet', glow = false, hint, footNote }) {
+  const list = Array.isArray(rows) ? rows : [];
+  const hasData = list.some((r) => Number(r.value) > 0);
   const max = Math.max(1, ...list.map((r) => Number(r.value) || 0));
   return (
     <div className={`f-chart-card${glow ? ' is-glow' : ''}`}>
       <h3>{title}</h3>
       {hint ? <p className="f-chart-hint f-muted">{hint}</p> : null}
-      {!list.length ? (
+      {!hasData ? (
         <p className="f-muted">{empty}</p>
       ) : (
-        <div className="f-col-histogram">
-          {list.map((r) => {
-            const val = Number(r.value) || 0;
-            const height = Math.max(8, Math.round((val / max) * 100));
-            return (
-              <div className="f-col-histogram-slot" key={r.label}>
-                <div className="f-col-histogram-val">{val}</div>
-                <div className="f-col-histogram-bar-wrap">
-                  <div
-                    className="f-col-histogram-bar"
-                    style={{ height: `${height}%`, background: r.color || 'var(--f-blue)' }}
-                    title={`${r.label}: ${val}`}
-                  />
+        <>
+          <div className="f-col-histogram">
+            {list.map((r) => {
+              const val = Number(r.value) || 0;
+              const height = val > 0 ? Math.max(8, Math.round((val / max) * 100)) : 0;
+              return (
+                <div
+                  className={`f-col-histogram-slot${val === 0 ? ' is-empty' : ''}`}
+                  key={r.label}
+                >
+                  <div className="f-col-histogram-val">{val}</div>
+                  <div className="f-col-histogram-bar-wrap">
+                    {val > 0 ? (
+                      <div
+                        className="f-col-histogram-bar"
+                        style={{ height: `${height}%`, background: r.color || 'var(--f-blue)' }}
+                        title={`${r.label}: ${val}`}
+                      />
+                    ) : (
+                      <div className="f-col-histogram-bar is-zero" title={`${r.label}: 0`} />
+                    )}
+                  </div>
+                  <div className="f-col-histogram-label">{r.label}</div>
                 </div>
-                <div className="f-col-histogram-label">{r.label}</div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+          {footNote ? <p className="f-chart-foot f-muted">{footNote}</p> : null}
+        </>
       )}
     </div>
   );
@@ -139,9 +152,73 @@ export function Donut({ title, parts, center, empty = 'No data yet', glow = fals
   );
 }
 
-/** One row per question; stacked mini-bars per variant letter. */
-export function VariantStackChart({ title, questions, empty = 'No variant questions yet', onQuestionClick, hint }) {
+function VariantStackRow({ q, onQuestionClick }) {
+  const slots = q.variants.filter((v) => v.n > 0);
+  return (
+    <div className="f-variant-stack-row">
+      <div className="f-variant-stack-head">
+        {onQuestionClick ? (
+          <button
+            type="button"
+            className="f-variant-stack-q f-variant-stack-q-btn"
+            onClick={() => onQuestionClick(q)}
+            title="Preview question"
+          >
+            {q.label}
+          </button>
+        ) : (
+          <span className="f-variant-stack-q">{q.label}</span>
+        )}
+        <span className="f-variant-stack-overall">
+          {q.pct}% overall
+          {q.variantSkew != null ? ` · ${q.variantSkew}pp spread` : ''}
+        </span>
+      </div>
+      <div className="f-variant-stack-bars">
+        {slots.map((slot) => (
+          <div
+            className={`f-variant-stack-slot${slot.lowSample ? ' is-low-sample' : ''}`}
+            key={`${q.id}-${slot.index}`}
+          >
+            <div className="f-variant-stack-meta">
+              <span className="f-variant-chip" style={{ '--v-accent': slot.color }}>
+                Version {slot.letter}
+              </span>
+              <span className="f-variant-stack-pct">{slot.pct}%</span>
+              <span className="f-muted">
+                {slot.ok}/{slot.n}
+              </span>
+              {slot.lowSample ? <span className="f-variant-low-tag">too few takes</span> : null}
+            </div>
+            <div className="f-variant-stack-track">
+              <div
+                className="f-variant-stack-fill"
+                style={{ width: `${slot.pct}%`, background: slot.color }}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/**
+ * One row per question, one bar per version.
+ * Only questions with a real, well-sampled skew show by default; the rest sit behind a disclosure.
+ */
+export function VariantStackChart({
+  title,
+  questions,
+  empty = 'No version questions yet',
+  onQuestionClick,
+  hint,
+  minN = 5,
+  skewThreshold = 20,
+}) {
+  const [showAll, setShowAll] = useState(false);
   const rows = (questions || []).filter((q) => q.hasVariants && q.variants?.some((v) => v.n > 0));
+
   if (!rows.length) {
     return (
       <div className="f-chart-card is-glow">
@@ -151,54 +228,39 @@ export function VariantStackChart({ title, questions, empty = 'No variant questi
     );
   }
 
+  const flagged = rows.filter(
+    (q) => q.reliableVariantCount >= 2 && q.variantSkew != null && q.variantSkew >= skewThreshold
+  );
+  const rest = rows.filter((q) => !flagged.includes(q));
+  const visible = showAll ? rows : flagged;
+
   return (
     <div className="f-chart-card is-glow f-variant-stack-chart">
       <h3>{title}</h3>
       {hint ? <p className="f-chart-hint f-muted">{hint}</p> : null}
-      <div className="f-variant-stack-list">
-        {rows.map((q) => {
-          const label = q.label;
-          const slots = q.variants.filter((v) => v.n > 0);
-          return (
-            <div className="f-variant-stack-row" key={q.id}>
-              <div className="f-variant-stack-head">
-                {onQuestionClick ? (
-                  <button
-                    type="button"
-                    className="f-variant-stack-q f-variant-stack-q-btn"
-                    onClick={() => onQuestionClick(q)}
-                    title="Preview question"
-                  >
-                    {label}
-                  </button>
-                ) : (
-                  <span className="f-variant-stack-q">{label}</span>
-                )}
-                <span className="f-variant-stack-overall">{q.pct}% overall</span>
-              </div>
-              <div className="f-variant-stack-bars">
-                {slots.map((slot) => (
-                  <div className="f-variant-stack-slot" key={`${q.id}-${slot.index}`}>
-                    <div className="f-variant-stack-meta">
-                      <span className="f-variant-chip" style={{ '--v-accent': slot.color }}>
-                        Ver {slot.letter}
-                      </span>
-                      <span className="f-variant-stack-pct">{slot.pct}%</span>
-                      <span className="f-muted">n={slot.n}</span>
-                    </div>
-                    <div className="f-variant-stack-track">
-                      <div
-                        className="f-variant-stack-fill"
-                        style={{ width: `${slot.pct}%`, background: slot.color }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      {!visible.length ? (
+        <p className="f-muted">
+          No version is meaningfully harder than another yet (nothing above a {skewThreshold}pp gap
+          with at least {minN} takes per version).
+        </p>
+      ) : (
+        <div className="f-variant-stack-list">
+          {visible.map((q) => (
+            <VariantStackRow key={q.id} q={q} onQuestionClick={onQuestionClick} />
+          ))}
+        </div>
+      )}
+      {rest.length ? (
+        <button
+          type="button"
+          className="f-outline-btn f-compact f-variant-stack-toggle"
+          onClick={() => setShowAll((v) => !v)}
+        >
+          {showAll
+            ? 'Show only skewed versions'
+            : `Show all versions (${rest.length} more question${rest.length === 1 ? '' : 's'})`}
+        </button>
+      ) : null}
     </div>
   );
 }
@@ -276,72 +338,72 @@ export function VariantHeatmap({ title, questions, empty = 'No variant data yet'
   );
 }
 
-function NextEventList({ title, items, empty, onItemClick }) {
-  if (!items?.length) {
-    return (
-      <div className="f-next-event-col">
-        <h4>{title}</h4>
-        <p className="f-muted">{empty}</p>
-      </div>
-    );
-  }
-  return (
-    <div className="f-next-event-col">
-      <h4>{title}</h4>
-      <ul className="f-next-event-list">
-        {items.map((item) => (
-          <li key={item.id}>
-            {onItemClick ? (
-              <button type="button" className="f-next-event-q-btn" onClick={() => onItemClick(item)}>
-                <span className="f-next-event-q">{item.label}</span>
-                <span className="f-next-event-reason">{item.reason || `${item.pct}%`}</span>
-              </button>
-            ) : (
-              <>
-                <span className="f-next-event-q">{item.label}</span>
-                <span className="f-next-event-reason">{item.reason || `${item.pct}%`}</span>
-              </>
-            )}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
+const TAG_COPY = {
+  REWRITE: 'Reword or ease this question',
+  REBALANCE: 'Even out the versions',
+  SWAP: 'Replace with harder content',
+};
 
-export function NextEventSection({ data, onItemClick }) {
+/** One ranked to-do list — most urgent first, each row opens the question. */
+export function NextEventSection({ data, onItemClick, promptText }) {
   if (!data) return null;
+  const items = data.items || [];
+  const { submissions = 0, minSampleN = 5 } = data.summary || {};
+
   return (
     <div className="f-chart-card is-glow f-next-event">
       <div className="f-next-event-head">
         <h3>Prep for next event</h3>
         <p className="f-muted">
-          Based on {data.summary?.submissions || 0} submission
-          {data.summary?.submissions === 1 ? '' : 's'} — rewrite skewed or confusing items, keep stable
-          questions, trim giveaways.
+          {items.length
+            ? `Ranked by impact, based on ${submissions} submission${
+                submissions === 1 ? '' : 's'
+              }. Questions with fewer than ${minSampleN} takes are left out.`
+            : `Nothing needs changing yet — no question with at least ${minSampleN} takes is too hard, too easy, or unbalanced across versions.`}
         </p>
       </div>
-      <div className="f-next-event-grid">
-        <NextEventList
-          title="Rewrite candidates"
-          items={data.rewrite}
-          empty="No weak questions flagged yet"
-          onItemClick={onItemClick}
-        />
-        <NextEventList
-          title="Skewed variants"
-          items={data.skewed?.map((s) => ({ ...s, reason: s.reason }))}
-          empty="Variant balance looks OK"
-          onItemClick={onItemClick}
-        />
-        <NextEventList
-          title="Keep"
-          items={data.keep?.map((k) => ({ ...k, reason: `${k.pct}% · stable` }))}
-          empty="—"
-          onItemClick={onItemClick}
-        />
-        <NextEventList title="Trim / swap" items={data.trim} empty="Nothing too easy flagged" onItemClick={onItemClick} />
-      </div>
+      {items.length ? (
+        <ol className="f-next-event-actions">
+          {items.map((item, i) => {
+            const body = (
+              <>
+                <span className="f-next-event-rank">{i + 1}</span>
+                <span className={`f-next-event-tag is-${item.tag.toLowerCase()}`} title={TAG_COPY[item.tag]}>
+                  {item.tag}
+                </span>
+                <span className="f-next-event-copy">
+                  <span className="f-next-event-q">
+                    {item.label}
+                    {promptText ? ` · ${promptText(item)}` : ''}
+                  </span>
+                  <span className="f-next-event-reason">{item.reason}</span>
+                </span>
+              </>
+            );
+            return (
+              <li key={item.id} className={`f-next-event-action is-${item.tone || 'medium'}`}>
+                {onItemClick ? (
+                  <button
+                    type="button"
+                    className="f-next-event-action-btn"
+                    onClick={() => onItemClick(item)}
+                    title="Preview question"
+                  >
+                    {body}
+                  </button>
+                ) : (
+                  <span className="f-next-event-action-btn">{body}</span>
+                )}
+              </li>
+            );
+          })}
+        </ol>
+      ) : null}
+      {data.hidden > 0 ? (
+        <p className="f-chart-foot f-muted">
+          {data.hidden} lower-priority item{data.hidden === 1 ? '' : 's'} not shown.
+        </p>
+      ) : null}
     </div>
   );
 }

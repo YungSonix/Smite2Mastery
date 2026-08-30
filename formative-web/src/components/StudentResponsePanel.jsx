@@ -108,6 +108,7 @@ export default function StudentResponsePanel({
   onGrade,
   onRemove,
   onViewActivity,
+  onJumpToInsights,
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [draftScores, setDraftScores] = useState({});
@@ -462,32 +463,45 @@ export default function StudentResponsePanel({
               </div>
               <div className="f-answer-foot">
                 <span className="f-muted" aria-hidden="true" />
-                {scored ? (
-                  <label className="f-grade-input">
-                    <input
-                      type="number"
-                      min={0}
-                      max={maxPts}
-                      step="any"
-                      value={draftScores[q.id] ?? ''}
-                      disabled={busy}
-                      onChange={(e) =>
-                        setDraftScores((prev) => ({ ...prev, [q.id]: e.target.value }))
-                      }
-                      onBlur={() => commitScore(q.id)}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                          e.currentTarget.blur();
+                <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+                  {scored ? (
+                    <button
+                      type="button"
+                      className="f-icon-btn f-muted"
+                      title="View in Insights"
+                      onClick={() => onJumpToInsights?.(q.id)}
+                      style={{ fontSize: 12, padding: '2px 6px' }}
+                    >
+                      Insights ↗
+                    </button>
+                  ) : null}
+                  {scored ? (
+                    <label className="f-grade-input">
+                      <input
+                        type="number"
+                        min={0}
+                        max={maxPts}
+                        step="any"
+                        value={draftScores[q.id] ?? ''}
+                        disabled={busy}
+                        onChange={(e) =>
+                          setDraftScores((prev) => ({ ...prev, [q.id]: e.target.value }))
                         }
-                      }}
-                    />
-                    <span>/ {maxPts}pt</span>
-                  </label>
-                ) : isGateQuestion(q) ? (
-                  <span className="f-muted">Identity</span>
-                ) : (
-                  <span className="f-muted">—</span>
-                )}
+                        onBlur={() => commitScore(q.id)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.currentTarget.blur();
+                          }
+                        }}
+                      />
+                      <span>/ {maxPts}pt</span>
+                    </label>
+                  ) : isGateQuestion(q) ? (
+                    <span className="f-muted">Identity</span>
+                  ) : (
+                    <span className="f-muted">—</span>
+                  )}
+                </div>
               </div>
             </article>
           );

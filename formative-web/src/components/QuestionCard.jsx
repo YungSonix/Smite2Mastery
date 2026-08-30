@@ -193,8 +193,15 @@ export default function QuestionCard({
   index,
   onChange,
   onDelete,
+  onDuplicate,
+  onMove,
+  canMoveUp = false,
+  canMoveDown = false,
   autoHints = false,
   quizPartialCreditMs = false,
+  focusVariantIndex,
+  focusVariantToken,
+  highlight = false,
 }) {
   const [q, setQ] = useState(question);
   const [uploadError, setUploadError] = useState('');
@@ -202,11 +209,23 @@ export default function QuestionCard({
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const [variantTab, setVariantTab] = useState(0); // 0=A, extras in meta.variants
+  const [variantSearchHighlight, setVariantSearchHighlight] = useState(false);
   const [urlDraft, setUrlDraft] = useState('');
   const [mediaPreviewToken, setMediaPreviewToken] = useState(null);
   useEffect(() => {
     setQ(question);
   }, [question]);
+
+  useEffect(() => {
+    if (focusVariantIndex == null || focusVariantToken == null) return;
+    const tab = Math.max(0, Number(focusVariantIndex) || 0);
+    const extras = Array.isArray(question.meta?.variants) ? question.meta.variants : [];
+    if (tab > 0 && extras.length < tab) return;
+    setVariantTab(tab);
+    setVariantSearchHighlight(true);
+    const t = setTimeout(() => setVariantSearchHighlight(false), 2200);
+    return () => clearTimeout(t);
+  }, [focusVariantIndex, focusVariantToken, question.id, question.meta?.variants]);
 
   useEffect(() => {
     if (!menuOpen) return undefined;
@@ -644,6 +663,26 @@ export default function QuestionCard({
     if (variantExtras.length < tab) return;
     patchVariantSlot(tab - 1, {
       enabled: variantExtras[tab - 1]?.enabled === false,
+    });
+  };
+
+  /** Remove one extra version. Version A is the base question and can never be removed here. */
+  const deleteVariantTab = (tab) => {
+    if (tab <= 0 || variantExtras.length < tab) return;
+    const letter = variantLetter(tab);
+    const ok = window.confirm(
+      `Delete Version ${letter}? This cannot be undone from responses already collected.`
+    );
+    if (!ok) return;
+    const variants = variantExtras.filter((_, i) => i !== tab - 1);
+    const nextMeta = { ...(q.meta || {}) };
+    if (variants.length) nextMeta.variants = variants;
+    else delete nextMeta.variants;
+    commit({ ...q, meta: nextMeta });
+    setVariantTab((cur) => {
+      if (cur === tab) return tab - 1;
+      if (cur > tab) return cur - 1;
+      return cur;
     });
   };
 
@@ -1633,7 +1672,9 @@ export default function QuestionCard({
 
   return (
     <div
-      className={`f-qcard ${useMediaSplit ? 'f-qcard-media' : ''} ${isFillBlank ? 'f-qcard-fib' : ''}`}
+      className={`f-qcard ${useMediaSplit ? 'f-qcard-media' : ''} ${isFillBlank ? 'f-qcard-fib' : ''} ${
+        highlight ? 'is-restored' : ''
+      }`}
       id={`host-q-${q.id}`}
     >
       <div className="f-qcard-head">
@@ -1650,6 +1691,46 @@ export default function QuestionCard({
           </button>
           {menuOpen ? (
             <div className="f-menu f-qcard-menu" role="menu">
+              {onMove ? (
+                <>
+                  <button
+                    type="button"
+                    role="menuitem"
+                    disabled={!canMoveUp}
+                    onClick={() => {
+                      setMenuOpen(false);
+                      onMove(-1);
+                    }}
+                  >
+                    Move up
+                  </button>
+                  <button
+                    type="button"
+                    role="menuitem"
+                    disabled={!canMoveDown}
+                    onClick={() => {
+                      setMenuOpen(false);
+                      onMove(1);
+                    }}
+                  >
+                    Move down
+                  </button>
+                </>
+              ) : null}
+              {onDuplicate ? (
+                <button
+                  type="button"
+                  role="menuitem"
+                  disabled={isGate}
+                  title="Insert a copy below, including every version and its media"
+                  onClick={() => {
+                    setMenuOpen(false);
+                    if (!isGate) onDuplicate();
+                  }}
+                >
+                  Duplicate question
+                </button>
+              ) : null}
               <button
                 type="button"
                 className="f-menu-danger"
@@ -1665,6 +1746,30 @@ export default function QuestionCard({
             </div>
           ) : null}
         </div>
+        {onMove ? (
+          <div className="f-qcard-move" role="group" aria-label="Reorder question">
+            <button
+              type="button"
+              className="f-icon-btn f-qcard-move-btn"
+              disabled={!canMoveUp}
+              title="Move question up"
+              aria-label={`Move question ${index + 1} up`}
+              onClick={() => onMove(-1)}
+            >
+              ▲
+            </button>
+            <button
+              type="button"
+              className="f-icon-btn f-qcard-move-btn"
+              disabled={!canMoveDown}
+              title="Move question down"
+              aria-label={`Move question ${index + 1} down`}
+              onClick={() => onMove(1)}
+            >
+              ▼
+            </button>
+          </div>
+        ) : null}
         <span className="f-q-num f-q-num-head" title={`Question ${index + 1}`} aria-label={`Question ${index + 1}`}>
           {index + 1}
         </span>
@@ -1715,21 +1820,35 @@ export default function QuestionCard({
       </div>
 
       {supportsVariants ? (
-        <div className="f-variant-tabs">
+        <div className={`f-variant-tabs ${variantSearchHighlight ? 'is-search-focus' : ''}`}>
           {Array.from({ length: 1 + variantExtras.length }, (_, i) => {
             const on = i === 0 || variantExtras[i - 1]?.enabled !== false;
+            const isFocusedFromSearch =
+              variantSearchHighlight && focusVariantIndex === i && variantTab === i;
             return (
-              <button
-                key={variantLetter(i)}
-                type="button"
-                className={variantTab === i ? 'active' : ''}
-                title={i > 0 ? 'Double-click to turn this version off or on' : undefined}
-                onClick={() => openVariantTab(i)}
-                onDoubleClick={() => toggleVariantEnabled(i)}
-              >
-                Version {variantLetter(i)}
-                {i > 0 ? (on ? ' · on' : ' · off') : ''}
-              </button>
+              <span className="f-variant-tab" key={variantLetter(i)}>
+                <button
+                  type="button"
+                  className={`${variantTab === i ? 'active' : ''} ${isFocusedFromSearch ? 'search-hit' : ''}`}
+                  title={i > 0 ? 'Double-click to turn this version off or on' : undefined}
+                  onClick={() => openVariantTab(i)}
+                  onDoubleClick={() => toggleVariantEnabled(i)}
+                >
+                  Version {variantLetter(i)}
+                  {i > 0 ? (on ? ' · on' : ' · off') : ''}
+                </button>
+                {i > 0 ? (
+                  <button
+                    type="button"
+                    className="f-variant-del"
+                    title={`Delete Version ${variantLetter(i)}`}
+                    aria-label={`Delete Version ${variantLetter(i)}`}
+                    onClick={() => deleteVariantTab(i)}
+                  >
+                    ×
+                  </button>
+                ) : null}
+              </span>
             );
           })}
           <button
@@ -1748,6 +1867,7 @@ export default function QuestionCard({
           <span className="f-variant-hint">
             Version A is always on. Add extra versions (up to {MAX_QUESTION_VARIANTS} total).
             Double-click an extra version to turn it off. Off versions are not given to players.
+            Use × to remove one version without touching the rest of the question.
             {variantTab > 0 && String(q.prompt || '') === 'Multiple choice question' ? (
               <>
                 {' '}

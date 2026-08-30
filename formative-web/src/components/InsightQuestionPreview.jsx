@@ -8,6 +8,7 @@ import { resolveMediaUrl } from '../lib/mediaUrl';
 import { promptPlain } from '../lib/promptPlain';
 import { typeLabel } from '../lib/questionTypes';
 import { applyVariant, variantCount, variantLetter } from '../lib/triviaVariants';
+import { buildChoiceDistribution, pctWithCounts } from '../lib/triviaInsights';
 
 function PreviewChoices({ q }) {
   const options = Array.isArray(q.options) ? q.options.map(String) : [];
@@ -52,12 +53,43 @@ function PreviewChoices({ q }) {
   );
 }
 
+function ChoiceSpread({ dist }) {
+  if (!dist) return null;
+  return (
+    <div className="f-preview-choice-spread">
+      <h4>What players picked ({dist.n} takes on this version)</h4>
+      <ul>
+        {dist.rows.map((row) => (
+          <li key={row.index} className={row.correct ? 'is-correct' : ''}>
+            <span className="f-preview-spread-label" title={row.label}>
+              {row.correct ? '✓ ' : ''}
+              {row.label}
+            </span>
+            <span className="f-preview-spread-track">
+              <span className="f-preview-spread-fill" style={{ width: `${row.pct}%` }} />
+            </span>
+            <span className="f-preview-spread-val">
+              {row.pct}% ({row.count})
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 export default function InsightQuestionPreview({
   question,
   questionIndex = 0,
   initialVariantIndex = 0,
   insightPct,
+  insightOk,
   insightN,
+  responses,
+  hasPrev = false,
+  hasNext = false,
+  onPrev,
+  onNext,
   onClose,
   onOpenInEditor,
 }) {
@@ -67,6 +99,10 @@ export default function InsightQuestionPreview({
   const media = listMediaUrls(displayQ);
   const isGate = displayQ.meta?.is_discord_gate || displayQ.meta?.is_ingame_gate;
   const isContent = ['image', 'audio', 'video', 'embed', 'content'].includes(displayQ.type);
+  const choiceSpread = useMemo(
+    () => buildChoiceDistribution({ question, variantIndex, responses }),
+    [question, variantIndex, responses]
+  );
 
   if (!question) return null;
 
@@ -84,12 +120,36 @@ export default function InsightQuestionPreview({
             <h3>Question {questionIndex + 1}</h3>
             <p className="f-muted">
               {typeLabel(displayQ)}
-              {insightN != null ? ` · ${insightPct}% correct (${insightN} takes)` : ''}
+              {insightN != null ? ` · ${pctWithCounts(insightPct, insightOk, insightN)} correct` : ''}
             </p>
           </div>
-          <button type="button" className="f-icon-btn" title="Close" onClick={onClose}>
-            ✕
-          </button>
+          <div className="f-insight-preview-nav">
+            {onPrev || onNext ? (
+              <>
+                <button
+                  type="button"
+                  className="f-outline-btn f-compact"
+                  title="Previous question"
+                  disabled={!hasPrev}
+                  onClick={onPrev}
+                >
+                  ← Prev
+                </button>
+                <button
+                  type="button"
+                  className="f-outline-btn f-compact"
+                  title="Next question"
+                  disabled={!hasNext}
+                  onClick={onNext}
+                >
+                  Next →
+                </button>
+              </>
+            ) : null}
+            <button type="button" className="f-icon-btn" title="Close" onClick={onClose}>
+              ✕
+            </button>
+          </div>
         </header>
 
         <div className="f-insight-preview-body">
@@ -136,6 +196,7 @@ export default function InsightQuestionPreview({
               <p className="f-preview-answer-line">
                 <strong>Answer:</strong> {formatCorrectAnswer(displayQ) || '—'}
               </p>
+              <ChoiceSpread dist={choiceSpread} />
             </>
           ) : null}
           {isGate ? (
@@ -145,7 +206,7 @@ export default function InsightQuestionPreview({
 
         <footer className="f-insight-preview-foot">
           {onOpenInEditor ? (
-            <button type="button" className="f-outline-btn" onClick={() => onOpenInEditor(question.id)}>
+            <button type="button" className="f-outline-btn" onClick={() => onOpenInEditor(question.id, variantIndex)}>
               Open in editor
             </button>
           ) : null}
