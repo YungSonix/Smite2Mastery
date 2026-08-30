@@ -828,6 +828,12 @@ export default function Activity() {
     return questions.filter((q) => editSearchResult.matchedIds.has(String(q.id)));
   }, [questions, editSearchActive, editSearchResult.matchedIds]);
 
+  const testTakeCount = useMemo(() => filterTestResponses(responses).length, [responses]);
+  const visibleResponses = useMemo(
+    () => (includeTestTakes ? responses : filterProductionResponses(responses)),
+    [responses, includeTestTakes]
+  );
+
   const updateActiveFromScroll = useCallback(() => {
     if (Date.now() < jumpLockUntil.current) return;
     if (!questions.length) return;
@@ -896,11 +902,6 @@ export default function Activity() {
 
   const link = quiz ? publicTakeUrl(quiz.slug) : '';
   const testLink = quiz ? hostTestTakeUrl(quiz.slug, settings.test_take_token) : '';
-  const testTakeCount = useMemo(() => filterTestResponses(responses).length, [responses]);
-  const visibleResponses = useMemo(
-    () => (includeTestTakes ? responses : filterProductionResponses(responses)),
-    [responses, includeTestTakes]
-  );
 
   const theme = quizThemeProps(settings);
   return (
