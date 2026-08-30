@@ -210,7 +210,7 @@ export default function StudentResponsePanel({
     const maxPts = Number(q.points) || 0;
     const raw = draftScores[questionId];
     if (raw === '' || raw == null) return;
-    const earned = Math.max(0, Math.min(maxPts, Number(raw)));
+    const earned = Math.max(0, Math.min(maxPts, Math.round(Number(raw) * 1000) / 1000));
     if (!Number.isFinite(earned)) return;
     const current = earnedFromStored(response.per_question?.[questionId], maxPts);
     if (current != null && Math.abs(current - earned) < 1e-9) return;
@@ -423,9 +423,27 @@ export default function StudentResponsePanel({
           const maxPts = Number(q.points) || 0;
           const earned = effectiveEarned(q, response, maxPts);
           const mark =
-            earned == null ? 'empty' : earned > 0 ? 'ok' : 'bad';
+            earned == null
+              ? 'empty'
+              : earned <= 0
+                ? 'bad'
+                : maxPts > 0 && earned < maxPts - 1e-9
+                  ? 'partial'
+                  : 'ok';
           const editorNum = editorNumById.get(q.id);
           const takeNum = i + 1;
+          const setAndCommit = async (pts) => {
+            const next = String(pts);
+            setDraftScores((prev) => ({ ...prev, [q.id]: next }));
+            const current = earnedFromStored(response.per_question?.[q.id], maxPts);
+            if (current != null && Math.abs(current - pts) < 1e-9) return;
+            setBusy(true);
+            try {
+              await onGrade?.(response.id, q.id, pts, maxPts);
+            } finally {
+              setBusy(false);
+            }
+          };
 
           return (
             <article key={q.id} className={`f-answer-card mark-${mark}`}>
@@ -476,26 +494,60 @@ export default function StudentResponsePanel({
                     </button>
                   ) : null}
                   {scored ? (
-                    <label className="f-grade-input">
-                      <input
-                        type="number"
-                        min={0}
-                        max={maxPts}
-                        step="any"
-                        value={draftScores[q.id] ?? ''}
-                        disabled={busy}
-                        onChange={(e) =>
-                          setDraftScores((prev) => ({ ...prev, [q.id]: e.target.value }))
-                        }
-                        onBlur={() => commitScore(q.id)}
-                        onKeyDown={(e) => {
-                          if (e.key === 'Enter') {
-                            e.currentTarget.blur();
+                    <div className="f-grade-wrap">
+                      <div className="f-grade-quick" role="group" aria-label="Quick grade">
+                        <button
+                          type="button"
+                          className="f-grade-chip"
+                          disabled={busy}
+                          title="0 points"
+                          onClick={() => setAndCommit(0)}
+                        >
+                          0
+                        </button>
+                        {maxPts > 0 ? (
+                          <button
+                            type="button"
+                            className="f-grade-chip"
+                            disabled={busy}
+                            title={`Half credit (${maxPts / 2} pt)`}
+                            onClick={() => setAndCommit(Math.round((maxPts / 2) * 1000) / 1000)}
+                          >
+                            ½
+                          </button>
+                        ) : null}
+                        <button
+                          type="button"
+                          className="f-grade-chip"
+                          disabled={busy}
+                          title={`Full credit (${maxPts} pt)`}
+                          onClick={() => setAndCommit(maxPts)}
+                        >
+                          Full
+                        </button>
+                      </div>
+                      <label className="f-grade-input" title="Type 0.5 for half credit, then press Enter">
+                        <input
+                          type="number"
+                          min={0}
+                          max={maxPts}
+                          step="0.5"
+                          inputMode="decimal"
+                          value={draftScores[q.id] ?? ''}
+                          disabled={busy}
+                          onChange={(e) =>
+                            setDraftScores((prev) => ({ ...prev, [q.id]: e.target.value }))
                           }
-                        }}
-                      />
-                      <span>/ {maxPts}pt</span>
-                    </label>
+                          onBlur={() => commitScore(q.id)}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                              e.currentTarget.blur();
+                            }
+                          }}
+                        />
+                        <span>/ {maxPts}pt</span>
+                      </label>
+                    </div>
                   ) : isGateQuestion(q) ? (
                     <span className="f-muted">Identity</span>
                   ) : (

@@ -3935,6 +3935,45 @@ label.f-file-btn:hover {
   font-size: 12px;
 }
 
+.f-grade-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.f-grade-quick {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.f-grade-chip {
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  border-radius: 8px;
+  border: 1px solid var(--f-blue-border);
+  background: var(--f-card);
+  color: var(--f-blue);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.f-grade-chip:hover:not(:disabled) {
+  background: var(--f-blue-soft);
+}
+
+.f-grade-chip:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.f-answer-card.mark-partial {
+  border-color: color-mix(in srgb, #fbbf24 55%, var(--f-border));
+}
+
 .f-grade-input input {
   width: 52px;
   padding: 4px 6px;
@@ -7284,6 +7323,44 @@ label.f-file-btn:hover {
   justify-content: space-between;
   gap: 8px;
   padding: 10px 16px;
+}
+
+.f-q-review-version-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--f-border);
+  background: color-mix(in srgb, var(--f-blue) 5%, var(--f-card));
+}
+
+.f-q-review-version-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--f-blue-border);
+  background: var(--f-card);
+  color: var(--f-text);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.f-q-review-version-chip:hover {
+  border-color: var(--f-blue);
+}
+
+.f-q-review-version-chip.is-active {
+  background: var(--f-blue-soft);
+  border-color: var(--f-blue);
+  color: var(--f-blue);
+}
+
+.f-q-review-mark.is-partial {
+  background: rgba(251, 191, 36, 0.18);
+  color: #b45309;
 }
 
 .f-q-review-card {

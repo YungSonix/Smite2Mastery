@@ -13,6 +13,12 @@ import { promptPlain } from '../lib/promptPlain';
 import { typeLabel } from '../lib/questionTypes';
 import { sortResponses } from '../lib/sortResponses';
 import { PaginationBar, usePagination } from '../lib/usePagination';
+import {
+  applyVariant,
+  extractVariantMap,
+  variantCount,
+  variantLetter,
+} from '../lib/triviaVariants';
 
 const PANEL_SORT = [
   { id: 'discord_az', label: 'Discord (A–Z)' },
@@ -28,7 +34,16 @@ function markFor(stored, maxPts, answerRaw) {
   }
   const earned = earnedFromStored(stored, maxPts);
   if (earned == null) return isBlankAnswer(answerRaw) ? 'bad' : 'empty';
-  return earned > 0 ? 'ok' : 'bad';
+  if (earned <= 0) return 'bad';
+  if (maxPts > 0 && earned < maxPts - 1e-9) return 'partial';
+  return 'ok';
+}
+
+function responseVariantIndex(response, questionId) {
+  const map = extractVariantMap(response?.answers) || {};
+  const raw = map[questionId];
+  const n = Number(raw);
+  return Number.isFinite(n) && n >= 0 ? n : 0;
 }
 
 export default function QuestionReviewPanel({
@@ -41,19 +56,50 @@ export default function QuestionReviewPanel({
   onSelectStudent,
 }) {
   const [sortBy, setSortBy] = useState('discord_az');
+  /** null = all versions */
+  const [versionFilter, setVersionFilter] = useState(null);
 
-  const rows = useMemo(() => sortResponses(responses, sortBy), [responses, sortBy]);
+  const vCount = variantCount(question);
+  const hasVersions = vCount > 1;
+
+  useEffect(() => {
+    setVersionFilter(null);
+  }, [question?.id]);
+
+  const displayQuestion = useMemo(() => {
+    if (!question) return null;
+    if (versionFilter == null) return question;
+    return applyVariant(question, versionFilter);
+  }, [question, versionFilter]);
+
+  const versionCounts = useMemo(() => {
+    const counts = Array.from({ length: Math.max(1, vCount) }, () => 0);
+    for (const r of responses || []) {
+      const vi = responseVariantIndex(r, question?.id);
+      if (vi >= 0 && vi < counts.length) counts[vi] += 1;
+      else counts[0] += 1;
+    }
+    return counts;
+  }, [responses, question?.id, vCount]);
+
+  const filtered = useMemo(() => {
+    const list = responses || [];
+    if (versionFilter == null || !hasVersions) return list;
+    return list.filter((r) => responseVariantIndex(r, question?.id) === versionFilter);
+  }, [responses, versionFilter, hasVersions, question?.id]);
+
+  const rows = useMemo(() => sortResponses(filtered, sortBy), [filtered, sortBy]);
   const { page, setPage, pageCount, slice, from, to, reset } = usePagination(rows.length);
 
   useEffect(() => {
     reset();
-  }, [sortBy, question?.id, rows.length, reset]);
+  }, [sortBy, question?.id, versionFilter, rows.length, reset]);
 
   const visibleRows = slice(rows);
   const maxPts = Number(question?.points) || 0;
   const scored = isScoredQuestion(question);
 
-  if (!question) return null;
+  if (!question || !displayQuestion) return null;
 
   const qLabel = questionIndex >= 0 ? questionIndex + 1 : '?';
 
@@ -65,7 +111,7 @@ export default function QuestionReviewPanel({
         </button>
         <div className="f-student-panel-title" style={{ textAlign: 'left' }}>
           <div className="f-student-panel-name">Question {qLabel}</div>
-          <div className="f-muted f-student-panel-sub">{typeLabel(question)}</div>
+          <div className="f-muted f-student-panel-sub">{typeLabel(displayQuestion)}</div>
         </div>
         <button type="button" className="f-icon-btn" title="Close" onClick={onClose}>
           ✕
@@ -88,20 +134,53 @@ export default function QuestionReviewPanel({
         ))}
       </nav>
 
+      {hasVersions ? (
+        <div className="f-q-review-version-bar" role="group" aria-label="Filter by version">
+          <button
+            type="button"
+            className={`f-q-review-version-chip${versionFilter == null ? ' is-active' : ''}`}
+            onClick={() => setVersionFilter(null)}
+          >
+            All <span className="f-muted">{(responses || []).length}</span>
+          </button>
+          {Array.from({ length: vCount }, (_, i) => (
+            <button
+              key={i}
+              type="button"
+              className={`f-q-review-version-chip${versionFilter === i ? ' is-active' : ''}`}
+              onClick={() => setVersionFilter(i)}
+              title={`Only students who got Version ${variantLetter(i)}`}
+            >
+              {variantLetter(i)} <span className="f-muted">{versionCounts[i] || 0}</span>
+            </button>
+          ))}
+        </div>
+      ) : null}
+
       <div className="f-q-review-meta">
-        <div className="f-answer-type">{typeLabel(question)}{scored ? ` · ${maxPts}pt` : ''}</div>
-        <div className="f-q-review-prompt">{promptPlain(question.prompt) || typeLabel(question)}</div>
-        <MediaStack urls={listMediaUrls(question)} />
+        <div className="f-answer-type">
+          {typeLabel(displayQuestion)}
+          {scored ? ` · ${maxPts}pt` : ''}
+          {versionFilter != null ? ` · Version ${variantLetter(versionFilter)}` : ''}
+        </div>
+        <div className="f-q-review-prompt">{promptPlain(displayQuestion.prompt) || typeLabel(displayQuestion)}</div>
+        <MediaStack urls={listMediaUrls(displayQuestion)} />
       </div>
 
       <div className="f-q-review-toolbar">
-        <span className="f-muted">{rows.length} response{rows.length === 1 ? '' : 's'}</span>
+        <span className="f-muted">
+          {rows.length} response{rows.length === 1 ? '' : 's'}
+          {versionFilter != null ? ` · Version ${variantLetter(versionFilter)}` : ''}
+        </span>
         <SortStudentsMenu value={sortBy} onChange={setSortBy} options={PANEL_SORT} />
       </div>
 
       <div className="f-student-panel-body">
         {visibleRows.map((r) => {
-          const answerText = formatResponseAnswer(question, r.answers?.[question.id], r);
+          const vi = responseVariantIndex(r, question.id);
+          const qForAnswer =
+            hasVersions && versionFilter == null ? applyVariant(question, vi) : displayQuestion;
+          const answerText = formatResponseAnswer(qForAnswer, r.answers?.[question.id], r);
           const stored = r.per_question?.[question.id];
           const mark = markFor(stored, maxPts, r.answers?.[question.id]);
           const earned = effectiveEarned(question, r, maxPts);
@@ -131,11 +210,18 @@ export default function QuestionReviewPanel({
                     </div>
                     <div className="f-muted" title={r.ingame_name || ''}>
                       {r.ingame_name || '—'}
+                      {hasVersions ? ` · Ver ${variantLetter(vi)}` : ''}
                     </div>
                   </div>
                 </div>
                 <span className={`f-q-review-mark is-${mark}`}>
-                  {mark === 'ok' ? 'Correct' : mark === 'bad' ? 'Wrong' : '—'}
+                  {mark === 'ok'
+                    ? 'Correct'
+                    : mark === 'partial'
+                      ? 'Partial'
+                      : mark === 'bad'
+                        ? 'Wrong'
+                        : '—'}
                 </span>
               </div>
               <div className="f-answer-value">
@@ -163,7 +249,13 @@ export default function QuestionReviewPanel({
           total={rows.length}
           onPage={setPage}
         />
-        {!rows.length ? <p className="f-muted">No submissions yet.</p> : null}
+        {!rows.length ? (
+          <p className="f-muted">
+            {versionFilter != null
+              ? `No submissions for Version ${variantLetter(versionFilter)}.`
+              : 'No submissions yet.'}
+          </p>
+        ) : null}
       </div>
     </aside>
   );
