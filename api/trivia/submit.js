@@ -9,6 +9,7 @@ const {
 } = require('../../lib/server/triviaApi');
 const { commitGuestAttempt } = require('../../lib/server/triviaCommit');
 const { readTakeSessionToken } = require('../../lib/server/triviaSessions');
+const { resolveTestTakeMode } = require('../../lib/server/triviaTestTake');
 
 const SUBMIT_MAX_BYTES = Number(process.env.TRIVIA_SUBMIT_MAX_BYTES) || 1024 * 1024;
 
@@ -81,6 +82,12 @@ module.exports = async function handler(req, res) {
 
     if (qErr) return send(res, 500, { error: qErr.message });
 
+    const testToken = String(body.test_take_token || body.testTakeToken || '').trim();
+    const testMode = resolveTestTakeMode(quiz.settings, testToken);
+    if (testToken && !testMode.valid) {
+      return send(res, 403, { error: 'Invalid practice link. Use the host test link from Assign.' });
+    }
+
     const payload = await commitGuestAttempt(sb, {
       quiz,
       questions: questions || [],
@@ -92,6 +99,7 @@ module.exports = async function handler(req, res) {
       ua: req.headers['user-agent'] || null,
       sessionToken: readTakeSessionToken(body),
       allowClosedWindow: Boolean(body.force_timeout),
+      isTestTake: testMode.isTestTake,
     });
     return send(res, 200, payload);
   } catch (e) {

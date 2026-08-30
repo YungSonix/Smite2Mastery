@@ -30,6 +30,14 @@
   --f-close: #e6eef8;
   --f-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --f-touch: 48px;
+  --f-chrome-bg: var(--f-sidebar);
+  --f-chrome-surface: var(--f-card);
+  --f-chrome-border: var(--f-border);
+  --f-chrome-radius: 12px;
+  --f-chrome-radius-sm: 8px;
+  --f-elev-1: 0 1px 2px rgba(0, 0, 0, 0.14), 0 1px 3px rgba(0, 0, 0, 0.1);
+  --f-elev-2: 0 4px 12px rgba(0, 0, 0, 0.16), 0 2px 4px rgba(0, 0, 0, 0.1);
+  --f-elev-3: 0 12px 28px rgba(0, 0, 0, 0.22), 0 4px 8px rgba(0, 0, 0, 0.12);
 }
 
 * {
@@ -394,6 +402,131 @@ a {
 
 .f-create-btn,
 .f-primary-btn,
+.f-assign-btn.is-live {
+  background: rgba(74, 222, 128, 0.15);
+  border-color: rgba(74, 222, 128, 0.45);
+  color: #86efac;
+}
+
+.f-topbar-copy-link {
+  font-size: 13px;
+  padding: 6px 12px;
+  white-space: nowrap;
+}
+
+.f-assign-modal-v2 .f-assign-layout {
+  display: flex;
+  gap: 0;
+  min-height: 360px;
+  border-top: 1px solid rgba(125, 211, 252, 0.12);
+}
+
+.f-assign-nav {
+  flex: 0 0 132px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 8px;
+  border-right: 1px solid var(--f-chrome-border, var(--f-border));
+  background: color-mix(in srgb, var(--f-panel-alt) 92%, var(--f-text) 3%);
+}
+
+.f-assign-nav-btn {
+  text-align: left;
+  padding: 8px 10px;
+  border: none;
+  border-radius: var(--f-chrome-radius-sm, 6px);
+  background: transparent;
+  color: var(--f-muted);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.f-assign-nav-btn:hover {
+  background: var(--f-blue-soft);
+  color: var(--f-text);
+}
+
+.f-assign-nav-btn.active {
+  background: var(--f-chrome-surface, var(--f-card));
+  color: var(--f-blue);
+  font-weight: 600;
+  box-shadow: var(--f-elev-1);
+}
+
+.f-assign-body-v2 {
+  flex: 1;
+  max-height: 52vh;
+  overflow-y: auto;
+}
+
+.f-assign-share-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.f-assign-live-pill {
+  display: inline-block;
+  padding: 2px 8px;
+  margin-right: 6px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: rgba(74, 222, 128, 0.2);
+  color: #86efac;
+}
+
+.f-assign-warn {
+  color: #fbbf24;
+  font-size: 13px;
+  margin-top: 12px;
+}
+
+.f-assign-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border-top: 1px solid rgba(125, 211, 252, 0.12);
+  flex-wrap: wrap;
+}
+
+.f-assign-footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.f-assign-live-note {
+  font-size: 13px;
+  color: #86efac;
+}
+
+.f-assign-publish-btn {
+  min-width: 120px;
+}
+
+@media (max-width: 640px) {
+  .f-assign-modal-v2 .f-assign-layout {
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .f-assign-nav {
+    flex: none;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-right: none;
+    border-bottom: 1px solid rgba(125, 211, 252, 0.12);
+  }
+}
+
 .f-assign-btn {
   background: var(--f-blue);
   color: var(--f-on-accent, #fff);
@@ -581,8 +714,9 @@ label.f-file-btn:hover {
 }
 
 .f-topbar {
-  background: var(--f-sidebar);
-  border-bottom: 1px solid var(--f-border);
+  background: var(--f-chrome-bg, var(--f-sidebar));
+  border-bottom: 1px solid var(--f-chrome-border, var(--f-border));
+  box-shadow: var(--f-elev-1);
   display: flex;
   align-items: center;
   gap: 10px;
@@ -735,8 +869,9 @@ label.f-file-btn:hover {
 }
 
 .f-subbar {
-  background: var(--f-panel);
-  border-bottom: 1px solid var(--f-border);
+  background: var(--f-chrome-bg, var(--f-panel));
+  border-bottom: 1px solid var(--f-chrome-border, var(--f-border));
+  box-shadow: var(--f-elev-1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -747,30 +882,38 @@ label.f-file-btn:hover {
 
 .f-pills {
   display: inline-flex;
-  background: var(--f-panel-alt);
-  border: 1px solid var(--f-border);
-  border-radius: 999px;
+  background: color-mix(in srgb, var(--f-panel-alt) 88%, var(--f-text) 4%);
+  border: 1px solid var(--f-chrome-border, var(--f-border));
+  border-radius: var(--f-chrome-radius-sm, 8px);
   padding: 3px;
   gap: 2px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
 }
 
 .f-pill {
   border: none;
   background: transparent;
   padding: 8px 18px;
-  border-radius: 999px;
+  border-radius: calc(var(--f-chrome-radius-sm, 8px) - 2px);
   cursor: pointer;
   font-weight: 600;
   color: var(--f-muted);
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  transition: background 0.15s var(--f-ease), box-shadow 0.15s var(--f-ease), color 0.15s var(--f-ease);
+}
+
+.f-pill:hover:not(.active) {
+  color: var(--f-text);
+  background: color-mix(in srgb, var(--f-card) 60%, transparent);
 }
 
 .f-pill.active {
-  background: var(--f-blue);
-  color: var(--f-on-accent, #fff);
-  border: 1px solid transparent;
+  background: var(--f-chrome-surface, var(--f-card));
+  color: var(--f-text);
+  border: 1px solid var(--f-chrome-border, var(--f-border));
+  box-shadow: var(--f-elev-1);
 }
 
 .f-pill-dot {
@@ -1187,6 +1330,26 @@ label.f-file-btn:hover {
   padding: 12px 14px;
   color: var(--f-text);
   outline: none;
+}
+
+.f-visual-editor .f-rt-ink {
+  color: var(--f-text);
+}
+
+.f-visual-editor .f-rt-accent {
+  color: var(--f-blue);
+}
+
+.f-visual-editor .f-rt-gold {
+  color: var(--f-label);
+}
+
+.f-visual-editor .f-rt-muted {
+  color: var(--f-muted);
+}
+
+.f-visual-editor span[style*='color'] {
+  color: inherit !important;
 }
 
 .f-visual-editor.is-empty:before {
@@ -3360,7 +3523,7 @@ label.f-file-btn:hover {
 .f-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(3, 7, 18, 0.55);
+  background: rgba(0, 0, 0, 0.32);
   display: grid;
   place-items: center;
   z-index: 50;
@@ -3374,15 +3537,15 @@ label.f-file-btn:hover {
 }
 
 .f-modal {
-  background: var(--f-card);
-  border: 1px solid var(--f-blue-border);
-  border-radius: 14px;
+  background: var(--f-chrome-surface, var(--f-card));
+  border: 1px solid var(--f-chrome-border, var(--f-blue-border));
+  border-radius: var(--f-chrome-radius, 14px);
   width: min(720px, 100%);
   max-height: min(80vh, 640px);
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  box-shadow: var(--f-shadow);
+  box-shadow: var(--f-elev-3, var(--f-shadow));
 }
 
 .f-modal-head {
@@ -3556,10 +3719,10 @@ label.f-file-btn:hover {
   position: absolute;
   right: 12px;
   top: 48px;
-  background: var(--f-card);
-  border: 1px solid var(--f-blue-border);
-  border-radius: 10px;
-  box-shadow: var(--f-shadow);
+  background: var(--f-chrome-surface, var(--f-card));
+  border: 1px solid var(--f-chrome-border, var(--f-blue-border));
+  border-radius: var(--f-chrome-radius-sm, 10px);
+  box-shadow: var(--f-elev-2);
   min-width: 240px;
   padding: 6px 0;
   z-index: 40;

@@ -116,16 +116,28 @@ export default function VisualTextEditor({
   };
 
   const applyColor = (kind) => {
-    run((el) => {
-      const color =
-        kind === 'accent'
-          ? cssVar(el, '--f-blue', '#5b8ab0')
-          : kind === 'gold'
-            ? cssVar(el, '--f-label', '#c4a35a')
-            : kind === 'muted'
-              ? cssVar(el, '--f-muted', '#6b7280')
-              : cssVar(el, '--f-text', '#2c3546');
-      document.execCommand('foreColor', false, color);
+    run(() => {
+      const classMap = {
+        ink: 'f-rt-ink',
+        accent: 'f-rt-accent',
+        gold: 'f-rt-gold',
+        muted: 'f-rt-muted',
+      };
+      const cls = classMap[kind] || 'f-rt-ink';
+      const sel = window.getSelection();
+      if (!sel?.rangeCount) return;
+      const range = sel.getRangeAt(0);
+      if (range.collapsed) {
+        document.execCommand('insertHTML', false, `<span class="${cls}">\u200b</span>`);
+        return;
+      }
+      const span = document.createElement('span');
+      span.className = cls;
+      try {
+        range.surroundContents(span);
+      } catch {
+        document.execCommand('insertHTML', false, `<span class="${cls}">${range.toString()}</span>`);
+      }
     });
   };
 
@@ -290,7 +302,7 @@ export default function VisualTextEditor({
       {linkOpen ? (
         <div className="f-link-pop">
           <p className="f-link-pop-hint">
-            Highlight words, then paste a URL — or type link text below if nothing is selected.
+            Highlight words, then paste a URL, or type link text below if nothing is selected.
           </p>
           <input
             className="f-link-pop-input"

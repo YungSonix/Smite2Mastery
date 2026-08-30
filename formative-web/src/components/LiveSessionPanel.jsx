@@ -129,7 +129,7 @@ export default function LiveSessionPanel({ session, sessions, questions, onClose
         </div>
       ) : (
         <div className="f-live-current is-done" role="status">
-          All visible questions have an answer in their draft — they may be reviewing or submitting.
+          All visible questions have an answer in their draft. They may be reviewing or submitting.
         </div>
       )}
 

@@ -192,7 +192,11 @@ module.exports = async function handler(req, res) {
     }
 
     const lite = saved.data || existing;
-    if (lite && (leftPage || sessionDraftDue({ ...existing, ...row, ...lite }, quiz.settings))) {
+    const timeLimitSec = Math.max(0, Number(quiz.settings?.time_limit_seconds) || 0);
+    const shouldFlush =
+      sessionDraftDue({ ...existing, ...row, ...lite }, quiz.settings) ||
+      (timeLimitSec > 0 && leftPage);
+    if (lite && shouldFlush) {
       await flushSessionIfDue(sb, quiz, lite).catch((err) =>
         console.warn('trivia flush after presence', err.message)
       );

@@ -142,8 +142,6 @@ function filterStyle(style) {
     if (!val || /expression|javascript|url\s*\(/i.test(val)) continue;
     if (
       [
-        'color',
-        'background-color',
         'font-size',
         'font-weight',
         'font-style',
@@ -207,7 +205,14 @@ export function sanitizeRichHtml(html) {
           else child.removeAttribute('style');
           return;
         }
-        if (n === 'class' && /\bf-md-h\b|\bf-spoiler\b/.test(attr.value)) return;
+        if (n === 'class' && /\bf-md-h\b|\bf-spoiler\b|\bf-rt-(?:ink|accent|gold|muted)\b/.test(attr.value)) return;
+        if (tag === 'FONT') {
+          child.removeAttribute('color');
+          if (!child.getAttribute('style') && !child.getAttribute('face') && !child.getAttribute('size')) {
+            unwrap(child);
+          }
+          return;
+        }
         child.removeAttribute(attr.name);
       });
     });
@@ -282,23 +287,19 @@ export function htmlToPlainText(raw) {
 }
 
 /**
- * Copy bold / color / size / emphasis from a styled host prompt onto new prompt text.
- * Used when adding questions or Change/Random replaces the wording.
+ * Copy bold / size / emphasis from a styled host prompt onto new prompt text.
+ * Color is intentionally omitted so theme changes do not freeze wrong ink.
  */
 export function applyPromptTextStyle(styleFromPrompt, newPrompt) {
   const from = String(styleFromPrompt || '');
   let next = String(newPrompt || '');
   if (!next.trim()) return next;
-  // Already richly styled — keep as-is.
   if (looksLikeHtml(next) && /<(?:strong|b|em|i|u|span)\b/i.test(next) && /style=|<(?:strong|b)\b/i.test(next)) {
     return next;
   }
   if (looksLikeHtml(next)) next = htmlToPlainText(next);
   if (!looksLikeHtml(from)) return next;
 
-  const color =
-    from.match(/color:\s*([^;:"']+)/i)?.[1]?.trim() ||
-    from.match(/<font\b[^>]*\bcolor=["']?([^"'>\s]+)/i)?.[1]?.trim();
   const fontSize = from.match(/font-size:\s*([^;:"']+)/i)?.[1]?.trim();
   const align = from.match(/text-align:\s*([^;:"']+)/i)?.[1]?.trim();
   const bold = /<(?:strong|b)\b/i.test(from) || /font-weight:\s*(bold|[6-9]00)/i.test(from);
@@ -307,7 +308,6 @@ export function applyPromptTextStyle(styleFromPrompt, newPrompt) {
 
   let inner = escapeHtml(next);
   const spanStyles = [];
-  if (color) spanStyles.push(`color: ${color}`);
   if (fontSize) spanStyles.push(`font-size: ${fontSize}`);
   if (spanStyles.length) inner = `<span style="${spanStyles.join('; ')}">${inner}</span>`;
   if (underline) inner = `<u>${inner}</u>`;

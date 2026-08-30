@@ -350,7 +350,7 @@ export default function StudentResponsePanel({
             </span>
             Possible alt account
             {integrity.peers?.length
-              ? ` — also ${integrity.peers.map((p) => p.discord || p.ingame).filter(Boolean).join(', ')}`
+              ? `, also ${integrity.peers.map((p) => p.discord || p.ingame).filter(Boolean).join(', ')}`
               : ''}
           </span>
         ) : null}
@@ -376,7 +376,7 @@ export default function StudentResponsePanel({
               </span>
             ) : (
               <span className="f-student-panel-took f-muted" title="Older takes have no finish clock">
-                · Took —
+                · Took n/a
               </span>
             )}
           </div>

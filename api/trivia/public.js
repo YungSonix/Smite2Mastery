@@ -7,6 +7,32 @@ const {
   rateLimit,
   isValidQuizSlug,
 } = require('../../lib/server/triviaApi');
+const { responseIsTestRow, resolveTestTakeMode } = require('../../lib/server/triviaTestTake');
+
+async function loadSubmissionStatus(sb, quiz, discord, { isTestTake = false } = {}) {
+  if (!discord || discord.length < 2) return null;
+  if (Boolean(quiz.settings?.allow_retake)) return null;
+  const { data: rows } = await sb
+    .from('trivia_responses')
+    .select('id, score, max_score, submitted_at, answers')
+    .eq('quiz_id', quiz.id)
+    .ilike('discord_username', discord);
+  const prior = (rows || []).find((r) => responseIsTestRow(r) === Boolean(isTestTake));
+  if (!prior) return null;
+  const out = {
+    already_submitted: true,
+    response_id: prior.id,
+    submitted_at: prior.submitted_at,
+  };
+  if (Boolean(quiz.settings?.show_scores)) {
+    const max = Number(prior.max_score) || 0;
+    const score = Number(prior.score) || 0;
+    out.score = score;
+    out.max_score = max;
+    out.percent = max > 0 ? Math.round((score / max) * 100) : 0;
+  }
+  return out;
+}
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'GET') return send(res, 405, { error: 'Method not allowed' });
@@ -15,6 +41,8 @@ module.exports = async function handler(req, res) {
     const url = new URL(req.url, 'http://localhost');
     const slug = String(url.searchParams.get('slug') || '').trim().toLowerCase();
     const discord = String(url.searchParams.get('discord') || '').trim();
+    const testToken = String(url.searchParams.get('token') || '').trim();
+    const takeMode = String(url.searchParams.get('take') || '').toLowerCase();
     const sb = supabaseAdmin();
 
     // Latest assigned quiz for More → Scroll Trivia card (no slug).
@@ -63,12 +91,14 @@ module.exports = async function handler(req, res) {
       if (session?.variant_map && typeof session.variant_map === 'object' && Object.keys(session.variant_map).length) {
         sessionMap = session.variant_map;
       }
-      const { data: last } = await sb
+      const isTestTake =
+        takeMode === 'test' && resolveTestTakeMode(quiz.settings, testToken).isTestTake;
+      const { data: lastRows } = await sb
         .from('trivia_responses')
         .select('answers')
         .eq('quiz_id', quiz.id)
-        .ilike('discord_username', discord)
-        .maybeSingle();
+        .ilike('discord_username', discord);
+      const last = (lastRows || []).find((r) => responseIsTestRow(r) === isTestTake);
       const nested = last?.answers?.__variant_map;
       if (nested && typeof nested === 'object') previousMap = nested;
 
@@ -82,7 +112,22 @@ module.exports = async function handler(req, res) {
         const applied = applyVariant(q, map[q.id] ?? 0);
         return sanitizeQuestionForPublic(applied);
       });
-      return send(res, 200, { quiz, questions: resolved, variant_map: map });
+      const submission = await loadSubmissionStatus(sb, quiz, discord, {
+        isTestTake:
+          takeMode === 'test' && resolveTestTakeMode(quiz.settings, testToken).isTestTake,
+      });
+      const testTake =
+        takeMode === 'test' && testToken
+          ? resolveTestTakeMode(quiz.settings, testToken)
+          : { isTestTake: false, valid: true };
+      return send(res, 200, {
+        quiz,
+        questions: resolved,
+        variant_map: map,
+        submission,
+        test_take: testTake.isTestTake,
+        test_take_valid: testTake.valid,
+      });
     }
 
     return send(res, 200, {

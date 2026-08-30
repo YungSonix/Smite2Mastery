@@ -36,6 +36,8 @@
     "trivia:load-test": "node scripts/trivia-load-test.mjs",
     "trivia:payload-check": "node scripts/trivia-payload-check.mjs",
     "trivia:smoke": "node scripts/trivia-prod-smoke.mjs",
+    "trivia:submit-sanity": "node scripts/trivia-submit-sanity.mjs",
+    "trivia:regrade-quiz": "node scripts/trivia-regrade-quiz.mjs",
     "trivia:presence-soak": "node scripts/trivia-presence-soak.mjs",
     "trivia:device-sims": "node scripts/formative-device-sims.mjs",
     "formative:trivia:device-sims": "node scripts/formative-device-sims.mjs",

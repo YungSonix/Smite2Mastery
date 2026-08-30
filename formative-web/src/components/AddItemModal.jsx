@@ -213,7 +213,7 @@ export default function AddItemModal({ open, onClose, onAdd }) {
           <aside className="f-add-side">
             <h4>For you & helpers</h4>
             <p>
-              All types are free on your host site. Guests only see the take link — never this
+              All types are free on your host site. Guests only see the take link, never this
               editor, Responses, or Analytics.
             </p>
             <p style={{ marginTop: 10 }}>

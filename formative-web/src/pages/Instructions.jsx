@@ -61,7 +61,7 @@ export default function Instructions() {
         </div>
       </div>
       <p className="f-lede">
-        Private contest host for you and a few helpers. Players only get the take link — never
+        Private contest host for you and a few helpers. Players only get the take link, never the
         editor, Responses, Analytics, or IP data.
       </p>
       <ol className="f-steps">

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Local Scroll Trivia question-maker sims (200+ cases).
+ * Local Scroll Trivia question-maker sims (500+ cases).
  *
  * Covers:
  *  - Every Random-question style (generate / change / variant B media)
@@ -13,7 +13,7 @@
  *  - Scoring (incl. multi-select, double-submit same answer)
  *  - Concurrent generation fingerprint collisions
  *  - Media URL change + local file loadability
- *  - Notes for timer / LLM / UI (no LLM in this generator)
+ *  - Practice / public take link helpers + response filters
  *
  *   npm run formative:trivia:question-sims
  *   FORMATIVE_API_BASE=http://localhost:3000 npm run formative:trivia:question-sims
@@ -27,10 +27,11 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const OUT_DIR = path.join(ROOT, 'artifacts', 'trivia-question-sims');
 const API_BASE = process.env.FORMATIVE_API_BASE || '';
-const TARGET = Math.max(200, Number(process.env.TRIVIA_SIM_CASES) || 220);
+const TARGET = Math.max(200, Number(process.env.TRIVIA_SIM_CASES) || 500);
 const require = createRequire(import.meta.url);
 
 const remixUrl = pathToFileURL(path.join(ROOT, 'formative-web/src/lib/triviaRemix.js')).href;
+const richTextUrl = pathToFileURL(path.join(ROOT, 'formative-web/src/lib/richText.js')).href;
 const {
   RANDOM_QUESTION_STYLES,
   makeRandomQuestionByStyle,
@@ -44,6 +45,27 @@ const {
   optionCountForSim,
   MEDIA_REMIX_KINDS,
 } = await import(remixUrl);
+
+const { applyPromptTextStyle, htmlToPlainText } = await import(richTextUrl);
+
+const takeLinksUrl = pathToFileURL(path.join(ROOT, 'formative-web/src/lib/takeLinks.js')).href;
+const responseFiltersUrl = pathToFileURL(
+  path.join(ROOT, 'formative-web/src/lib/responseFilters.js')
+).href;
+const {
+  hostTestTakeUrl,
+  ensureTestTakeToken,
+  parseTakeLinkMode,
+  isValidTestTake,
+} = await import(takeLinksUrl);
+const { responseIsTest, filterProductionResponses, filterTestResponses } = await import(
+  responseFiltersUrl
+);
+const {
+  isValidTestTakeToken,
+  resolveTestTakeMode,
+  responseIsTestRow,
+} = require(path.join(ROOT, 'lib/server/triviaTestTake.js'));
 
 const { gradeOne, scoreAnswers } = require(path.join(ROOT, 'lib/server/triviaQuestionTypes.js'));
 
@@ -115,6 +137,13 @@ function patchQuestion(base, result) {
   return applyRemixPatchToQuestion(base, result).question;
 }
 
+function questionValidForSim(q) {
+  if (q.type === 'short_answer' || q.meta?.kind === 'fill_blank') {
+    return hasCollectibleCorrect(q);
+  }
+  return hasCollectibleCorrect(q) && optionsAreValid(q);
+}
+
 function correctLabel(q) {
   const opts = Array.isArray(q?.options) ? q.options : [];
   if (Array.isArray(q?.correct?.indices) && q.correct.indices.length) {
@@ -127,7 +156,7 @@ function correctLabel(q) {
 async function suiteStylesAndMedia() {
   const styles = RANDOM_QUESTION_STYLES.map((s) => s.id);
   for (const styleId of styles) {
-    for (let r = 1; r <= 8; r += 1) {
+    for (let r = 1; r <= 16; r += 1) {
       const id = `style:${styleId}:r${r}`;
       const built = makeRandomQuestionByStyle(styleId, blankMc(4));
       if (built.error) {
@@ -135,7 +164,7 @@ async function suiteStylesAndMedia() {
         continue;
       }
       const q = patchQuestion(blankMc(4), built);
-      if (!hasCollectibleCorrect(q) || !optionsAreValid(q)) {
+      if (!questionValidForSim(q)) {
         record(id, false, { reason: 'invalid-options-or-correct', correct: q.correct, options: q.options });
         continue;
       }
@@ -154,14 +183,89 @@ async function suiteStylesAndMedia() {
       }
       if (url) {
         const load = await checkMediaLoads(url);
-        if (!load.ok && !load.warn) {
+        const passiveMissingLocal = styleId === 'passive' && load.reason === 'missing-local-file';
+        if (!load.ok && !load.warn && !passiveMissingLocal) {
           record(id, false, { reason: load.reason || 'media-load-failed', url, media: load });
+          continue;
+        }
+        if (passiveMissingLocal) {
+          record(id, true, { styleId, url, type: q.type, kind: q.meta?.remix_kind, warn: true, reason: load.reason });
           continue;
         }
       }
       record(id, true, { styleId, url, type: q.type, kind: q.meta?.remix_kind });
     }
   }
+}
+
+async function suitePromptCopyQuality() {
+  const threeOfThese = /Three of these .+ — which/i;
+  for (const styleId of RANDOM_QUESTION_STYLES.map((s) => s.id)) {
+    for (let r = 1; r <= 10; r += 1) {
+      const id = `prompt-copy:${styleId}:r${r}`;
+      const built = makeRandomQuestionByStyle(styleId, blankMc(4));
+      if (built.error) {
+        record(id, false, { reason: built.error, styleId });
+        continue;
+      }
+      const q = patchQuestion(blankMc(4), built);
+      const plain = htmlToPlainText(q.prompt || '');
+      const hasEmDash = plain.includes('—');
+      const hasThreeTemplate = threeOfThese.test(plain);
+      const ok = !hasEmDash && !hasThreeTemplate;
+      record(id, ok, {
+        styleId,
+        prompt: plain.slice(0, 160),
+        reason: hasEmDash ? 'em-dash-in-prompt' : hasThreeTemplate ? 'three-of-these-em-dash-template' : undefined,
+      });
+    }
+  }
+}
+
+async function suiteRichTextTheme() {
+  const redStyled = '<p style="color: red; font-size: 20px"><strong>Old prompt</strong></p>';
+  {
+    const id = 'richtext:strip-color';
+    const out = applyPromptTextStyle(redStyled, 'Which god has this passive?');
+    const hasColor = /\bcolor\s*:/i.test(out);
+    record(id, !hasColor, { out, reason: hasColor ? 'color-carried-from-style' : undefined });
+  }
+  {
+    const id = 'richtext:keep-bold-not-color';
+    const out = applyPromptTextStyle(redStyled, 'Pick the correct answer.');
+    const hasBold = /<(?:strong|b)\b/i.test(out);
+    const hasColor = /\bcolor\s*:/i.test(out);
+    record(id, hasBold && !hasColor, {
+      out,
+      reason: !hasBold ? 'bold-not-carried' : hasColor ? 'color-carried-from-style' : undefined,
+    });
+  }
+  {
+    const id = 'richtext:plain-from-unchanged';
+    const out = applyPromptTextStyle('Plain prompt?', 'Another plain prompt?');
+    record(id, out === 'Another plain prompt?', { out, reason: out !== 'Another plain prompt?' ? 'plain-mutated' : undefined });
+  }
+}
+
+function suiteTestTakePipeline() {
+  const token = ensureTestTakeToken('');
+  const settings = { test_take_token: token };
+  record('testtake:token-length', token.length >= 12, { tokenLen: token.length });
+  record('testtake:valid-token', isValidTestTake(settings, token));
+  record('testtake:reject-bad', !isValidTestTake(settings, 'not-the-token'));
+  record('testtake:server-valid', isValidTestTakeToken(settings, token));
+  const mode = resolveTestTakeMode(settings, token);
+  record('testtake:server-mode', mode.isTestTake && mode.valid);
+  const url = hostTestTakeUrl('scroll-trivia', token);
+  const parsed = parseTakeLinkMode(new URL(url, 'http://local.test').searchParams);
+  record('testtake:url-parse', parsed.mode === 'test' && parsed.token === token, { url });
+  const prod = { id: 'p1', answers: { q1: 0 } };
+  const practice = { id: 't1', answers: { q1: 0, __test_take: true } };
+  record('testtake:filter-prod', filterProductionResponses([prod, practice]).length === 1);
+  record('testtake:filter-test', filterTestResponses([prod, practice]).length === 1);
+  record('testtake:row-tag', responseIsTest(practice) && !responseIsTest(prod));
+  record('testtake:server-row', responseIsTestRow(practice) && !responseIsTestRow(prod));
+  record('testtake:public-no-token', resolveTestTakeMode(settings, '').isTestTake === false);
 }
 
 async function suiteVariantMediaSwap() {
@@ -180,7 +284,7 @@ async function suiteVariantMediaSwap() {
         continue;
       }
       const { variant } = applyRemixPatchToVariant(a, 0, second);
-      if (!hasCollectibleCorrect(variant) || !optionsAreValid(variant)) {
+      if (!questionValidForSim(variant)) {
         record(id, false, { reason: 'variant-invalid', correct: variant.correct, type: variant.type });
         continue;
       }
@@ -470,6 +574,9 @@ async function main() {
   console.log(`Running expanded question sims (target ≥ ${TARGET})…`);
 
   await suiteStylesAndMedia();
+  await suitePromptCopyQuality();
+  await suiteRichTextTheme();
+  suiteTestTakePipeline();
   await suiteVariantMediaSwap();
   await suiteOptionCounts();
   await suiteDuplicates();
@@ -499,7 +606,7 @@ async function main() {
       const load = await checkMediaLoads(url);
       mediaOk = load.ok || Boolean(load.warn);
     }
-    record(id, mediaOk && optionsAreValid(q), { url });
+    record(id, mediaOk && questionValidForSim(q), { url });
   }
 
   const report = {

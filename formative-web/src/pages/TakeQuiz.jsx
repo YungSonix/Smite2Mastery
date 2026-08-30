@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import RichText from '../components/RichText';
 import MediaStack from '../components/MediaStack';
 import { submitTrivia, requestTriviaHint } from '../lib/api';
@@ -28,6 +28,7 @@ import {
   timerFloatClassName,
 } from '../lib/quizTimeWarnings';
 import { LIFELINES_PER_ATTEMPT, totalLifelinesUsed, lifelineMultiplier } from '../lib/triviaHints';
+import { parseTakeLinkMode } from '../lib/takeLinks';
 
 function createTakeSessionToken() {
   try {
@@ -179,6 +180,23 @@ function DrawingPad({ value, onChange }) {
   );
 }
 
+function applySubmissionResult(data, setResult, clearSlug) {
+  if (!data?.already_submitted && !data?.alreadySubmitted && !data?.ok) return false;
+  const payload = {
+    ok: true,
+    alreadySubmitted: Boolean(data.already_submitted || data.alreadySubmitted),
+    responseId: data.response_id || data.responseId,
+  };
+  if (data.score != null) {
+    payload.score = data.score;
+    payload.maxScore = data.max_score ?? data.maxScore;
+    payload.percent = data.percent;
+  }
+  clearTriviaProgress(clearSlug);
+  setResult(payload);
+  return true;
+}
+
 function isGate(q) {
   return Boolean(q?.meta?.is_discord_gate || q?.meta?.is_ingame_gate);
 }
@@ -213,6 +231,10 @@ function isAnswered(q, answers) {
 
 export default function TakeQuiz() {
   const { slug } = useParams();
+  const [searchParams] = useSearchParams();
+  const takeLink = useMemo(() => parseTakeLinkMode(searchParams), [searchParams]);
+  const [isPracticeTake, setIsPracticeTake] = useState(false);
+  const [practiceLinkInvalid, setPracticeLinkInvalid] = useState(false);
   const [quiz, setQuiz] = useState(null);
   const [questions, setQuestions] = useState([]);
   const [discord, setDiscord] = useState('');
@@ -248,15 +270,32 @@ export default function TakeQuiz() {
       try {
         const saved = loadTriviaProgress(slug);
         const discordQ = saved?.discord ? `&discord=${encodeURIComponent(saved.discord)}` : '';
-        const res = await fetch(`/api/trivia/public?slug=${encodeURIComponent(slug)}${discordQ}`, {
-          cache: 'no-store',
-        });
+        const takeQ =
+          takeLink.mode === 'test' && takeLink.token
+            ? `&take=test&token=${encodeURIComponent(takeLink.token)}`
+            : '';
+        const res = await fetch(
+          `/api/trivia/public?slug=${encodeURIComponent(slug)}${discordQ}${takeQ}`,
+          {
+            cache: 'no-store',
+          }
+        );
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Failed to load');
         if (!alive) return;
+        if (takeLink.mode === 'test' && takeLink.token && data.test_take_valid === false) {
+          setPracticeLinkInvalid(true);
+        }
+        setIsPracticeTake(Boolean(data.test_take));
         setQuiz(data.quiz);
         setQuestions(data.questions || []);
         if (data.variant_map) setVariantMap(data.variant_map);
+        if (data.submission?.already_submitted) {
+          if (saved?.discord) setDiscord(String(saved.discord));
+          if (saved?.ingame) setIngame(String(saved.ingame));
+          applySubmissionResult(data.submission, setResult, slug);
+          return;
+        }
         if (saved && !restoredRef.current) {
           restoredRef.current = true;
           if (saved.discord) setDiscord(String(saved.discord));
@@ -287,7 +326,7 @@ export default function TakeQuiz() {
     return () => {
       alive = false;
     };
-  }, [slug]);
+  }, [slug, takeLink.mode, takeLink.token]);
 
   // After Discord is entered, lock in that player's question variants.
   useEffect(() => {
@@ -296,14 +335,21 @@ export default function TakeQuiz() {
     let alive = true;
     const t = setTimeout(async () => {
       try {
+        const takeQ =
+          takeLink.mode === 'test' && takeLink.token
+            ? `&take=test&token=${encodeURIComponent(takeLink.token)}`
+            : '';
         const res = await fetch(
-          `/api/trivia/public?slug=${encodeURIComponent(slug)}&discord=${encodeURIComponent(name)}`,
+          `/api/trivia/public?slug=${encodeURIComponent(slug)}&discord=${encodeURIComponent(name)}${takeQ}`,
           { cache: 'no-store' }
         );
         const data = await res.json();
         if (!res.ok || !alive) return;
         if (data.questions) setQuestions(data.questions);
         if (data.variant_map) setVariantMap(data.variant_map);
+        if (data.submission?.already_submitted) {
+          applySubmissionResult(data.submission, setResult, slug);
+        }
       } catch {
         /* keep current questions */
       }
@@ -312,7 +358,7 @@ export default function TakeQuiz() {
       alive = false;
       clearTimeout(t);
     };
-  }, [slug, discord, startedAt]);
+  }, [slug, discord, startedAt, takeLink.mode, takeLink.token]);
 
   // Autosave progress for tab reopen.
   useEffect(() => {
@@ -384,6 +430,7 @@ export default function TakeQuiz() {
     variantMap,
     startedAt,
     takeSessionToken: takeSessionTokenRef.current,
+    testTakeToken: isPracticeTake && takeLink.token ? takeLink.token : '',
   };
 
   const lifelinesLeft = Math.max(0, LIFELINES_PER_ATTEMPT - totalLifelinesUsed(hintCounts));
@@ -608,6 +655,7 @@ export default function TakeQuiz() {
           discord_username: discordName,
           ingame_name: ingameName,
           take_session_token: p.takeSessionToken || takeSessionTokenRef.current,
+          test_take_token: p.testTakeToken || undefined,
           answers: p.answers,
           variant_map: p.variantMap,
           force_timeout: Boolean(opts.force),
@@ -616,9 +664,31 @@ export default function TakeQuiz() {
       );
       clearTriviaProgress(p.slug);
       resultRef.current = data || { ok: true };
+      submittingRef.current = true;
       if (!opts.keepalive) setResult(data);
       else setResult(data || { ok: true });
     } catch (err) {
+      if (err.status === 409 && /already submitted/i.test(String(err.message || ''))) {
+        try {
+          const takeQ =
+            takeLink.mode === 'test' && takeLink.token
+              ? `&take=test&token=${encodeURIComponent(takeLink.token)}`
+              : '';
+          const res = await fetch(
+            `/api/trivia/public?slug=${encodeURIComponent(p.slug)}&discord=${encodeURIComponent(discordName)}${takeQ}`,
+            { cache: 'no-store' }
+          );
+          const statusData = await res.json();
+          if (statusData.submission?.already_submitted) {
+            applySubmissionResult(statusData.submission, setResult, p.slug);
+            resultRef.current = { ok: true, alreadySubmitted: true };
+            submittingRef.current = true;
+            return;
+          }
+        } catch {
+          /* fall through */
+        }
+      }
       setError(humanizeQuizError(err.message) || 'Submit failed');
       submittingRef.current = false;
     } finally {
@@ -699,16 +769,29 @@ export default function TakeQuiz() {
     );
   }
 
+  if (practiceLinkInvalid) {
+    return (
+      <div className="f-take">
+        <div className="f-take-shell">
+          <p className="f-error">
+            This practice link is invalid or expired. Open Assign on the host editor and copy the
+            current host practice link.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   const theme = quizThemeProps(settings);
 
   if (result) {
-    const showScores = Boolean(quiz.settings?.show_scores);
+    const showScores = Boolean(quiz.settings?.show_scores) && result.score != null;
     return (
       <div className={`f-take ${theme.className}`} style={theme.style}>
         <div className="f-take-shell">
           <div className="f-success-card f-fade-up">
             <p className="f-kicker">Scroll Trivia</p>
-            <h1>You're in</h1>
+            <h1>{result.alreadySubmitted ? 'Already submitted' : "You're in"}</h1>
             <p>
               Thanks, <strong>{discord}</strong>
               {ingame ? (
@@ -717,9 +800,14 @@ export default function TakeQuiz() {
                   (<strong>{ingame}</strong>)
                 </>
               ) : null}
-              . Your answers were submitted.
+              .{' '}
+              {result.alreadySubmitted
+                ? 'We already have your answers for this quiz. No need to submit again.'
+                : isPracticeTake
+                  ? 'Practice run recorded. This does not count toward the live contest.'
+                  : 'Your answers were submitted.'}
             </p>
-            {showScores && result.score != null ? (
+            {showScores ? (
               <p className="f-muted" style={{ marginBottom: 0 }}>
                 Score{' '}
                 <strong>
@@ -775,7 +863,14 @@ export default function TakeQuiz() {
 
         {resumed ? (
           <div className="f-notice f-fade-up" role="status">
-            Welcome back — your answers were restored from this browser.
+            Welcome back. Your answers were restored from this browser.
+          </div>
+        ) : null}
+
+        {isPracticeTake ? (
+          <div className="f-notice f-practice-take f-fade-up" role="status">
+            <strong>Host practice run.</strong> Your submission is tagged and hidden from live
+            Responses until the host turns on practice takes.
           </div>
         ) : null}
 
@@ -804,7 +899,7 @@ export default function TakeQuiz() {
             {formatUnlockCountdown(windowState.opensAt, now)
               ? ` ${formatUnlockCountdown(windowState.opensAt, now)}.`
               : ''}{' '}
-            You can read the rules now — Start unlocks then.
+            You can read the rules now. Start unlocks then.
           </div>
         ) : null}
         {windowState.status === 'closed' ? (
@@ -932,7 +1027,7 @@ export default function TakeQuiz() {
                   : windowState.status === 'closed'
                     ? 'Quiz closed'
                     : timed
-                      ? `Next — start ${Math.round(timeLimitSec / 60)}-minute quiz`
+                      ? `Next: start ${Math.round(timeLimitSec / 60)}-minute quiz`
                       : 'Next'}
               </button>
             </section>
@@ -1280,7 +1375,7 @@ export default function TakeQuiz() {
                 <li key={item.id}>
                   <button type="button" className="f-missing-jump" onClick={() => jumpToQuestion(item.id)}>
                     Question {item.num}
-                    {item.preview ? ` — ${item.preview.slice(0, 80)}${item.preview.length > 80 ? '…' : ''}` : ''}
+                    {item.preview ? `: ${item.preview.slice(0, 80)}${item.preview.length > 80 ? '…' : ''}` : ''}
                   </button>
                 </li>
               ))}

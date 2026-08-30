@@ -108,7 +108,7 @@ function PreviewQuestionCard({ q, idx, variantIndex, onVariantChange }) {
       </div>
       {count > 1 ? (
         <p className="f-muted f-preview-variant-note">
-          Players with alternates see one randomized version — switch above to preview each wording.
+          Players with alternates see one randomized version. Switch above to preview each wording.
         </p>
       ) : null}
       {promptPlain(displayQ.prompt) ? (
@@ -234,7 +234,7 @@ export default function HostPreview() {
         <Link className="f-icon-btn" to={activityHref(quiz)} aria-label="Back to editor" title="Back to editor">
           ←
         </Link>
-        <div className="f-topbar-title">{quiz.title || 'Untitled'} — Preview</div>
+        <div className="f-topbar-title">{quiz.title || 'Untitled'} · Preview</div>
         <div className="f-topbar-actions">
           {variantableCount > 0 ? (
             <>
@@ -256,9 +256,9 @@ export default function HostPreview() {
       </header>
 
       <div className="f-host-preview-banner">
-        Host preview — all questions and correct answers. This is not a timed take and does not record a response.
+        Host preview. All questions and correct answers. This is not a timed take and does not record a response.
         {variantableCount > 0
-          ? ` ${variantableCount} question${variantableCount === 1 ? '' : 's'} have alternate versions — use the version controls on each card.`
+          ? ` ${variantableCount} question${variantableCount === 1 ? '' : 's'} have alternate versions. Use the version controls on each card.`
           : ''}
       </div>
 

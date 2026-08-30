@@ -39,7 +39,7 @@ export default function SkinCropThumb({ src, seed = 'skin' }) {
           ) ? (
             <>
               {' '}
-              — skin art loads from the GitHub <code>assets</code> branch; check network or path
+              . Skin art loads from the GitHub <code>assets</code> branch; check network or path
             </>
           ) : null}
         </p>

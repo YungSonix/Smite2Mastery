@@ -983,8 +983,8 @@ export default function QuestionCard({
           </div>
           <p className="f-pick-mode-hint">
             {isMulti
-              ? 'Checkboxes — mark every correct answer.'
-              : 'Circles — mark the one correct answer.'}
+              ? 'Checkboxes: mark every correct answer.'
+              : 'Circles: mark the one correct answer.'}
           </p>
         </div>
       ) : q.type === 'true_false' ? (
@@ -1316,7 +1316,7 @@ export default function QuestionCard({
       {q.type === 'matching' ? (
         <div className="f-match-editor">
           <p className="f-muted" style={{ fontSize: 12, margin: '10px 0 6px' }}>
-            Prompts on the left. Correct answer(s) on the right — comma-separate if more than one is
+            Prompts on the left. Correct answer(s) on the right. Comma-separate if more than one is
             right. Extra answers below have no prompt; players still see them mixed in.
           </p>
           {matchRows.map((row, i) => (
@@ -1505,7 +1505,7 @@ export default function QuestionCard({
     supportsVariants && variantTab > 0 ? (
       <div className="f-variant-editor">
         <p className="f-muted" style={{ marginTop: 0, fontSize: 13 }}>
-          Version {variantLetter(variantTab)} — different players may see this wording instead of A.
+          Version {variantLetter(variantTab)}. Different players may see this wording instead of A.
           Keep difficulty similar.
         </p>
         <div className="f-fib-field f-variant-prompt-field">
@@ -1872,7 +1872,7 @@ export default function QuestionCard({
               <>
                 {' '}
                 You are editing Version {variantLetter(variantTab)}. Version A is still the
-                default “Multiple choice question” — put the real prompt and media on A, or on
+                default “Multiple choice question”. Put the real prompt and media on A, or on
                 this version.
               </>
             ) : null}

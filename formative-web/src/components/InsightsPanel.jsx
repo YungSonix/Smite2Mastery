@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import InsightQuestionPreview from './InsightQuestionPreview';
 import { ColumnHistogram, Donut, KpiStrip, NextEventSection, VariantStackChart } from './HostCharts';
 import { promptPlain } from '../lib/promptPlain';
@@ -175,9 +175,9 @@ export default function InsightsPanel({ questions, responses, timeLimitSeconds, 
           <span>
             <strong>
               {flaggedCount} submission{flaggedCount === 1 ? '' : 's'} flagged for review
-            </strong>{' '}
-            — {reviewPairs ? `${reviewPairs} linked pair${reviewPairs === 1 ? '' : 's'}, ` : ''}
-            possible alt accounts. Check the Responses tab before awarding prizes.
+            </strong>
+            {reviewPairs ? ` (${reviewPairs} linked pair${reviewPairs === 1 ? '' : 's'})` : ''}
+            . Possible alt accounts. Check Responses before awarding prizes.
           </span>
         </div>
       ) : null}
@@ -186,7 +186,7 @@ export default function InsightsPanel({ questions, responses, timeLimitSeconds, 
 
       {stats.n > 0 && stats.lowSample ? (
         <p className="f-insights-caption f-muted">
-          Charts stay hidden until {LOW_SAMPLE_SUBMISSIONS} submissions — with {stats.n}, every
+          Charts stay hidden until {LOW_SAMPLE_SUBMISSIONS} submissions. With {stats.n}, every
           percentage below will swing hard as more people play. Read the table as counts, not rates.
         </p>
       ) : null}
@@ -305,7 +305,7 @@ export default function InsightsPanel({ questions, responses, timeLimitSeconds, 
                               }`}
                               style={{ '--v-accent': slot.color }}
                               title={`Version ${slot.letter}: ${pctWithCounts(slot.pct, slot.ok, slot.n)}${
-                                slot.lowSample ? ' — too few takes to trust' : ''
+                                slot.lowSample ? '. Too few takes to trust' : ''
                               }`}
                               onClick={() => openInsightQuestion(q, slot.index)}
                             >
@@ -324,7 +324,7 @@ export default function InsightsPanel({ questions, responses, timeLimitSeconds, 
                   <span className="f-muted">
                     {q.ok}/{q.n}
                   </span>
-                  <span className="f-muted">{q.avgMs != null ? formatDuration(q.avgMs) : '—'}</span>
+                  <span className="f-muted">{q.avgMs != null ? formatDuration(q.avgMs) : 'n/a'}</span>
                 </div>
               </div>
             );

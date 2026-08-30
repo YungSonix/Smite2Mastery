@@ -11,7 +11,7 @@ import StudentResponsePanel from '../components/StudentResponsePanel';
 import LiveSessionPanel from '../components/LiveSessionPanel';
 import QuestionReviewPanel from '../components/QuestionReviewPanel';
 import SortStudentsMenu from '../components/SortStudentsMenu';
-import { hostApi, takeUrl, activityHref, previewUrl } from '../lib/api';
+import { hostApi, activityHref, previewUrl } from '../lib/api';
 import { downloadResponsesCsvFromServer } from '../lib/exportResponses';
 import {
   ASSETS_BRANCH_BANNER_EXAMPLE,
@@ -29,6 +29,7 @@ import { scoredInsightQuestions } from '../lib/triviaInsights';
 import { hasResponseAnswers } from '../lib/formatResponseAnswer';
 import { clearResponsePanelAnchor, setResponsePanelAnchor } from '../lib/responsePanelAnchor';
 import QuizSettingsModal from '../components/QuizSettingsModal';
+import AssignModal from '../components/AssignModal';
 import {
   clearEditorDraft,
   loadEditorDraft,
@@ -38,6 +39,12 @@ import {
 import { localTimeZoneLabel } from '../lib/formatWhen';
 import { searchQuestions } from '../lib/questionSearch';
 import { responseMatchesQuery } from '../lib/responseSearch';
+import { applyHostAssignDefaults } from '../lib/hostAssignDefaults';
+import { publicTakeUrl, hostTestTakeUrl, ensureTestTakeToken } from '../lib/takeLinks';
+import {
+  filterProductionResponses,
+  filterTestResponses,
+} from '../lib/responseFilters';
 
 /** How long a deleted question stays recoverable from the Undo banner. */
 const UNDO_WINDOW_MS = 25000;
@@ -74,64 +81,6 @@ const MORE_ITEMS = [
   { id: 'delete', label: 'Delete quiz', wire: true, danger: true },
 ];
 
-function toLocalInput(iso) {
-  if (!iso) return '';
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return '';
-  const pad = (n) => String(n).padStart(2, '0');
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-}
-
-function fromLocalInput(value) {
-  if (!value) return '';
-  const d = new Date(value);
-  if (Number.isNaN(d.getTime())) return '';
-  return d.toISOString();
-}
-
-function DeferredNumberInput({ value, onCommit, min = 0, step = 1, ...props }) {
-  const [draft, setDraft] = useState(null);
-  const display = draft !== null ? draft : String(value ?? '');
-
-  return (
-    <input
-      type="number"
-      min={min}
-      step={step}
-      value={display}
-      onFocus={() => setDraft(String(value ?? ''))}
-      onChange={(e) => setDraft(e.target.value)}
-      onBlur={() => {
-        const raw = draft ?? String(value ?? '');
-        setDraft(null);
-        const n = Math.max(min, Number(raw) || 0);
-        if (n !== value) onCommit(n);
-      }}
-      {...props}
-    />
-  );
-}
-
-function DeferredDatetimeInput({ isoValue, onCommit }) {
-  const [draft, setDraft] = useState(null);
-  const display = draft !== null ? draft : toLocalInput(isoValue);
-
-  return (
-    <input
-      type="datetime-local"
-      value={display}
-      onFocus={() => setDraft(toLocalInput(isoValue))}
-      onChange={(e) => setDraft(e.target.value)}
-      onBlur={() => {
-        const raw = draft ?? toLocalInput(isoValue);
-        setDraft(null);
-        const iso = fromLocalInput(raw);
-        if (iso !== (isoValue || '')) onCommit(iso);
-      }}
-    />
-  );
-}
-
 export default function Activity() {
   const { quizId } = useParams();
   const [params, setParams] = useSearchParams();
@@ -149,12 +98,14 @@ export default function Activity() {
   const [addOpen, setAddOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
   const [assignOpen, setAssignOpen] = useState(false);
+  const [publishing, setPublishing] = useState(false);
   const [quizSettingsOpen, setQuizSettingsOpen] = useState(false);
   const [selectedResponse, setSelectedResponse] = useState(null);
   const [selectedSession, setSelectedSession] = useState(null);
   const [selectedQuestionId, setSelectedQuestionId] = useState(null);
   const [responseSort, setResponseSort] = useState('submitted_desc');
   const [responseSearch, setResponseSearch] = useState('');
+  const [includeTestTakes, setIncludeTestTakes] = useState(false);
   const [scrollToResponse, setScrollToResponse] = useState(null);
   const [saving, setSaving] = useState(false);
   const [autoSaveHint, setAutoSaveHint] = useState('');
@@ -530,7 +481,7 @@ export default function Activity() {
         if (!alive) return;
         if (result.status === 'fail') {
           setDraftWarning(
-            'Local backup failed — your browser storage is full. Click Save (top right) so the quiz is stored on the server.'
+            'Local backup failed. Your browser storage is full. Click Save (top right) so the quiz is stored on the server.'
           );
         } else if (result.status === 'lite' && !result.idb) {
           setDraftWarning(
@@ -662,7 +613,7 @@ export default function Activity() {
     const label = questionLabel(snapshot);
     const seconds = Math.round(UNDO_WINDOW_MS / 1000);
     const ok = window.confirm(
-      `Delete question ${index + 1}${label ? ` — “${label}”` : ''}?\n\n` +
+      `Delete question ${index + 1}${label ? `: “${label}”` : ''}?\n\n` +
         `You can undo for ${seconds} seconds. Answers students already submitted for it stay ` +
         `in Responses but no longer match a question.`
     );
@@ -782,17 +733,34 @@ export default function Activity() {
     }
   };
 
-  const assign = async () => {
-    if (dirty) {
-      const ok = await saveAll();
-      if (!ok) return;
+  const assign = () => setAssignOpen(true);
+
+  const publishQuiz = async () => {
+    setPublishing(true);
+    setError('');
+    try {
+      const q = quizRef.current;
+      const nextSettings = {
+        ...mergeQuizSettings(q?.settings),
+        show_scores: false,
+        show_answers: false,
+        test_take_token: ensureTestTakeToken(q?.settings?.test_take_token),
+      };
+      const data = await hostApi('/api/trivia/host', {
+        method: 'PUT',
+        body: {
+          action: 'update_quiz',
+          quizId,
+          patch: { is_assigned: true, settings: nextSettings },
+        },
+      });
+      setQuiz(data.quiz);
+    } catch (e) {
+      setError(e.message || 'Publish failed');
+      throw e;
+    } finally {
+      setPublishing(false);
     }
-    const q = quizRef.current;
-    await saveQuizPatch({
-      is_assigned: true,
-      settings: mergeQuizSettings(q?.settings),
-    });
-    setAssignOpen(true);
   };
 
   const onMore = async (id) => {
@@ -820,7 +788,7 @@ export default function Activity() {
     if (id === 'delete') {
       const title = String(quiz?.title || 'this quiz').trim() || 'this quiz';
       const extra = quiz?.is_assigned
-        ? ' This quiz is assigned — take links stop working and all responses are removed.'
+        ? ' This quiz is assigned. Take links stop working and all responses are removed.'
         : ' Questions and responses for it are removed.';
       if (!window.confirm(`Delete “${title}”?${extra}`)) return;
       try {
@@ -905,7 +873,7 @@ export default function Activity() {
     );
   }
 
-  const settings = mergeQuizSettings(quiz?.settings);
+  const settings = applyHostAssignDefaults(mergeQuizSettings(quiz?.settings));
   const assignWindow = quizWindowState(settings);
 
   const patchSettings = (partial) => {
@@ -922,7 +890,17 @@ export default function Activity() {
     if (nextSettings) saveQuizPatch({ settings: nextSettings });
   };
 
-  const link = quiz ? takeUrl(quiz.slug) : '';
+  const patchAssignSettings = (partial) => {
+    patchSettings({ ...partial, show_scores: false, show_answers: false });
+  };
+
+  const link = quiz ? publicTakeUrl(quiz.slug) : '';
+  const testLink = quiz ? hostTestTakeUrl(quiz.slug, settings.test_take_token) : '';
+  const testTakeCount = useMemo(() => filterTestResponses(responses).length, [responses]);
+  const visibleResponses = useMemo(
+    () => (includeTestTakes ? responses : filterProductionResponses(responses)),
+    [responses, includeTestTakes]
+  );
 
   const theme = quizThemeProps(settings);
   return (
@@ -1033,9 +1011,24 @@ export default function Activity() {
           >
             {saving ? 'Saving…' : dirty ? 'Save' : 'Saved'}
           </button>
-          <button type="button" className="f-assign-btn" onClick={assign}>
-            Assign
+          <button
+            type="button"
+            className={`f-assign-btn ${quiz?.is_assigned ? 'is-live' : ''}`}
+            onClick={assign}
+            title={quiz?.is_assigned ? 'Assigned. Open share and schedule' : 'Open assign settings'}
+          >
+            {quiz?.is_assigned ? 'Assigned' : 'Assign'}
           </button>
+          {quiz?.is_assigned ? (
+            <button
+              type="button"
+              className="f-outline-btn f-topbar-copy-link"
+              onClick={() => navigator.clipboard?.writeText(link)}
+              title="Copy take link"
+            >
+              Copy link
+            </button>
+          ) : null}
         </div>
       </header>
 
@@ -1126,7 +1119,7 @@ export default function Activity() {
               <div className="f-undo-row" key={entry.token}>
                 <span className="f-undo-text">
                   Deleted question {entry.index + 1}
-                  {entry.label ? ` — “${entry.label}”` : ''}
+                  {entry.label ? `: “${entry.label}”` : ''}
                 </span>
                 <span className="f-undo-timer">{left}s</span>
                 <button
@@ -1494,18 +1487,34 @@ export default function Activity() {
           <div className="f-responses-main">
             <div className="f-responses-tools">
               <ResponsesStudentSearch
-                responses={responses}
+                responses={visibleResponses}
                 query={responseSearch}
                 onQueryChange={setResponseSearch}
-                totalCount={responses?.length || 0}
+                totalCount={visibleResponses?.length || 0}
                 filteredCount={
                   responseSearch.trim()
-                    ? (responses || []).filter((r) => responseMatchesQuery(r, responseSearch)).length
-                    : responses?.length || 0
+                    ? (visibleResponses || []).filter((r) => responseMatchesQuery(r, responseSearch)).length
+                    : visibleResponses?.length || 0
                 }
                 onPick={(r) => openStudentResponse(r)}
               />
               <div className="f-responses-tools-actions">
+              <label className="f-settings-toggle f-responses-test-toggle" title="Show host practice submissions">
+                <span className="f-settings-toggle-copy">
+                  <strong>Include practice takes</strong>
+                  <small>
+                    {testTakeCount
+                      ? `${testTakeCount} hidden practice submission${testTakeCount === 1 ? '' : 's'}`
+                      : 'No practice submissions yet'}
+                  </small>
+                </span>
+                <input
+                  type="checkbox"
+                  className="f-switch"
+                  checked={includeTestTakes}
+                  onChange={(e) => setIncludeTestTakes(e.target.checked)}
+                />
+              </label>
               <SortStudentsMenu value={responseSort} onChange={setResponseSort} />
               <button type="button" className="f-outline-btn" disabled>
                 Grading method
@@ -1513,7 +1522,7 @@ export default function Activity() {
               <button
                 type="button"
                 className="f-outline-btn"
-                disabled={!responses?.length}
+                disabled={!visibleResponses?.length}
                 title="Download Excel-friendly CSV of all submissions"
                 onClick={async () => {
                   try {
@@ -1532,7 +1541,7 @@ export default function Activity() {
             </div>
             <ResponsesGrid
               questions={questions}
-              responses={responses}
+              responses={visibleResponses}
               sessions={sessions}
               sessionsError={sessionsError}
               sortBy={responseSort}
@@ -1583,7 +1592,7 @@ export default function Activity() {
                 (q) => q.id === selectedQuestionId
               )}
               scoredQuestions={scoredInsightQuestions(questions)}
-              responses={responses}
+              responses={visibleResponses}
               onClose={() => setSelectedQuestionId(null)}
               onSelectQuestion={(q) => setSelectedQuestionId(q.id)}
               onSelectStudent={openStudentResponse}
@@ -1604,7 +1613,7 @@ export default function Activity() {
                   return fromList;
                 })()
               }
-              responses={responses}
+              responses={visibleResponses}
               questions={questions}
               quiz={quiz}
               onClose={() => {
@@ -1666,7 +1675,7 @@ export default function Activity() {
       {tab === 'insights' && (
         <InsightsPanel
           questions={questions}
-          responses={responses}
+          responses={visibleResponses}
           timeLimitSeconds={settings.time_limit_seconds}
           initialPreviewId={insightsPreviewId}
           onJumpToEditor={(id, variantIndex) => {
@@ -1711,153 +1720,19 @@ export default function Activity() {
       ) : null}
 
       {assignOpen ? (
-        <div className="f-overlay" onClick={() => setAssignOpen(false)} role="presentation">
-          <div
-            className="f-modal f-modal-wide"
-            style={{ maxWidth: 640 }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="f-modal-head">
-              <strong>Assign settings</strong>
-              <button type="button" className="f-icon-btn" onClick={() => setAssignOpen(false)}>
-                ✕
-              </button>
-            </div>
-            <div className="f-assign-body">
-              <section className="f-assign-section">
-                <h4>Share link</h4>
-                <p className="f-muted" style={{ marginTop: 0 }}>
-                  Guests open this link, enter Discord + In-Game Name, and submit. Join code:{' '}
-                  <strong>{quiz.join_code}</strong>
-                  {' '}Assigning this quiz unassigns your other quizzes. Same Discord cannot submit
-                  twice unless Total attempts is Unlimited.
-                </p>
-                <input type="text" readOnly value={link} onFocus={(e) => e.target.select()} />
-                <div style={{ display: 'flex', gap: 8, marginTop: 12, flexWrap: 'wrap' }}>
-                  <button
-                    type="button"
-                    className="f-primary-btn"
-                    onClick={() => navigator.clipboard?.writeText(link)}
-                  >
-                    Copy link
-                  </button>
-                  <button
-                    type="button"
-                    className="f-outline-btn"
-                    onClick={() => window.open(link, '_blank')}
-                  >
-                    Open take page
-                  </button>
-                </div>
-                {quiz.is_assigned ? (
-                  <p style={{ color: '#4ade80', fontSize: 13, marginTop: 12 }}>Assigned — link is live.</p>
-                ) : (
-                  <p className="f-muted" style={{ fontSize: 12, marginTop: 12 }}>
-                    Click Assign in the top bar to publish if still a draft.
-                  </p>
-                )}
-              </section>
-
-              <section className="f-assign-section">
-                <h4>Grading and feedback</h4>
-                <label className="f-assign-row">
-                  <span>
-                    Total attempts
-                    <small>How many times the same Discord name can submit</small>
-                  </span>
-                  <select
-                    value={settings.allow_retake ? 'unlimited' : '1'}
-                    onChange={(e) =>
-                      patchSettings({ allow_retake: e.target.value === 'unlimited' })
-                    }
-                  >
-                    <option value="1">1</option>
-                    <option value="unlimited">Unlimited</option>
-                  </select>
-                </label>
-                <label className="f-assign-row">
-                  <span>
-                    After submission
-                    <small>What players see after they submit</small>
-                  </span>
-                  <select
-                    value={settings.after_submission || 'hidden'}
-                    onChange={(e) => patchSettings({ after_submission: e.target.value })}
-                  >
-                    <option value="hidden">Thank-you only</option>
-                    <option value="visible">Keep take page message</option>
-                  </select>
-                </label>
-                <label className="f-assign-row">
-                  <span>
-                    Return scores
-                    <small>
-                      Quiz-wide. Per question: open the question → Settings → Don&apos;t show score
-                    </small>
-                  </span>
-                  <select
-                    value={settings.show_scores ? 'show' : 'hide'}
-                    onChange={(e) => patchSettings({ show_scores: e.target.value === 'show' })}
-                  >
-                    <option value="hide">Don&apos;t show scores</option>
-                    <option value="show">Show scores</option>
-                  </select>
-                </label>
-                <label className="f-assign-row">
-                  <span>
-                    Time limit (minutes)
-                    <small>0 = no timer. Starts when they click Start.</small>
-                  </span>
-                  <DeferredNumberInput
-                    min={0}
-                    step={1}
-                    value={Math.round(Number(settings.time_limit_seconds || 0) / 60) || 0}
-                    onCommit={(minutes) =>
-                      patchSettings({ time_limit_seconds: Math.max(0, minutes) * 60 })
-                    }
-                  />
-                </label>
-                <label className="f-assign-row">
-                  <span>
-                    Opens
-                    <small>
-                      Empty = already open. You&apos;re setting times in{' '}
-                      {localTimeZoneLabel()}. Students see unlock times in their own timezone.
-                    </small>
-                  </span>
-                  <DeferredDatetimeInput
-                    isoValue={settings.opens_at}
-                    onCommit={(iso) => patchSettings({ opens_at: iso })}
-                  />
-                </label>
-                <label className="f-assign-row">
-                  <span>
-                    Closes
-                    <small>Empty = no end.</small>
-                  </span>
-                  <DeferredDatetimeInput
-                    isoValue={settings.closes_at}
-                    onCommit={(iso) => patchSettings({ closes_at: iso })}
-                  />
-                </label>
-                <label className="f-assign-row">
-                  <span>
-                    Return correct answers
-                    <small>Players never receive answer keys on the take page</small>
-                  </span>
-                  <select
-                    value={settings.show_answers ? 'show' : 'hide'}
-                    onChange={(e) => patchSettings({ show_answers: e.target.value === 'show' })}
-                    disabled
-                    title="Answer keys stay host-only"
-                  >
-                    <option value="hide">Don&apos;t show answers</option>
-                  </select>
-                </label>
-              </section>
-            </div>
-          </div>
-        </div>
+        <AssignModal
+          open={assignOpen}
+          onClose={() => setAssignOpen(false)}
+          quiz={quiz}
+          settings={settings}
+          link={link}
+          testLink={testLink}
+          dirty={dirty}
+          publishing={publishing}
+          onSaveFirst={saveAll}
+          onPatchSettings={patchAssignSettings}
+          onPublish={publishQuiz}
+        />
       ) : null}
     </div>
   );

@@ -41,7 +41,7 @@ export function BarChart({
                   <button
                     type="button"
                     className="f-bar-chart-label f-bar-chart-label-btn"
-                    title={r.title || `${label} — click to preview`}
+                    title={r.title || `${label}. Click to preview`}
                     onClick={() => onRowClick(r)}
                   >
                     {label}
@@ -359,7 +359,7 @@ export function NextEventSection({ data, onItemClick, promptText }) {
             ? `Ranked by impact, based on ${submissions} submission${
                 submissions === 1 ? '' : 's'
               }. Questions with fewer than ${minSampleN} takes are left out.`
-            : `Nothing needs changing yet — no question with at least ${minSampleN} takes is too hard, too easy, or unbalanced across versions.`}
+            : `Nothing needs changing yet. No question with at least ${minSampleN} takes is too hard, too easy, or unbalanced across versions.`}
         </p>
       </div>
       {items.length ? (

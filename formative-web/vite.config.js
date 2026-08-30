@@ -1,10 +1,19 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Deployed under /trivia on the same Vercel project as Expo web.
 export default defineConfig({
   plugins: [react()],
   base: '/trivia/',
+  resolve: {
+    alias: {
+      '@repo-lib': path.resolve(__dirname, '../lib'),
+    },
+  },
   build: {
     outDir: 'dist',
     emptyOutDir: true,

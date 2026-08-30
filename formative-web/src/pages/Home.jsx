@@ -41,7 +41,7 @@ export default function Home() {
   const deleteQuiz = async (quiz) => {
     const title = String(quiz?.title || 'this quiz').trim() || 'this quiz';
     const extra = quiz?.is_assigned
-      ? ' This quiz is assigned — take links stop working and all responses are removed.'
+      ? ' This quiz is assigned. Take links stop working and all responses are removed.'
       : ' Questions and responses for it are removed.';
     if (!window.confirm(`Delete “${title}”?${extra}`)) return;
     setError('');
@@ -78,7 +78,7 @@ export default function Home() {
           <div className="f-trial-banner">
             <span>★</span>
             <span>
-              Private host area — create quizzes, share a take link, review Discord + In-Game Name
+              Private host area: create quizzes, share a take link, review Discord + In-Game Name
               responses.
             </span>
             <button type="button" onClick={() => setBannerDismissed(true)}>
@@ -96,7 +96,7 @@ export default function Home() {
         <p className="f-kicker">Smite Scroll</p>
         <h1>Scroll Trivia</h1>
         <p className="f-lede" style={{ margin: '8px auto 0', textAlign: 'center' }}>
-          Build contests, assign a link, track responses — for you and your helpers.
+          Build contests, assign a link, track responses for you and your helpers.
         </p>
         <button type="button" className="f-create-btn" style={{ marginTop: 18 }} onClick={createQuiz}>
           Create +

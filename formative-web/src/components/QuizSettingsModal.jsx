@@ -226,38 +226,6 @@ export default function QuizSettingsModal({ settings, onChange, onClose }) {
           {tab === 'play' ? (
             <>
               <section className="f-settings-card">
-                <h4>Grading</h4>
-                <Toggle
-                  label="Partial credit on multiple selection"
-                  hint="All pick-all-that-apply questions: score = (correct picks − wrong picks) ÷ number of correct answers"
-                  checked={settings.partial_credit_multiple_selection}
-                  onChange={(v) => onChange({ partial_credit_multiple_selection: v })}
-                />
-              </section>
-
-              <section className="f-settings-card">
-                <h4>During the quiz</h4>
-                <Toggle
-                  label="Randomize answer order"
-                  hint="Shuffle A/B/C/D for each guest"
-                  checked={settings.randomize_order}
-                  onChange={(v) => onChange({ randomize_order: v })}
-                />
-                <Toggle
-                  label="Shuffle questions"
-                  hint="Scored questions appear in random order (Discord + IGN stay first)"
-                  checked={settings.shuffle_questions}
-                  onChange={(v) => onChange({ shuffle_questions: v })}
-                />
-                <Toggle
-                  label="Require every scored question"
-                  hint="Block submit until all scored items are answered"
-                  checked={settings.require_all}
-                  onChange={(v) => onChange({ require_all: v })}
-                />
-              </section>
-
-              <section className="f-settings-card">
                 <h4>Editor helpers</h4>
                 <Toggle
                   label="Auto-fill new questions"
@@ -284,7 +252,7 @@ export default function QuizSettingsModal({ settings, onChange, onClose }) {
               </section>
 
               <p className="f-muted f-settings-foot">
-                Timer, open/close window, retakes, and score display are under <strong>Assign</strong>.
+                Timer, attempts, shuffle, and open/close window are under <strong>Assign</strong>.
               </p>
             </>
           ) : null}

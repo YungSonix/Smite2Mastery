@@ -24,7 +24,7 @@ export function scoredInsightQuestions(questions) {
 }
 
 export function formatDuration(ms) {
-  if (ms == null || !Number.isFinite(Number(ms)) || Number(ms) < 0) return '—';
+  if (ms == null || !Number.isFinite(Number(ms)) || Number(ms) < 0) return 'n/a';
   const s = Math.round(Number(ms) / 1000);
   if (s < 60) return `${s}s`;
   const h = Math.floor(s / 3600);
@@ -265,7 +265,7 @@ export function buildQuizInsights({ questions, responses, timeLimitSeconds } = {
         .map((slot) => ({
           id: `${q.id}-v${slot.index}`,
           label: `${q.label} · ${slot.letter}`,
-          title: `${promptPlain(q.prompt) || 'Question'} — Version ${slot.letter}`,
+          title: `${promptPlain(q.prompt) || 'Question'} · Version ${slot.letter}`,
           value: slot.pct,
           display: `${slot.pct}%`,
           n: slot.n,
@@ -329,9 +329,9 @@ export function buildQuizInsights({ questions, responses, timeLimitSeconds } = {
 
 const MAX_ACTIONS = 8;
 
-/** `62% (18/29)` — percentage with the raw counts behind it. */
+/** `62% (18/29)` with the raw counts behind it. */
 export function pctWithCounts(pct, ok, n) {
-  if (pct == null) return '—';
+  if (pct == null) return 'n/a';
   if (ok == null || n == null || !n) return `${pct}%`;
   return `${pct}% (${ok}/${n})`;
 }
@@ -363,7 +363,7 @@ export function buildNextEventInsights(perQuestion, submissionCount) {
         tag: 'REWRITE',
         tone: 'high',
         rank: 200 + (HARD_THRESHOLD_PCT - q.pct),
-        reason: `Only ${pctWithCounts(q.pct, q.ok, q.n)} got it — clarify the wording or ease the difficulty.`,
+        reason: `Only ${pctWithCounts(q.pct, q.ok, q.n)} got it. Clarify the wording or ease the difficulty.`,
       });
     } else if (
       q.pct <= 55 &&
@@ -380,7 +380,7 @@ export function buildNextEventInsights(perQuestion, submissionCount) {
           q.pct,
           q.ok,
           q.n
-        )} correct — likely confusing, not hard.`,
+        )} correct. Likely confusing, not hard.`,
       });
     }
 
@@ -398,7 +398,7 @@ export function buildNextEventInsights(perQuestion, submissionCount) {
             tone: 'high',
             delta,
             rank: 150 + delta,
-            reason: `Version ${easiest.letter} (${easiest.pct}%) is ${delta}pp easier than version ${hardest.letter} (${hardest.pct}%) — even them out or retire one.`,
+            reason: `Version ${easiest.letter} (${easiest.pct}%) is ${delta}pp easier than version ${hardest.letter} (${hardest.pct}%). Even them out or retire one.`,
           });
         }
       }
@@ -410,7 +410,7 @@ export function buildNextEventInsights(perQuestion, submissionCount) {
         tag: 'SWAP',
         tone: 'low',
         rank: 40 + (q.pct - EASY_THRESHOLD_PCT),
-        reason: `${pctWithCounts(q.pct, q.ok, q.n)} correct — a giveaway. Swap in harder content.`,
+        reason: `${pctWithCounts(q.pct, q.ok, q.n)} correct. This is a giveaway. Swap in harder content.`,
       });
     }
 
@@ -461,7 +461,7 @@ export function buildInsightsTakeaway(stats) {
       ? `The median score was ${stats.medianPct}% (average ${stats.avg}%)`
       : `The average score was ${stats.avg}%`;
   out.push(
-    `${takers} finished this quiz. ${center}, and ${stats.passPct}% cleared the ${PASS_THRESHOLD_PCT}% pass line.`
+    `${takers} took this quiz. ${center}. ${stats.passPct}% hit the ${PASS_THRESHOLD_PCT}% pass line.`
   );
 
   const scoredQs = (stats.perQuestion || []).filter((q) => q.n >= MIN_VARIANT_N);
@@ -469,11 +469,11 @@ export function buildInsightsTakeaway(stats) {
   if (hardest.length && hardest[0].pct < 60) {
     const worst = hardest.filter((q) => q.pct < 60);
     const parts = worst.map((q) => `${q.label} at ${pctWithCounts(q.pct, q.ok, q.n)}`);
-    out.push(`Hardest question${worst.length === 1 ? '' : 's'}: ${ordinalList(parts)}.`);
+    out.push(`Toughest spot${worst.length === 1 ? '' : 's'}: ${ordinalList(parts)}. Worth a reword before the next run.`);
   } else if (hardest.length) {
     const weakest = hardest[0];
     out.push(
-      `Nothing tripped people up badly — even the weakest question, ${weakest.label}, landed at ${pctWithCounts(
+      `Difficulty looked even across the board. The softest question was ${weakest.label} at ${pctWithCounts(
         weakest.pct,
         weakest.ok,
         weakest.n
@@ -488,7 +488,7 @@ export function buildInsightsTakeaway(stats) {
     const worst = skewed[0];
     const rest = skewed.length - 1;
     out.push(
-      `${worst.label} is unbalanced across versions — a ${worst.variantSkew}pp gap between the easiest and hardest version${
+      `${worst.label} plays differently by version. Easiest and hardest versions are ${worst.variantSkew} percentage points apart${
         rest > 0 ? `, plus ${rest} other question${rest === 1 ? '' : 's'} with the same problem` : ''
       }.`
     );
@@ -496,9 +496,9 @@ export function buildInsightsTakeaway(stats) {
 
   if (stats.lowSample) {
     out.push(
-      `With only ${stats.n} submission${
+      `Only ${stats.n} submission${
         stats.n === 1 ? '' : 's'
-      }, treat every percentage as a rough signal — one more take can move them 10 points or more.`
+      } so far. Percentages will jump around until you have a bigger sample.`
     );
   } else if (stats.medianDurationMs != null) {
     out.push(`Half of everyone finished within ${formatDuration(stats.medianDurationMs)}.`);

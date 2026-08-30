@@ -7,6 +7,7 @@ import { useLiveClock } from '../lib/useLiveClock';
 import { PaginationBar, usePagination } from '../lib/usePagination';
 import { buildSubmissionIntegrity, integrityFor } from '../lib/submissionIntegrity';
 import { responseMatchesQuery } from '../lib/responseSearch';
+import { responseIsTest } from '../lib/responseFilters';
 import { RESPONSES_PAGE_SIZE } from '../lib/usePagination';
 
 function selectRow(r, e, onSelect) {
@@ -215,7 +216,7 @@ export default function ResponsesGrid({
               <th className="col-rank" title="Rank in current sort">
                 #
               </th>
-              <th className="col-flag" title="Possible alt account — same name, timing, or pattern">
+              <th className="col-flag" title="Possible alt account: same name, timing, or pattern">
                 ⚑
               </th>
               <th className="col-discord">Discord</th>
@@ -311,6 +312,12 @@ export default function ResponsesGrid({
                       </div>
                       <span className="f-student-name" title={r.discord_username}>
                         {r.discord_username}
+                        {responseIsTest(r) ? (
+                          <span className="f-practice-pill" title="Host practice take">
+                            {' '}
+                            practice
+                          </span>
+                        ) : null}
                         {flagged && integrity.peers?.length ? (
                           <span className="f-dup-ip-peers" title={flagTitle}>
                             {' '}

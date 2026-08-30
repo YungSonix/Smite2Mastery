@@ -3,6 +3,11 @@ import mediaCatalog from './triviaMediaCatalog.json' with { type: 'json' };
 import godMeta from './triviaGodMeta.json' with { type: 'json' };
 import abilitySfxSimilarity from './triviaAbilitySfxSimilarity.json' with { type: 'json' };
 import { formatAbilitySfxLabel } from './abilitySfxLabel.js';
+import {
+  buildVgsListenQuestion,
+  buildVgsCalloutPickQuestion,
+  buildVgsTypeCodeQuestion,
+} from './vgsTrivia.js';
 
 function clone(v) {
   return v == null ? v : JSON.parse(JSON.stringify(v));
@@ -385,8 +390,8 @@ function godsByPantheon() {
 }
 
 const PANTHEON_ODD_PROMPTS = [
-  'Which god is from a different pantheon?',
-  'Which god does not belong?',
+  'Four gods. Three share a pantheon. Which one does not belong?',
+  'Which god is from a different pantheon than the other three?',
 ];
 
 /** Four gods: 3 share a pantheon, 1 is the odd pantheon out. */
@@ -417,6 +422,106 @@ function makePantheonOddOneQuestion({ count = 4 } = {}) {
         gods: [...same, odd],
       },
     },
+  });
+}
+
+function godProfilesList() {
+  return godProfiles().filter((p) => p?.name);
+}
+
+/** Four gods: three share a trait, one is the odd one out. */
+function makeGodTraitOddOne({
+  count = 4,
+  remixKind,
+  prompt,
+  hasTrait,
+  hintKey,
+  hintValue,
+} = {}) {
+  const profiles = godProfilesList();
+  const withTrait = profiles.filter((p) => hasTrait(p));
+  const without = profiles.filter((p) => !hasTrait(p));
+  if (withTrait.length < 3 || without.length < 1) return null;
+  const same = pickDistinct(
+    withTrait.map((p) => p.name),
+    3,
+    new Set()
+  );
+  const odd = pickOne(without);
+  if (same.length < 3 || !odd?.name) return null;
+  const want = Math.max(4, Number(count) || 4);
+  return packMc({
+    prompt,
+    correctLabel: odd.name,
+    distractors: same,
+    count: want,
+    clearMedia: true,
+    extraMeta: {
+      remix_kind: remixKind,
+      hint_context: {
+        trait: hintKey,
+        trait_value: hintValue,
+        odd_god: odd.name,
+        majority_gods: same,
+      },
+    },
+  });
+}
+
+function makeGodCcOddOneQuestion({ count = 4, ccId } = {}) {
+  const ccTypes = ['stun', 'root', 'slow', 'cripple', 'silence', 'knockup', 'fear', 'taunt'];
+  const chosen = ccId || pickOne(ccTypes);
+  const label = formatCcLabel(chosen);
+  const hasCc = (p) => (p.ccs || []).map((c) => norm(c)).includes(norm(chosen));
+  return makeGodTraitOddOne({
+    count,
+    remixKind: 'god_cc_odd_one',
+    prompt: `Three gods here can ${label.toLowerCase()} from their kit. Who cannot?`,
+    hasTrait: hasCc,
+    hintKey: 'cc',
+    hintValue: chosen,
+  });
+}
+
+function makeGodRoleOddOneQuestion({ count = 4, role } = {}) {
+  const roles = ['ADC', 'Mid', 'Jungle', 'Solo', 'Support'];
+  const chosen = role || pickOne(roles);
+  const hasRole = (p) => (p.roles || []).includes(chosen) || p.role === chosen;
+  return makeGodTraitOddOne({
+    count,
+    remixKind: 'god_role_odd_one',
+    prompt: `Three of these are common ${chosen} picks. Who does not belong?`,
+    hasTrait: hasRole,
+    hintKey: 'role',
+    hintValue: chosen,
+  });
+}
+
+function makeGodScalingOddOneQuestion({ count = 4, scale } = {}) {
+  const chosen = scale || pickOne(['Physical', 'Magical']);
+  const prompt =
+    chosen === 'Physical'
+      ? 'Three gods here scale with Strength. Who does not?'
+      : 'Three gods here scale with Intelligence. Who does not?';
+  const hasScale = (p) => String(p.type || '') === chosen;
+  return makeGodTraitOddOne({
+    count,
+    remixKind: 'god_scaling_odd_one',
+    prompt,
+    hasTrait: hasScale,
+    hintKey: 'damage_type',
+    hintValue: chosen,
+  });
+}
+
+function makeGodAspectOddOneQuestion({ count = 4 } = {}) {
+  return makeGodTraitOddOne({
+    count,
+    remixKind: 'god_aspect_odd_one',
+    prompt: 'Three of these gods have an Aspect. Who does not?',
+    hasTrait: (p) => Boolean(p.hasAspect),
+    hintKey: 'has_aspect',
+    hintValue: true,
   });
 }
 
@@ -718,18 +823,15 @@ function buildGodClaimBank(profile) {
 }
 
 const GOD_CLAIM_CORRECT_PROMPTS = [
-  (g) => `Which of these is true about ${g}?`,
-  (g) => `Choose the answer that is correct about ${g}`,
-  (g) => `Surely you know ${g} — which claim is actually true?`,
+  (g) => `Which fact about ${g} is true?`,
+  (g) => `Pick the true fact about ${g}.`,
   (g) => `One of these about ${g} is real. Pick it.`,
 ];
 
 const GOD_CLAIM_INCORRECT_PROMPTS = [
-  (g) => `Which of these is NOT true about ${g}?`,
-  (g) => `Choose the answer that is not correct about ${g}`,
-  (g) => `Pick the claim that is wrong about ${g}`,
-  (g) => `Spot the lie about ${g}`,
-  (g) => `${g} facts — which one is bogus?`,
+  (g) => `Which fact about ${g} is wrong?`,
+  (g) => `Pick the lie about ${g}.`,
+  (g) => `Spot the fake fact about ${g}.`,
 ];
 
 function isGodClaimCorrectPrompt(source) {
@@ -738,7 +840,7 @@ function isGodClaimCorrectPrompt(source) {
   if (kind === 'god_claim_incorrect') return false;
   const p = String(source?.prompt || '');
   if (/not\s+correct|not\s+true|is\s+wrong|aren't\s+correct|are\s+not\s+correct/i.test(p)) return false;
-  return /which of these is true about|is correct about|actually true about|claim is actually true/i.test(p);
+  return /which fact about|pick the true fact|is real\. pick/i.test(p);
 }
 
 function isGodClaimIncorrectPrompt(source) {
@@ -747,9 +849,8 @@ function isGodClaimIncorrectPrompt(source) {
   if (kind === 'god_claim_correct') return false;
   const p = String(source?.prompt || '');
   return (
-    /not\s+correct about|not\s+true about|is\s+NOT\s+true about|claim that is wrong about|aren't\s+correct about|are\s+not\s+correct about/i.test(
-      p
-    ) || /choose the answers? that (?:are|is) not correct about/i.test(p)
+    /fact about .+ is wrong|pick the lie about|spot the fake fact|pick every wrong fact/i.test(p) ||
+    /not\s+correct about|not\s+true about|is\s+NOT\s+true about|claim that is wrong about/i.test(p)
   );
 }
 
@@ -896,7 +997,7 @@ function makeGodClaimQuestion({
       const prompt =
         keepPrompt ||
         (multiOk && correctLabels.length > 1
-          ? `Choose the answers that are not correct about ${cand.name}`
+          ? `Pick every wrong fact about ${cand.name}.`
           : pickOne(GOD_CLAIM_INCORRECT_PROMPTS)(cand.name));
       const hit = packGodClaimMc({
         prompt,
@@ -1024,7 +1125,7 @@ function makeAspectIconQuestion({ count = 5, avoidIcons = new Set(), keepPrompt 
 
   const prompt =
     keepPrompt ||
-    'Pick the God that has this aspect icon. (May or may not be more than one God)';
+    'Who uses this Aspect icon? Pick all that apply.';
   return {
     patch: {
       type,
@@ -1263,7 +1364,7 @@ function makeGodEmojiQuestion({ count, avoidGods = new Set(), correctName = null
   if (wrong.length < count - 1) return null;
   const setLetter = pickGodEmojiSetLetter();
   return packMc({
-    prompt: 'Which god do these three emojis represent?',
+    prompt: 'Name the god from these emojis.',
     correctLabel: god.name,
     distractors: wrong,
     count,
@@ -1395,7 +1496,7 @@ function remixVoiceLine(source, avoidTexts) {
   const count = optionCount(source);
   const wrong = godIdentifyDistractors(clip.god, count - 1);
   return packMc({
-    prompt: source.prompt || 'Choose the correct god this voice line belongs to.',
+    prompt: source.prompt || 'Whose VOX line is this?',
     correctLabel: clip.god,
     distractors: wrong,
     count,
@@ -1431,7 +1532,7 @@ function remixSkinGuess(source, avoidTexts) {
   const wrong = godIdentifyDistractors(card.god, count - 1);
   const seed = `${card.god}|${card.file || card.skinName}`;
   return packMc({
-    prompt: source.prompt || 'Choose the correct god this skin belongs to.',
+    prompt: source.prompt || 'Whose skin is this?',
     correctLabel: card.god,
     distractors: wrong,
     count,
@@ -2516,13 +2617,13 @@ export const RANDOM_QUESTION_STYLES = [
   {
     id: 'item_has_stat',
     label: 'Item has this stat',
-    blurb: 'Multiple choice — which item grants a named stat',
+    blurb: 'Pick the item that grants a named stat',
     group: 'Items',
   },
   {
     id: 'item_stat_amount',
     label: 'How much stat on item',
-    blurb: 'Multiple choice — numeric amount for one item stat',
+    blurb: 'Numeric amount for one item stat',
     group: 'Items',
   },
   {
@@ -2534,7 +2635,7 @@ export const RANDOM_QUESTION_STYLES = [
   {
     id: 'item_stat_odd_one',
     label: 'Item missing this stat',
-    blurb: 'Four items — three have a named stat, pick the one that does not',
+    blurb: 'Four items. Three share a stat. Pick the odd one out.',
     group: 'Items',
   },
   {
@@ -2546,19 +2647,43 @@ export const RANDOM_QUESTION_STYLES = [
   {
     id: 'pantheon_odd_one',
     label: 'Odd pantheon out',
-    blurb: 'Four gods — three share a pantheon, pick the one that does not',
+    blurb: 'Four gods. Three share a pantheon. Pick the odd one out.',
+    group: 'Gods',
+  },
+  {
+    id: 'god_cc_odd_one',
+    label: 'Odd god out (kit CC)',
+    blurb: 'Four gods. Three can apply a CC from kit. One cannot.',
+    group: 'Gods',
+  },
+  {
+    id: 'god_role_odd_one',
+    label: 'Odd god out (role)',
+    blurb: 'Four gods. Three fit a role. Pick who does not.',
+    group: 'Gods',
+  },
+  {
+    id: 'god_scaling_odd_one',
+    label: 'Odd god out (scaling)',
+    blurb: 'Four gods. Three scale STR or INT. Pick the odd scaling.',
+    group: 'Gods',
+  },
+  {
+    id: 'god_aspect_odd_one',
+    label: 'Odd god out (Aspect)',
+    blurb: 'Four gods. Three have an Aspect. Who does not?',
     group: 'Gods',
   },
   {
     id: 'god_claim_correct',
     label: 'True about this god',
-    blurb: 'Multiple choice — which claim sentence is true about a named god',
+    blurb: 'Pick the true claim about a named god',
     group: 'Gods',
   },
   {
     id: 'god_claim_incorrect',
     label: 'Not true about this god',
-    blurb: 'Which claim is wrong about a named god — neighbor near-misses and occasional meta-trick when all listed facts are true',
+    blurb: 'Pick the wrong claim. Near misses and occasional meta tricks.',
     group: 'Gods',
   },
   {
@@ -2570,7 +2695,7 @@ export const RANDOM_QUESTION_STYLES = [
   {
     id: 'aspect_icon',
     label: 'Aspect icon',
-    blurb: 'Show aspect emblem — pick god(s) that use it (multi when shared)',
+    blurb: 'Aspect emblem. Pick god(s) that use it.',
     group: 'Gods',
   },
   {
@@ -2582,43 +2707,61 @@ export const RANDOM_QUESTION_STYLES = [
   {
     id: 'ability_cc',
     label: 'Ability CC',
-    blurb: 'Multiple choice — which CC an ability applies (stun, root, slow…)',
+    blurb: 'Which CC does this ability apply? (stun, root, slow…)',
     group: 'Gods',
   },
   {
     id: 'passive',
     label: 'Passive',
-    blurb: 'Passive ability icon — pick which god it belongs to',
+    blurb: 'Passive icon. Pick which god it belongs to.',
     group: 'Gods',
   },
   {
     id: 'combo_cc',
     label: 'Combo CC',
-    blurb: 'Which god(s) can apply a CC combo across their kit (multi when shared)',
+    blurb: 'Which god(s) can apply a CC combo from kit?',
     group: 'Gods',
+  },
+  {
+    id: 'vgs_listen',
+    label: 'VGS: hear the line',
+    blurb: 'Play a VGS line. Pick the matching PC command.',
+    group: 'VGS',
+  },
+  {
+    id: 'vgs_callout_pick',
+    label: 'VGS: callout to code',
+    blurb: 'Read the callout. Pick the correct PC VGS code.',
+    group: 'VGS',
+  },
+  {
+    id: 'vgs_type_code',
+    label: 'VGS: type the code',
+    blurb: 'Read the callout. Type the PC VGS code (e.g. VAM).',
+    group: 'VGS',
   },
   {
     id: 'god_emoji',
     label: 'Guess from emojis',
-    blurb: 'Three-emoji card — which god',
+    blurb: 'Three emojis. Name the god.',
     group: 'Gods',
   },
   {
     id: 'voice_line',
     label: 'Guess the voice line',
-    blurb: 'Audio — which god speaks this VOX line (prefers skin packs over Skin00_Base)',
+    blurb: 'VOX audio. Name the god (prefers skin packs over base).',
     group: 'Media',
   },
   {
     id: 'ability_sound',
     label: 'Guess the ability sound',
-    blurb: 'Audio — Skin00_Base Ability1–4 Activate/Start cast SFX',
+    blurb: 'Ability cast SFX from base skin. Name the ability.',
     group: 'Media',
   },
   {
     id: 'skin_guess',
     label: 'Guess the skin (zoomed)',
-    blurb: 'Zoomed NewGodSkins card — which god (prefers non-Default)',
+    blurb: 'Zoomed skin card. Name the god (prefers non Default).',
     group: 'Media',
   },
 ];
@@ -2771,6 +2914,10 @@ function styleMakers(count) {
     item_has_stat: () => makeItemHasStatQuestion({ count }),
     item_stat_odd_one: () => makeItemStatOddOneQuestion({ count }),
     pantheon_odd_one: () => makePantheonOddOneQuestion({ count }),
+    god_cc_odd_one: () => makeGodCcOddOneQuestion({ count }),
+    god_role_odd_one: () => makeGodRoleOddOneQuestion({ count }),
+    god_scaling_odd_one: () => makeGodScalingOddOneQuestion({ count }),
+    god_aspect_odd_one: () => makeGodAspectOddOneQuestion({ count }),
     god_claim_correct: () => makeGodClaimCorrectQuestion({ count }),
     god_claim_incorrect: () => makeGodClaimIncorrectQuestion({ count }),
     item_stat_amount: () => {
@@ -2837,7 +2984,7 @@ function styleMakers(count) {
       if (!clip) return null;
       const wrong = godIdentifyDistractors(clip.god, count - 1);
       return packMc({
-        prompt: 'Choose the correct god this voice line belongs to.',
+        prompt: 'Whose VOX line is this?',
         correctLabel: clip.god,
         distractors: wrong,
         count,
@@ -2863,7 +3010,7 @@ function styleMakers(count) {
       const wrong = godIdentifyDistractors(card.god, count - 1);
       const seed = `${card.god}|${card.file || card.skinName}`;
       return packMc({
-        prompt: 'Choose the correct god this skin belongs to.',
+        prompt: 'Whose skin is this?',
         correctLabel: card.god,
         distractors: wrong,
         count,
@@ -2882,6 +3029,18 @@ function styleMakers(count) {
     passive: () => makePassiveQuestion({ count }),
     combo_cc: () => makeComboCcQuestion({ count }),
     god_emoji: () => makeGodEmojiQuestion({ count }),
+    vgs_listen: () => {
+      const built = buildVgsListenQuestion({ count });
+      return built ? { patch: built } : null;
+    },
+    vgs_callout_pick: () => {
+      const built = buildVgsCalloutPickQuestion({ count });
+      return built ? { patch: built } : null;
+    },
+    vgs_type_code: () => {
+      const built = buildVgsTypeCodeQuestion();
+      return built ? { patch: built } : null;
+    },
   };
 }
 
