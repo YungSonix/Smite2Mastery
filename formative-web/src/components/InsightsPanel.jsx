@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import InsightQuestionPreview from './InsightQuestionPreview';
 import { ColumnHistogram, Donut, KpiStrip, NextEventSection, VariantStackChart } from './HostCharts';
 import { promptPlain } from '../lib/promptPlain';
@@ -32,9 +32,29 @@ function nextSort(prev, col) {
   return { col, dir };
 }
 
+function scrollToInsightsSection(node) {
+  if (!node) return;
+  node.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 export default function InsightsPanel({ questions, responses, timeLimitSeconds, onJumpToEditor, initialPreviewId }) {
   const [preview, setPreview] = useState(null);
   const [sort, setSort] = useState({ col: 'pct', dir: 1 });
+  const overviewRef = useRef(null);
+  const chartsRef = useRef(null);
+  const versionsRef = useRef(null);
+  const nextRef = useRef(null);
+  const questionsRef = useRef(null);
+  const sectionRefs = useMemo(
+    () => ({
+      overview: overviewRef,
+      charts: chartsRef,
+      versions: versionsRef,
+      next: nextRef,
+      questions: questionsRef,
+    }),
+    []
+  );
 
   const scored = useMemo(() => scoredInsightQuestions(questions), [questions]);
   const indexById = useMemo(() => new Map(scored.map((q, i) => [q.id, i])), [scored]);
@@ -142,6 +162,17 @@ export default function InsightsPanel({ questions, responses, timeLimitSeconds, 
   const previewQuestion = preview ? scored[preview.i] : null;
   const previewStats = preview ? stats.perQuestion[preview.i] : null;
 
+  const jumpSections = useMemo(() => {
+    const items = [
+      { id: 'overview', label: 'Overview' },
+      { id: 'charts', label: 'Charts', show: stats.n > 0 && !stats.lowSample },
+      { id: 'versions', label: 'Versions', show: stats.n > 0 && stats.variantQuestionCount > 0 },
+      { id: 'next', label: 'Next steps', show: stats.n > 0 && Boolean(stats.nextEvent) },
+      { id: 'questions', label: 'All questions', show: stats.n > 0 && stats.perQuestion.length > 0 },
+    ];
+    return items.filter((item) => item.show !== false);
+  }, [stats]);
+
   const clickHint = 'Click any question to preview exactly what players saw.';
 
   return (
@@ -158,8 +189,24 @@ export default function InsightsPanel({ questions, responses, timeLimitSeconds, 
         </div>
       </header>
 
+      {jumpSections.length > 1 ? (
+        <nav className="f-insights-jump-nav" aria-label="Jump to section">
+          {jumpSections.map((section) => (
+            <button
+              key={section.id}
+              type="button"
+              className="f-insights-jump-btn"
+              onClick={() => scrollToInsightsSection(sectionRefs[section.id]?.current)}
+            >
+              {section.label}
+            </button>
+          ))}
+        </nav>
+      ) : null}
+
+      <div className="f-insights-section" ref={overviewRef} id="insights-overview">
       {takeaway.length ? (
-        <div className="f-insights-takeaway">
+        <div className="f-insights-takeaway f-insights-panel">
           <h3>What this says</h3>
           <p>{takeaway.join(' ')}</p>
         </div>
@@ -190,8 +237,14 @@ export default function InsightsPanel({ questions, responses, timeLimitSeconds, 
           percentage below will swing hard as more people play. Read the table as counts, not rates.
         </p>
       ) : null}
+      </div>
 
       {stats.n > 0 && !stats.lowSample ? (
+        <div
+          className="f-insights-section f-insights-section--charts"
+          ref={chartsRef}
+          id="insights-charts"
+        >
         <div className="f-analytics-grid f-analytics-grid--insights f-insights-grid-12">
           <div className="f-insights-span-5">
             <Donut title="Score mix" parts={stats.bands} center={`${stats.medianPct ?? stats.avg}%`} glow size="lg" />
@@ -211,10 +264,15 @@ export default function InsightsPanel({ questions, responses, timeLimitSeconds, 
             />
           </div>
         </div>
+        </div>
       ) : null}
 
       {stats.n > 0 && stats.variantQuestionCount > 0 ? (
-        <div style={{ marginTop: 16 }}>
+        <div
+          className="f-insights-section f-insights-section--versions"
+          ref={versionsRef}
+          id="insights-versions"
+        >
           <VariantStackChart
             title="Version balance"
             questions={stats.perQuestion}
@@ -228,7 +286,7 @@ export default function InsightsPanel({ questions, responses, timeLimitSeconds, 
       ) : null}
 
       {stats.n > 0 && stats.nextEvent ? (
-        <div style={{ marginTop: 16 }}>
+        <div className="f-insights-section f-insights-section--next" ref={nextRef} id="insights-next">
           <NextEventSection
             data={stats.nextEvent}
             onItemClick={openInsightQuestion}
@@ -247,7 +305,13 @@ export default function InsightsPanel({ questions, responses, timeLimitSeconds, 
       ) : null}
 
       {stats.n > 0 && stats.perQuestion.length ? (
-        <div className="f-insights-list f-insights-question-table" style={{ marginTop: 20 }}>
+        <div
+          className="f-insights-section f-insights-section--questions"
+          ref={questionsRef}
+          id="insights-questions"
+        >
+        <div className="f-insights-list f-insights-question-table f-insights-panel">
+          <div className="f-insights-section-label">All questions</div>
           <div className="f-insights-table-head f-insights-table-head--sort">
             <button
               type="button"
@@ -329,6 +393,7 @@ export default function InsightsPanel({ questions, responses, timeLimitSeconds, 
               </div>
             );
           })}
+        </div>
         </div>
       ) : stats.perQuestion.length === 0 ? (
         <p className="f-muted">Add scored questions to see insights.</p>

@@ -401,17 +401,38 @@ a {
 }
 
 .f-create-btn,
-.f-primary-btn,
-.f-assign-btn.is-live {
+.f-primary-btn {
   background: rgba(74, 222, 128, 0.15);
   border-color: rgba(74, 222, 128, 0.45);
   color: #86efac;
 }
 
+.f-theme-mode-light .f-create-btn,
+.f-theme-mode-light .f-primary-btn {
+  background: linear-gradient(180deg, #047857 0%, #065f46 100%);
+  border-color: #059669;
+  color: #f0fdf4;
+  box-shadow: var(--f-elev-2);
+}
+
 .f-topbar-copy-link {
   font-size: 13px;
-  padding: 6px 12px;
+  padding: 8px 14px;
   white-space: nowrap;
+  font-weight: 700;
+  box-shadow: var(--f-elev-1);
+}
+
+.f-theme-mode-light .f-topbar .f-outline-btn {
+  background: #fff;
+  color: var(--f-blue);
+  border-color: color-mix(in srgb, var(--f-blue) 45%, var(--f-border));
+  box-shadow: var(--f-elev-1);
+}
+
+.f-theme-mode-light .f-topbar .f-outline-btn:hover {
+  background: var(--f-blue);
+  color: var(--f-on-accent, #fff);
 }
 
 .f-assign-modal-v2 .f-assign-layout {
@@ -535,23 +556,73 @@ a {
   padding: 10px 18px;
   font-weight: 700;
   cursor: pointer;
+  box-shadow: var(--f-elev-1);
+}
+
+.f-assign-btn.is-live {
+  background: linear-gradient(180deg, rgba(74, 222, 128, 0.28) 0%, rgba(34, 197, 94, 0.18) 100%);
+  border-color: rgba(74, 222, 128, 0.55);
+  color: #bbf7d0;
+  box-shadow:
+    0 0 0 1px rgba(74, 222, 128, 0.2),
+    0 6px 18px rgba(34, 197, 94, 0.22);
+}
+
+.f-theme-mode-light .f-assign-btn.is-live {
+  background: linear-gradient(180deg, #059669 0%, #047857 100%);
+  border-color: #047857;
+  color: #f0fdf4;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.18);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.14) inset,
+    0 4px 14px rgba(4, 120, 87, 0.35);
+}
+
+.f-theme-mode-light .f-assign-btn.is-live:hover {
+  background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+  color: #fff;
+  border-color: #059669;
+}
+
+.f-theme-mode-dim .f-assign-btn.is-live {
+  background: linear-gradient(180deg, rgba(74, 222, 128, 0.32) 0%, rgba(34, 197, 94, 0.22) 100%);
+  border-color: rgba(134, 239, 172, 0.55);
+  color: #dcfce7;
 }
 
 .f-create-btn:hover,
 .f-primary-btn:hover,
 .f-assign-btn:hover {
-  background: var(--f-blue-soft);
-  color: var(--f-blue);
+  filter: brightness(1.06);
+}
+
+.f-theme-mode-light .f-create-btn:hover,
+.f-theme-mode-light .f-primary-btn:hover {
+  background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+  color: #fff;
+}
+
+.f-assign-btn:not(.is-live):hover {
+  background: var(--f-blue-hover, var(--f-blue-soft));
+  color: var(--f-on-accent, #fff);
 }
 
 .f-save-btn {
   background: var(--f-card);
-  color: var(--f-muted);
-  border: 1px solid var(--f-border);
+  color: var(--f-text);
+  border: 1px solid color-mix(in srgb, var(--f-text) 22%, var(--f-border));
   border-radius: 8px;
   padding: 10px 16px;
   font-weight: 700;
   cursor: pointer;
+  box-shadow: var(--f-elev-1);
+}
+
+.f-theme-mode-light .f-save-btn:not(.is-dirty):disabled {
+  background: #fff;
+  color: color-mix(in srgb, var(--f-text) 72%, var(--f-muted));
+  border-color: color-mix(in srgb, var(--f-text) 18%, var(--f-border));
+  opacity: 1;
 }
 
 .f-save-btn.is-dirty {
@@ -6245,9 +6316,11 @@ label.f-file-btn:hover {
 
 .f-insights-v2 .f-insights-list {
   background: var(--f-card);
-  border: 1px solid var(--f-blue-border);
+  border: 1px solid color-mix(in srgb, var(--f-blue) 32%, var(--f-border));
   border-radius: 14px;
-  box-shadow: var(--f-shadow);
+  box-shadow:
+    var(--f-elev-3),
+    0 0 0 1px color-mix(in srgb, var(--f-blue) 10%, transparent);
   overflow: hidden;
 }
 
@@ -6335,13 +6408,13 @@ label.f-file-btn:hover {
 }
 
 .f-insights-v3 .f-chart-card.is-glow {
-  border: 1px solid color-mix(in srgb, var(--f-blue) 35%, var(--f-border));
+  border: 1px solid color-mix(in srgb, var(--f-blue) 42%, var(--f-border));
   background:
-    radial-gradient(120% 80% at 100% 0%, color-mix(in srgb, var(--f-blue) 8%, transparent), transparent 55%),
-    var(--f-card);
+    radial-gradient(120% 80% at 100% 0%, color-mix(in srgb, var(--f-blue) 12%, transparent), transparent 55%),
+    linear-gradient(165deg, color-mix(in srgb, var(--f-card) 92%, #fff), var(--f-card));
   box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--f-blue) 10%, transparent),
-    0 14px 36px rgba(0, 0, 0, 0.22);
+    0 0 0 1px color-mix(in srgb, var(--f-blue) 12%, transparent),
+    var(--f-elev-3);
 }
 
 .f-insights-v3 .f-chart-card h3 {
@@ -6554,9 +6627,10 @@ label.f-file-btn:hover {
 }
 
 .f-insights-sort-btn {
-  background: none;
-  border: none;
-  padding: 0;
+  background: color-mix(in srgb, var(--f-page) 40%, var(--f-card));
+  border: 1px solid color-mix(in srgb, var(--f-blue) 20%, var(--f-border));
+  border-radius: 8px;
+  padding: 5px 10px;
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
@@ -6566,8 +6640,17 @@ label.f-file-btn:hover {
   text-align: left;
 }
 
+.f-insights-sort-btn:hover {
+  color: var(--f-blue);
+  border-color: color-mix(in srgb, var(--f-blue) 45%, var(--f-border));
+  background: color-mix(in srgb, var(--f-blue) 10%, var(--f-card));
+}
+
 .f-insights-sort-btn.is-active {
   color: var(--f-blue);
+  background: color-mix(in srgb, var(--f-blue) 16%, var(--f-card));
+  border-color: color-mix(in srgb, var(--f-blue) 50%, var(--f-border));
+  box-shadow: var(--f-elev-1);
 }
 
 .f-insights-table-head-prompt {
@@ -6580,14 +6663,36 @@ label.f-file-btn:hover {
 
 .f-insight-num-btn,
 .f-insight-prompt-btn {
-  background: none;
-  border: none;
   cursor: pointer;
   font: inherit;
   text-align: left;
 }
 
+.f-insight-num-btn {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  margin: 0;
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--f-blue) 35%, var(--f-border));
+  background: color-mix(in srgb, var(--f-blue) 12%, var(--f-card));
+  color: var(--f-blue);
+  font-weight: 800;
+  font-size: 13px;
+  box-shadow: var(--f-elev-1);
+}
+
+.f-insight-num-btn:hover {
+  background: var(--f-blue);
+  color: var(--f-on-accent, #fff);
+  border-color: var(--f-blue);
+}
+
 .f-insight-prompt-btn {
+  background: none;
+  border: none;
   color: var(--f-text);
   padding: 0;
   width: 100%;
@@ -6746,10 +6851,14 @@ label.f-file-btn:hover {
 .f-kpi-row--insights .f-kpi {
   position: relative;
   overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--f-blue) 28%, var(--f-border));
+  border: 1px solid color-mix(in srgb, var(--kpi-accent, var(--f-blue)) 35%, var(--f-border));
   background:
-    linear-gradient(145deg, color-mix(in srgb, var(--f-card) 92%, #fff), var(--f-card));
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14);
+    linear-gradient(
+      155deg,
+      color-mix(in srgb, var(--kpi-accent, var(--f-blue)) 8%, var(--f-card)),
+      var(--f-card)
+    );
+  box-shadow: var(--f-elev-2);
 }
 
 .f-kpi-row--insights .f-kpi::before {
@@ -6819,14 +6928,22 @@ label.f-file-btn:hover {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 2px 8px;
+  padding: 3px 10px;
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--v-accent, var(--f-blue)) 45%, var(--f-border));
-  background: color-mix(in srgb, var(--v-accent, var(--f-blue)) 14%, var(--f-card));
-  color: var(--f-text);
+  border: 1.5px solid color-mix(in srgb, var(--v-accent, var(--f-blue)) 55%, var(--f-border));
+  background: color-mix(in srgb, var(--v-accent, var(--f-blue)) 24%, var(--f-card));
+  color: color-mix(in srgb, var(--v-accent, var(--f-blue)) 72%, var(--f-text));
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.03em;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.12) inset,
+    var(--f-elev-1);
+}
+
+.f-variant-chip-btn:hover {
+  filter: brightness(1.08);
+  border-color: color-mix(in srgb, var(--v-accent, var(--f-blue)) 70%, var(--f-border));
 }
 
 .f-insight-prompt-row {
@@ -7743,6 +7860,73 @@ html.f-scrape-guard-active #root > *:not(.f-scrape-guard-scrim) {
   margin: 12px 0 0;
   font-size: 12.5px;
   line-height: 1.5;
+}
+
+/* Insights jump nav + section depth */
+.f-insights-jump-nav {
+  position: sticky;
+  top: 0;
+  z-index: 16;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 18px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--f-blue) 34%, var(--f-border));
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--f-card) 94%, #fff), var(--f-card));
+  box-shadow: var(--f-elev-2);
+}
+
+.f-insights-jump-btn {
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--f-blue) 38%, var(--f-border));
+  background: color-mix(in srgb, var(--f-blue) 10%, var(--f-card));
+  color: var(--f-text);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  box-shadow: var(--f-elev-1);
+}
+
+.f-insights-jump-btn:hover {
+  background: color-mix(in srgb, var(--f-blue) 20%, var(--f-card));
+  color: var(--f-blue);
+  border-color: color-mix(in srgb, var(--f-blue) 55%, var(--f-border));
+}
+
+.f-insights-section {
+  scroll-margin-top: 88px;
+  margin-bottom: 18px;
+}
+
+.f-insights-section--charts,
+.f-insights-section--versions,
+.f-insights-section--next,
+.f-insights-section--questions {
+  padding: 4px 0 0;
+}
+
+.f-insights-panel {
+  box-shadow:
+    var(--f-elev-2),
+    0 0 0 1px color-mix(in srgb, var(--f-blue) 8%, transparent);
+}
+
+.f-insights-section-label {
+  padding: 12px 16px 8px;
+  font-family: var(--f-display);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--f-blue);
+  border-bottom: 1px solid color-mix(in srgb, var(--f-blue) 18%, var(--f-border));
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--f-blue) 6%, var(--f-card)), var(--f-card));
 }
 
 .f-chart-foot {
