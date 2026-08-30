@@ -1794,29 +1794,31 @@ export default function QuestionCard({
             </select>
           </label>
         )}
-        <span className="pts">
-          <input
-            type="number"
-            min={0}
-            step={1}
-            value={q.points ?? 1}
-            onChange={(e) => local({ points: Number(e.target.value) || 0 })}
-            onBlur={() => commit()}
-            style={{ width: 56, marginTop: 0 }}
-            disabled={isGate}
-          />{' '}
-          Point{Number(q.points) === 1 ? '' : 's'}
-        </span>
-        {!isGate ? (
-          <label className="f-req-head">
+        <span className="f-qcard-head-meta">
+          <span className="pts">
             <input
-              type="checkbox"
-              checked={Boolean(q.required)}
-              onChange={(e) => commit({ ...q, required: e.target.checked })}
-            />
-            Required
-          </label>
-        ) : null}
+              type="number"
+              min={0}
+              step={1}
+              value={q.points ?? 1}
+              onChange={(e) => local({ points: Number(e.target.value) || 0 })}
+              onBlur={() => commit()}
+              style={{ width: 56, marginTop: 0 }}
+              disabled={isGate}
+            />{' '}
+            Point{Number(q.points) === 1 ? '' : 's'}
+          </span>
+          {!isGate ? (
+            <label className="f-req-head">
+              <input
+                type="checkbox"
+                checked={Boolean(q.required)}
+                onChange={(e) => commit({ ...q, required: e.target.checked })}
+              />
+              Required
+            </label>
+          ) : null}
+        </span>
       </div>
 
       {supportsVariants ? (

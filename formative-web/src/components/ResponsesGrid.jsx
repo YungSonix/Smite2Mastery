@@ -4,11 +4,12 @@ import { formatDuration, responseDurationMs, responseLeftPage, responseTabAwayCo
 import { presenceLabel, presenceStatus } from '../lib/triviaPresence';
 import { responsePercent, sortResponses } from '../lib/sortResponses';
 import { useLiveClock } from '../lib/useLiveClock';
-import { PaginationBar, usePagination } from '../lib/usePagination';
+import { PaginationBar, PageSizePicker, usePagination, readResponsesPageSize, writeResponsesPageSize } from '../lib/usePagination';
 import { buildSubmissionIntegrity, integrityFor } from '../lib/submissionIntegrity';
 import { responseMatchesQuery } from '../lib/responseSearch';
 import { responseIsTest } from '../lib/responseFilters';
-import { RESPONSES_PAGE_SIZE } from '../lib/usePagination';
+
+const Q_COLUMNS_STORAGE_KEY = 'trivia_responses_q_columns';
 
 function selectRow(r, e, onSelect) {
   if (!onSelect) return;
@@ -42,6 +43,31 @@ export default function ResponsesGrid({
   selectedQuestionId,
 }) {
   const [flaggedOnly, setFlaggedOnly] = useState(false);
+  const [pageSize, setPageSize] = useState(() => readResponsesPageSize());
+  const [showQuestionCols, setShowQuestionCols] = useState(() => {
+    try {
+      return localStorage.getItem(Q_COLUMNS_STORAGE_KEY) !== 'collapsed';
+    } catch {
+      return true;
+    }
+  });
+
+  const toggleQuestionCols = () => {
+    setShowQuestionCols((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem(Q_COLUMNS_STORAGE_KEY, next ? 'expanded' : 'collapsed');
+      } catch {
+        /* ignore */
+      }
+      return next;
+    });
+  };
+
+  const onPageSizeChange = (n) => {
+    setPageSize(n);
+    writeResponsesPageSize(n);
+  };
 
   const scored = scoredInsightQuestions(questions);
 
@@ -63,24 +89,24 @@ export default function ResponsesGrid({
   }, [responses, flaggedOnly, integrityIndex, searchQuery]);
 
   const sorted = useMemo(() => sortResponses(filteredResponses, sortBy), [filteredResponses, sortBy]);
-  const { page, setPage, pageCount, slice, from, to, reset } = usePagination(sorted.length);
+  const { page, setPage, pageCount, slice, from, to, reset } = usePagination(sorted.length, pageSize);
 
   useEffect(() => {
     reset();
-  }, [sortBy, filteredResponses?.length, searchQuery, reset]);
+  }, [sortBy, filteredResponses?.length, searchQuery, pageSize, reset]);
 
   useEffect(() => {
     if (!scrollToResponse?.id) return;
     const idx = sorted.findIndex((r) => r.id === scrollToResponse.id);
     if (idx < 0) return;
-    const targetPage = Math.floor(idx / RESPONSES_PAGE_SIZE);
+    const targetPage = Math.floor(idx / pageSize);
     setPage(targetPage);
     requestAnimationFrame(() => {
       document
         .querySelector(`[data-response-id="${scrollToResponse.id}"]`)
         ?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
     });
-  }, [scrollToResponse, sorted, setPage]);
+  }, [scrollToResponse, sorted, setPage, pageSize]);
 
   const visibleRows = slice(sorted);
 
@@ -199,17 +225,40 @@ export default function ResponsesGrid({
           already submitted if they open it again.
         </p>
       )}
-      <div className="f-panel-card f-submissions-card">
-        <div className="f-panel-card-head" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+      <div className={`f-panel-card f-submissions-card${showQuestionCols ? '' : ' is-q-collapsed'}`}>
+        <div className="f-panel-card-head f-submissions-toolbar">
+          <div className="f-submissions-toolbar-left">
             <h3 className="f-panel-card-title">Submissions</h3>
             <span className="f-live-count">{responses?.length || 0}</span>
           </div>
-          <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, cursor: 'pointer', userSelect: 'none' }}>
-            <input type="checkbox" checked={flaggedOnly} onChange={(e) => setFlaggedOnly(e.target.checked)} />
-            Flagged only
-          </label>
+          <div className="f-submissions-toolbar-right">
+            <PageSizePicker value={pageSize} onChange={onPageSizeChange} />
+            <button
+              type="button"
+              className={`f-outline-btn f-grid-expand-btn${showQuestionCols ? ' is-expanded' : ''}`}
+              onClick={toggleQuestionCols}
+              title={showQuestionCols ? 'Hide per-question columns' : 'Show per-question columns'}
+            >
+              {showQuestionCols ? 'Collapse Q columns' : 'Expand Q columns'}
+            </button>
+            <label className="f-flagged-only-toggle">
+              <input type="checkbox" checked={flaggedOnly} onChange={(e) => setFlaggedOnly(e.target.checked)} />
+              Flagged only
+            </label>
+          </div>
         </div>
+        {sorted.length > 0 ? (
+          <PaginationBar
+            className="f-pagination-top"
+            page={page}
+            pageCount={pageCount}
+            from={from}
+            to={to}
+            total={sorted.length}
+            pageSize={pageSize}
+            onPage={setPage}
+          />
+        ) : null}
         <table className="f-grid">
           <thead>
             <tr>
@@ -382,6 +431,7 @@ export default function ResponsesGrid({
           from={from}
           to={to}
           total={sorted.length}
+          pageSize={pageSize}
           onPage={setPage}
         />
         {!responses?.length ? (

@@ -105,6 +105,52 @@ function median(nums) {
   return sorted.length % 2 ? sorted[mid] : Math.round((sorted[mid - 1] + sorted[mid]) / 2);
 }
 
+function responsePctForRow(r) {
+  const max = Number(r.max_score) || 0;
+  const score = Number(r.score) || 0;
+  return max > 0 ? (score / max) * 100 : 0;
+}
+
+/** Top 27% vs bottom 27% correct rate gap (percentage points). */
+export function questionDiscrimination(rows, qId) {
+  const graded = (rows || [])
+    .filter((r) => r.per_question?.[qId] != null)
+    .map((r) => ({
+      pct: responsePctForRow(r),
+      correct: Number(r.per_question[qId]) > 0,
+    }));
+  if (graded.length < 6) return null;
+  const sorted = [...graded].sort((a, b) => b.pct - a.pct);
+  const slice = Math.max(1, Math.ceil(sorted.length * 0.27));
+  const top = sorted.slice(0, slice);
+  const bottom = sorted.slice(-slice);
+  const rate = (group) => (group.length ? group.filter((x) => x.correct).length / group.length : 0);
+  return Math.round((rate(top) - rate(bottom)) * 1000) / 10;
+}
+
+export function questionDifficultyVerdict(pct, discrimination) {
+  if (discrimination != null && discrimination < 10) return 'ambiguous';
+  if (pct >= 80) return 'too_easy';
+  if (pct <= 25) return 'too_hard';
+  if (pct >= 40 && pct <= 60) return 'middle';
+  return 'mixed';
+}
+
+export function verdictLabel(verdict) {
+  switch (verdict) {
+    case 'middle':
+      return 'Middle band (best signal)';
+    case 'too_easy':
+      return 'Most got it right';
+    case 'too_hard':
+      return 'Most missed it';
+    case 'ambiguous':
+      return 'Top and bottom scorers split oddly';
+    default:
+      return 'Mixed';
+  }
+}
+
 function timeBuckets(limitSec) {
   const cap = Math.max(0, Number(limitSec) || 0);
   if (cap >= 120) {
@@ -232,6 +278,9 @@ export function buildQuizInsights({ questions, responses, timeLimitSeconds } = {
         : null;
 
     const avgMs = times.length ? Math.round(times.reduce((a, b) => a + b, 0) / times.length) : null;
+    const medianMs = times.length ? median(times) : null;
+    const discrimination = questionDiscrimination(rows, q.id);
+    const verdict = seen ? questionDifficultyVerdict(Math.round((ok / seen) * 100), discrimination) : 'mixed';
     return {
       id: q.id,
       i,
@@ -241,6 +290,9 @@ export function buildQuizInsights({ questions, responses, timeLimitSeconds } = {
       ok,
       n: seen,
       avgMs,
+      medianMs,
+      discrimination,
+      verdict,
       variantCount: vCount,
       hasVariants,
       variantSkew,

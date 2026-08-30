@@ -260,6 +260,7 @@ export default function TakeQuiz() {
   const resultRef = useRef(null);
   const payloadRef = useRef({});
   const takeSessionTokenRef = useRef('');
+  const questionShownAtRef = useRef({});
   const timerCuesFiredRef = useRef(new Set());
   const [timerCue, setTimerCue] = useState(null);
   resultRef.current = result;
@@ -385,8 +386,13 @@ export default function TakeQuiz() {
   const setAnswer = (id, value) => {
     setAnswers((prev) => {
       const timings = { ...(prev.__timings || {}) };
-      if (timings[id] == null && startedAt) {
-        timings[id] = Math.max(0, Date.now() - Number(startedAt));
+      if (timings[id] == null) {
+        const shownAt = questionShownAtRef.current[id];
+        if (shownAt != null) {
+          timings[id] = Math.max(0, Math.round(performance.now() - shownAt));
+        } else if (startedAt) {
+          timings[id] = Math.max(0, Date.now() - Number(startedAt));
+        }
       }
       const next = { ...prev, [id]: value, __timings: timings };
       payloadRef.current = { ...payloadRef.current, answers: next };
@@ -488,6 +494,15 @@ export default function TakeQuiz() {
       io?.disconnect();
     };
   }, [showQuestions, orderedPlayable]);
+
+  useEffect(() => {
+    if (!showQuestions || !orderedPlayable.length) return;
+    const q = orderedPlayable[visibleQ - 1];
+    if (!q?.id) return;
+    if (questionShownAtRef.current[q.id] == null) {
+      questionShownAtRef.current[q.id] = performance.now();
+    }
+  }, [visibleQ, showQuestions, orderedPlayable]);
 
   useEffect(() => {
     if (!showQuestions) return;

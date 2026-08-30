@@ -8,6 +8,7 @@ import {
   formatDuration,
   pctWithCounts,
   scoredInsightQuestions,
+  verdictLabel,
   LOW_SAMPLE_SUBMISSIONS,
   MIN_VARIANT_N,
   SKEW_THRESHOLD_PP,
@@ -18,6 +19,7 @@ const SORT_COLS = [
   { id: 'num', label: '#', narrow: true },
   { id: 'pct', label: '%' },
   { id: 'n', label: 'n' },
+  { id: 'disc', label: 'Disc' },
   { id: 'time', label: 'Time' },
 ];
 
@@ -28,7 +30,8 @@ function shortPrompt(prompt, max = 70) {
 
 function nextSort(prev, col) {
   if (prev.col === col) return { col, dir: prev.dir * -1 };
-  const dir = col === 'num' ? 1 : col === 'pct' ? 1 : -1;
+  const dir =
+    col === 'num' ? 1 : col === 'pct' || col === 'disc' ? 1 : col === 'time' ? -1 : -1;
   return { col, dir };
 }
 
@@ -128,8 +131,13 @@ export default function InsightsPanel({ questions, responses, timeLimitSeconds, 
         case 'n':
           return (a.n - b.n) * dir;
         case 'time': {
-          const av = a.avgMs ?? -1;
-          const bv = b.avgMs ?? -1;
+          const av = a.medianMs ?? a.avgMs ?? -1;
+          const bv = b.medianMs ?? b.avgMs ?? -1;
+          return (av - bv) * dir;
+        }
+        case 'disc': {
+          const av = a.discrimination ?? -999;
+          const bv = b.discrimination ?? -999;
           return (av - bv) * dir;
         }
         case 'pct':
@@ -312,6 +320,19 @@ export default function InsightsPanel({ questions, responses, timeLimitSeconds, 
         >
         <div className="f-insights-list f-insights-question-table f-insights-panel">
           <div className="f-insights-section-label">All questions</div>
+          {stats.hasTimings ? (
+            <p className="f-insights-timing-note f-muted">
+              Time = median seconds on that question (new takes only). Older submissions show n/a.
+            </p>
+          ) : (
+            <p className="f-insights-timing-note f-muted">
+              Per-question time fills in as new takes record answer timing. Total finish time is in Charts.
+            </p>
+          )}
+          <div className="f-insights-legend" aria-hidden="true">
+            <span className="f-insights-legend-item is-middle">40–60% = best skill signal</span>
+            <span className="f-insights-legend-item is-ambiguous">Low disc = reword candidate</span>
+          </div>
           <div className="f-insights-table-head f-insights-table-head--sort">
             <button
               type="button"
@@ -336,8 +357,13 @@ export default function InsightsPanel({ questions, responses, timeLimitSeconds, 
           {sortedTable.map((q) => {
             const label = promptPlain(q.prompt) || 'Question';
             const tone = q.pct >= 70 ? 'high' : q.pct >= 40 ? 'mid' : 'low';
+            const rowTone =
+              q.verdict === 'ambiguous' ? 'ambiguous' : q.verdict === 'middle' ? 'middle' : '';
+            const timeLabel =
+              q.medianMs != null ? formatDuration(q.medianMs) : q.avgMs != null ? formatDuration(q.avgMs) : 'n/a';
+            const discLabel = q.discrimination != null ? `${q.discrimination}pp` : '—';
             return (
-              <div className="f-insight-row f-insight-table-row" key={q.id}>
+              <div className={`f-insight-row f-insight-table-row is-verdict-${rowTone || q.verdict}`} key={q.id}>
                 <button
                   type="button"
                   className="f-insight-num f-insight-num-btn"
@@ -388,7 +414,12 @@ export default function InsightsPanel({ questions, responses, timeLimitSeconds, 
                   <span className="f-muted">
                     {q.ok}/{q.n}
                   </span>
-                  <span className="f-muted">{q.avgMs != null ? formatDuration(q.avgMs) : 'n/a'}</span>
+                  <span className="f-insight-disc" title="Top 27% vs bottom 27% correct gap">
+                    {discLabel}
+                  </span>
+                  <span className="f-muted" title={verdictLabel(q.verdict)}>
+                    {timeLabel}
+                  </span>
                 </div>
               </div>
             );
