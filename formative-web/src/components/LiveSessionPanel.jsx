@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 import MediaStack from './MediaStack';
 import { listMediaUrls, questionMediaCrop, questionMediaCropSeed } from '../lib/questionMedia';
-import { formatIp } from '../lib/quizSettings';
 import {
   currentLiveQuestion,
   isGateQuestion,
@@ -120,7 +119,6 @@ export default function LiveSessionPanel({ session, sessions, questions, onClose
           {progress.answered}/{progress.total || session.question_count || '?'} answered · Tab away{' '}
           {Number(session.hidden_count) || 0}
         </span>
-        <span className="f-muted">IP {formatIp(session.ip_address)}</span>
         <span className="f-muted">Last seen {lastSeen}</span>
       </div>
 

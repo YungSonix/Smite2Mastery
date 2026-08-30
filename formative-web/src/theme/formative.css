@@ -3892,6 +3892,15 @@ label.f-file-btn:hover {
   padding: 8px 2px;
 }
 
+.f-grid .col-flag {
+  width: 32px;
+  min-width: 32px;
+  max-width: 36px;
+  text-align: center;
+  padding: 8px 2px;
+  vertical-align: middle;
+}
+
 .f-grid .ip-col {
   width: 88px;
   min-width: 80px;
@@ -5548,6 +5557,17 @@ label.f-file-btn:hover {
   line-height: 1.45;
 }
 
+.f-banner-info {
+  margin: 0 16px 8px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  color: #bae6fd;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
 .f-fab-up {
   bottom: 88px;
   width: 48px;
@@ -5658,8 +5678,10 @@ label.f-file-btn:hover {
 }
 
 .f-insights-v2 {
-  max-width: 1120px;
-  padding: 28px 20px 64px;
+  max-width: none;
+  width: 100%;
+  padding: 28px clamp(16px, 2.5vw, 32px) 64px;
+  box-sizing: border-box;
 }
 
 .f-insights-v2 .f-insights-head {
@@ -5787,7 +5809,173 @@ label.f-file-btn:hover {
 }
 
 .f-analytics-grid--insights {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.f-insights-span-4 {
+  grid-column: span 4;
+}
+
+.f-insights-span-6 {
+  grid-column: span 6;
+}
+
+.f-insights-span-12 {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 960px) {
+  .f-insights-span-4,
+  .f-insights-span-6 {
+    grid-column: span 12;
+  }
+}
+
+.f-insights-question-table .f-insights-table-head {
+  display: grid;
+  grid-template-columns: 36px 1fr 72px 48px 72px;
+  gap: 12px;
+  padding: 10px 16px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--f-muted);
+  border-bottom: 1px solid var(--f-border);
+}
+
+.f-insight-table-row {
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  align-items: center;
+}
+
+.f-insight-stats--table {
+  display: grid;
+  grid-template-columns: 72px 48px 72px;
+  gap: 8px;
+  text-align: right;
+}
+
+.f-variant-heatmap-scroll {
+  overflow-x: auto;
+}
+
+.f-variant-heatmap-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.f-variant-heatmap-table th,
+.f-variant-heatmap-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--f-border);
+  text-align: center;
+}
+
+.f-variant-heatmap-table th:first-child,
+.f-variant-heatmap-table td:first-child {
+  text-align: left;
+  font-weight: 700;
+}
+
+.f-variant-heatmap-table td.is-high {
+  background: color-mix(in srgb, #2dd4bf 18%, transparent);
+}
+
+.f-variant-heatmap-table td.is-mid {
+  background: color-mix(in srgb, #38bdf8 14%, transparent);
+}
+
+.f-variant-heatmap-table td.is-low {
+  background: color-mix(in srgb, #f87171 16%, transparent);
+}
+
+.f-variant-heatmap-table td.is-empty {
+  color: var(--f-muted);
+}
+
+.f-heatmap-pct {
+  display: block;
+  font-weight: 800;
+}
+
+.f-heatmap-overall {
+  font-weight: 700;
+  color: var(--f-blue);
+}
+
+.f-next-event-head h3 {
+  margin: 0 0 4px;
+}
+
+.f-next-event-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 12px;
+}
+
+@media (max-width: 1100px) {
+  .f-next-event-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .f-next-event-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.f-next-event-col h4 {
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: var(--f-blue);
+}
+
+.f-next-event-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.f-next-event-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.f-next-event-q {
+  font-weight: 700;
+}
+
+.f-next-event-reason {
+  color: var(--f-muted);
+}
+
+.f-student-panel-integrity {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #fbbf24;
+}
+
+.f-dup-ip-flag.is-soft {
+  opacity: 0.85;
+}
+
+.f-dup-ip-flag.is-strong,
+.f-dup-ip-flag.is-high {
+  filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.55));
 }
 
 .f-analytics-span-2 {

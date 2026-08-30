@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import MediaStack from './MediaStack';
 import { listMediaUrls } from '../lib/questionMedia';
-import { formatIp } from '../lib/quizSettings';
 import { typeLabel } from '../lib/questionTypes';
 import { promptPlain } from '../lib/promptPlain';
 import { formatDuration, responseDurationMs } from '../lib/triviaInsights';
@@ -19,6 +18,7 @@ import {
 } from '../lib/formatResponseAnswer';
 import { orderQuestionsLikeStudent, applyVariant, extractVariantMap, extractQuestionOrder } from '../lib/triviaVariants';
 import { scoredInsightQuestions } from '../lib/triviaInsights';
+import { buildSubmissionIntegrity, integrityFor } from '../lib/submissionIntegrity';
 
 function MenuIcon({ name }) {
   const props = {
@@ -122,6 +122,11 @@ export default function StudentResponsePanel({
   );
   const prev = index > 0 ? responses[index - 1] : null;
   const next = index >= 0 && index < (responses?.length || 0) - 1 ? responses[index + 1] : null;
+
+  const integrity = useMemo(() => {
+    const map = buildSubmissionIntegrity(responses);
+    return integrityFor(response?.id, map);
+  }, [responses, response?.id]);
 
   const variantMap = useMemo(
     () => extractVariantMap(response?.answers) || {},
@@ -337,7 +342,17 @@ export default function StudentResponsePanel({
       </header>
 
       <div className="f-student-panel-meta">
-        <span className="f-muted">IP {formatIp(response.ip_address)}</span>
+        {integrity.level !== 'none' ? (
+          <span className="f-student-panel-integrity" title={integrity.title}>
+            <span className={`f-dup-ip-flag is-${integrity.level}`} aria-hidden>
+              ⚑
+            </span>
+            Possible alt account
+            {integrity.peers?.length
+              ? ` — also ${integrity.peers.map((p) => p.discord || p.ingame).filter(Boolean).join(', ')}`
+              : ''}
+          </span>
+        ) : null}
         {shuffleOn ? (
           <span className="f-muted f-student-panel-order-note">
             Numbers = their take order (grid columns use editor order).

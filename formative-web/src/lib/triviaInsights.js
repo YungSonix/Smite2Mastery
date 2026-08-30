@@ -292,5 +292,110 @@ export function buildQuizInsights({ questions, responses, timeLimitSeconds } = {
     medianDurationMs: median(durations),
     timeRows: durations.length ? buckets : [],
     hasTimings: perQuestion.some((q) => q.avgMs != null),
+    nextEvent: buildNextEventInsights(perQuestion, n),
+  };
+}
+
+const MIN_VARIANT_N = 5;
+const SKEW_THRESHOLD_PP = 20;
+const HARD_THRESHOLD_PCT = 40;
+const EASY_THRESHOLD_PCT = 90;
+
+export function buildNextEventInsights(perQuestion, submissionCount) {
+  const rewrite = [];
+  const skewed = [];
+  const keep = [];
+  const trim = [];
+
+  const timed = perQuestion.filter((q) => q.avgMs != null);
+  const medianQMs = timed.length
+    ? timed.map((q) => q.avgMs).sort((a, b) => a - b)[Math.floor(timed.length / 2)]
+    : null;
+
+  for (const q of perQuestion) {
+    if (q.n < 5) continue;
+    const label = q.label;
+    const prompt = q.prompt;
+
+    if (q.pct < HARD_THRESHOLD_PCT) {
+      rewrite.push({
+        id: q.id,
+        label,
+        prompt,
+        pct: q.pct,
+        n: q.n,
+        severity: 'high',
+        reason: `Only ${q.pct}% correct — clarify wording or ease difficulty`,
+      });
+    } else if (
+      q.pct >= HARD_THRESHOLD_PCT &&
+      q.pct <= 55 &&
+      medianQMs != null &&
+      q.avgMs != null &&
+      q.avgMs > medianQMs * 1.5
+    ) {
+      rewrite.push({
+        id: q.id,
+        label,
+        prompt,
+        pct: q.pct,
+        n: q.n,
+        severity: 'medium',
+        reason: 'Slow and middling accuracy — may be confusing',
+      });
+    }
+
+    if (q.pct > EASY_THRESHOLD_PCT) {
+      trim.push({
+        id: q.id,
+        label,
+        prompt,
+        pct: q.pct,
+        reason: 'Very high correct rate — consider swapping for harder content',
+      });
+    } else if (q.pct >= 55 && q.pct <= 80) {
+      const slots = (q.variants || []).filter((s) => s.n >= MIN_VARIANT_N);
+      const delta =
+        slots.length >= 2
+          ? Math.max(...slots.map((s) => s.pct)) - Math.min(...slots.map((s) => s.pct))
+          : 0;
+      if (delta < 10) {
+        keep.push({ id: q.id, label, prompt, pct: q.pct });
+      }
+    }
+
+    if (q.hasVariants) {
+      const slots = (q.variants || []).filter((s) => s.n >= MIN_VARIANT_N);
+      if (slots.length >= 2) {
+        const delta = Math.max(...slots.map((s) => s.pct)) - Math.min(...slots.map((s) => s.pct));
+        if (delta >= SKEW_THRESHOLD_PP) {
+          skewed.push({
+            id: q.id,
+            label,
+            prompt,
+            delta,
+            slots,
+            reason: 'Variant difficulty skew — rebalance or retire the harder version',
+          });
+        }
+      }
+    }
+  }
+
+  rewrite.sort((a, b) => a.pct - b.pct);
+  skewed.sort((a, b) => b.delta - a.delta);
+
+  return {
+    rewrite: rewrite.slice(0, 8),
+    skewed: skewed.slice(0, 8),
+    keep: keep.slice(0, 8),
+    trim: trim.slice(0, 8),
+    summary: {
+      rewrite: rewrite.length,
+      skewed: skewed.length,
+      keep: keep.length,
+      trim: trim.length,
+      submissions: submissionCount,
+    },
   };
 }

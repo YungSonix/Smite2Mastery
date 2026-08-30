@@ -1,12 +1,11 @@
 import { useEffect, useMemo } from 'react';
 import { liveSessionSummary } from '../lib/liveSessionStats';
-import { formatIp } from '../lib/quizSettings';
 import { formatDuration, responseDurationMs, responseLeftPage, responseTabAwayCount, scoredInsightQuestions } from '../lib/triviaInsights';
 import { presenceLabel, presenceStatus } from '../lib/triviaPresence';
 import { responsePercent, sortResponses } from '../lib/sortResponses';
 import { useLiveClock } from '../lib/useLiveClock';
 import { PaginationBar, usePagination } from '../lib/usePagination';
-import { duplicateIpCounts, duplicateIpPeers, sharedIpPeerSummary, sharedIpPeerTitle, sharedIpPeersFor, sharedIpSubmissionCount } from '../lib/duplicateIp';
+import { buildSubmissionIntegrity, integrityFor } from '../lib/submissionIntegrity';
 
 function selectRow(r, e, onSelect) {
   if (!onSelect) return;
@@ -15,6 +14,13 @@ function selectRow(r, e, onSelect) {
   requestAnimationFrame(() => {
     row?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
   });
+}
+
+function peerSummary(peers) {
+  if (!peers?.length) return '';
+  const names = peers.slice(0, 2).map((p) => p.discord || p.ingame || '?');
+  const extra = peers.length > 2 ? ` +${peers.length - 2}` : '';
+  return names.join(', ') + extra;
 }
 
 export default function ResponsesGrid({
@@ -41,8 +47,7 @@ export default function ResponsesGrid({
 
   const visibleRows = slice(sorted);
 
-  const ipCounts = useMemo(() => duplicateIpCounts(responses), [responses]);
-  const ipPeers = useMemo(() => duplicateIpPeers(responses), [responses]);
+  const integrityIndex = useMemo(() => buildSubmissionIntegrity(responses), [responses]);
 
   const totalsAvg = (() => {
     if (!responses?.length) return 0;
@@ -103,7 +108,6 @@ export default function ResponsesGrid({
                 <th className="col-status">Status</th>
                 <th className="col-progress">Answered</th>
                 <th className="col-focus">Left tab</th>
-                <th className="ip-col">IP</th>
               </tr>
             </thead>
             <tbody>
@@ -148,11 +152,6 @@ export default function ResponsesGrid({
                     <td className="col-focus" title="Times the quiz tab went to the background">
                       {Number(s.hidden_count) || 0}
                     </td>
-                    <td className="ip-col">
-                      <code className="f-ip" title={s.ip_address || ''}>
-                        {formatIp(s.ip_address)}
-                      </code>
-                    </td>
                   </tr>
                 );
               })}
@@ -175,6 +174,9 @@ export default function ResponsesGrid({
             <tr>
               <th className="col-rank" title="Rank in current sort">
                 #
+              </th>
+              <th className="col-flag" title="Possible alt account — same name, timing, or pattern">
+                ⚑
               </th>
               <th className="col-discord">Discord</th>
               <th className="col-ingame">In-Game</th>
@@ -200,12 +202,12 @@ export default function ResponsesGrid({
                   </button>
                 </th>
               ))}
-              <th className="ip-col">IP</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td className="col-rank f-muted">—</td>
+              <td className="col-flag f-muted">—</td>
               <td className="f-muted col-discord">Avg</td>
               <td className="f-muted col-ingame">—</td>
               <td className="totals-col">{totalsAvg}%</td>
@@ -229,7 +231,6 @@ export default function ResponsesGrid({
                   </td>
                 );
               })}
-              <td className="ip-col f-muted">—</td>
             </tr>
             {visibleRows.map((r, rowIdx) => {
               const rank = from + rowIdx;
@@ -238,11 +239,9 @@ export default function ResponsesGrid({
               const tabAway = responseTabAwayCount(r);
               const leftPage = responseLeftPage(r);
               const initial = (r.discord_username || '?').charAt(0).toUpperCase();
-              const ipShareCount = sharedIpSubmissionCount(r.ip_address, ipCounts);
-              const sharedIp = ipShareCount > 1;
-              const ipPeersList = sharedIpPeersFor(r, ipPeers);
-              const peerSummary = sharedIpPeerSummary(ipPeersList);
-              const peerTitle = sharedIpPeerTitle(ipPeersList);
+              const integrity = integrityFor(r.id, integrityIndex);
+              const flagged = integrity.level !== 'none';
+              const flagTitle = integrity.title || integrity.reasons?.join(' · ') || '';
               return (
                 <tr
                   key={r.id}
@@ -253,6 +252,17 @@ export default function ResponsesGrid({
                   <td className="col-rank" title={`#${rank} in list`}>
                     {rank}
                   </td>
+                  <td className="col-flag">
+                    {flagged ? (
+                      <span
+                        className={`f-dup-ip-flag is-${integrity.level}`}
+                        title={flagTitle}
+                        aria-label={flagTitle}
+                      >
+                        ⚑
+                      </span>
+                    ) : null}
+                  </td>
                   <td className="col-discord">
                     <div className="f-student">
                       <div className="f-avatar" style={{ width: 22, height: 22, fontSize: 11 }}>
@@ -260,6 +270,12 @@ export default function ResponsesGrid({
                       </div>
                       <span className="f-student-name" title={r.discord_username}>
                         {r.discord_username}
+                        {flagged && integrity.peers?.length ? (
+                          <span className="f-dup-ip-peers" title={flagTitle}>
+                            {' '}
+                            · also {peerSummary(integrity.peers)}
+                          </span>
+                        ) : null}
                       </span>
                     </div>
                   </td>
@@ -307,25 +323,6 @@ export default function ResponsesGrid({
                       </td>
                     );
                   })}
-                  <td className="ip-col">
-                    <span className={`f-ip-cell${sharedIp ? ' has-shared-ip' : ''}`}>
-                      {sharedIp ? (
-                        <span className="f-dup-ip-flag" title={peerTitle} aria-label={peerTitle}>
-                          ⚑
-                        </span>
-                      ) : null}
-                      <span className="f-ip-cell-main">
-                        <code className="f-ip" title={r.ip_address || ''}>
-                          {formatIp(r.ip_address)}
-                        </code>
-                        {sharedIp && peerSummary ? (
-                          <span className="f-dup-ip-peers" title={peerTitle}>
-                            also {peerSummary}
-                          </span>
-                        ) : null}
-                      </span>
-                    </span>
-                  </td>
                 </tr>
               );
             })}
@@ -341,8 +338,8 @@ export default function ResponsesGrid({
         />
         {!responses?.length ? (
           <p className="f-muted" style={{ padding: '12px 4px' }}>
-            No submissions yet. After someone takes the quiz, Discord, In-Game Name, and IP appear here
-            (host-only). Local testing shows IP as localhost.
+            No submissions yet. After someone takes the quiz, Discord and in-game name appear here
+            (host-only).
           </p>
         ) : null}
       </div>

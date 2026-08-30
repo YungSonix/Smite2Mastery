@@ -11,7 +11,6 @@ export const RESPONSE_SORT_OPTIONS = [
   { id: 'score_lo', label: 'Score % (Lo–Hi)' },
   { id: 'time_hi', label: 'Time (longest first)' },
   { id: 'time_lo', label: 'Time (shortest first)' },
-  { id: 'ip_az', label: 'IP (A–Z)' },
 ];
 
 export function responsePercent(r) {
@@ -70,8 +69,6 @@ export function sortResponses(responses, sortId) {
       );
     case 'submitted_asc':
       return list.sort((a, b) => cmpNumNullLast(submittedMs(a), submittedMs(b), 1));
-    case 'ip_az':
-      return list.sort((a, b) => cmpStr(a.ip_address, b.ip_address, 1));
     case 'submitted_desc':
     default:
       return list.sort((a, b) => cmpNumNullLast(submittedMs(a), submittedMs(b), -1));

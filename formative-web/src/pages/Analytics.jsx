@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import HostShell from '../components/HostShell';
 import { BarChart, Donut } from '../components/HostCharts';
 import { hostApi } from '../lib/api';
+import { buildSubmissionIntegrity, integrityPairsCount } from '../lib/submissionIntegrity';
 
 export default function Analytics() {
   const [data, setData] = useState({ quizzes: [], questions: [], responses: [] });
@@ -41,7 +42,13 @@ export default function Analytics() {
       })
       .filter((x) => x != null);
     const avg = pcts.length ? Math.round(pcts.reduce((a, b) => a + b, 0) / pcts.length) : 0;
-    const uniqueIps = new Set(responses.map((r) => r.ip_address).filter(Boolean)).size;
+    const integrityIndex = buildSubmissionIntegrity(responses);
+    const reviewPairs = integrityPairsCount(responses, integrityIndex);
+    let flagged = 0;
+    for (const r of responses) {
+      const entry = integrityIndex.get(r.id);
+      if (entry?.level && entry.level !== 'none') flagged += 1;
+    }
     const pass = pcts.filter((p) => p >= 70).length;
     const fail = pcts.length - pass;
 
@@ -107,27 +114,25 @@ export default function Analytics() {
       .sort((a, b) => a.value - b.value)
       .slice(0, 10);
 
-    const ipCounts = {};
-    for (const r of responses) {
-      if (!r.ip_address) continue;
-      if (!ipCounts[r.ip_address]) ipCounts[r.ip_address] = new Set();
-      ipCounts[r.ip_address].add(String(r.discord_username || '').toLowerCase());
-    }
-    const multiIp = Object.entries(ipCounts)
-      .filter(([, set]) => set.size > 1)
-      .map(([ip, set]) => ({ label: ip, value: set.size }))
-      .sort((a, b) => b.value - a.value)
-      .slice(0, 8);
+    const integrityRows = responses
+      .map((r) => integrityIndex.get(r.id))
+      .filter((entry) => entry?.level && entry.level !== 'none')
+      .slice(0, 8)
+      .map((entry, i) => ({
+        label: entry.peers?.[0]?.discord || `Flag ${i + 1}`,
+        value: entry.score,
+      }));
 
     return {
       n,
       avg,
-      uniqueIps,
+      flagged,
+      reviewPairs,
       buckets,
       dayRows,
       quizRows,
       questionRows,
-      multiIp,
+      integrityRows,
       passFail: [
         { label: '≥70%', value: pass, color: '#2dd4bf' },
         { label: '<70%', value: fail, color: '#f87171' },
@@ -166,8 +171,8 @@ export default function Analytics() {
           <div className="f-kpi-value">{stats.avg}%</div>
         </div>
         <div className="f-kpi">
-          <div className="f-kpi-label">Unique IPs</div>
-          <div className="f-kpi-value">{stats.uniqueIps}</div>
+          <div className="f-kpi-label">Review flags</div>
+          <div className="f-kpi-value">{stats.flagged}</div>
         </div>
         <div className="f-kpi">
           <div className="f-kpi-label">Quizzes</div>
@@ -184,11 +189,11 @@ export default function Analytics() {
           title="Avg score by quiz"
           rows={stats.quizRows.map((r) => ({ label: r.label, value: r.value }))}
         />
-        <BarChart title="IPs with multiple Discord names" rows={stats.multiIp} />
+        <BarChart title="Integrity signal strength" rows={stats.integrityRows} />
       </div>
 
       <p className="f-muted" style={{ marginTop: 16, fontSize: 12 }}>
-        Integrity signals (including IP) stay on host pages only.
+        Review flags use name, timing, and score patterns — not IP addresses. Host pages only.
       </p>
     </HostShell>
   );

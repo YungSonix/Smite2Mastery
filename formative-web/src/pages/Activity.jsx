@@ -17,7 +17,7 @@ import {
   readImageAsDataUrl,
 } from '../lib/imageUpload';
 import { resolveBannerUrl } from '../lib/mediaUrl';
-import { mergeQuizSettings, mergeDraftQuizSettings } from '../lib/quizSettings';
+import { mergeQuizSettings, mergeDraftQuizSettings, stripAssignSettings, quizWindowState } from '../lib/quizSettings';
 import { quizThemeProps } from '../lib/quizThemes';
 import { randomizeQuestion } from '../lib/triviaRemix';
 import { applyPromptTextStyle } from '../lib/richText';
@@ -394,10 +394,10 @@ export default function Activity() {
       if (quizDirty || bannerDirty || instructionsDirty) {
         const patch = {
           title: q.title,
-          settings: {
+          settings: stripAssignSettings({
             ...mergeQuizSettings(q.settings),
             instructions: instructionsNow,
-          },
+          }),
         };
         if (bannerDirty) patch.banner_url = q.banner_url;
         const data = await hostApi('/api/trivia/host', {
@@ -676,6 +676,7 @@ export default function Activity() {
   }
 
   const settings = mergeQuizSettings(quiz?.settings);
+  const assignWindow = quizWindowState(settings);
 
   const patchSettings = (partial) => {
     let nextSettings = null;
@@ -842,6 +843,21 @@ export default function Activity() {
       {draftWarning ? (
         <div className="f-banner-warn" role="status">
           {draftWarning}
+        </div>
+      ) : null}
+      {quiz?.is_assigned && assignWindow.status === 'closed' ? (
+        <div className="f-banner-warn" role="status">
+          Quiz window closed
+          {assignWindow.closesAt
+            ? ` at ${new Date(assignWindow.closesAt).toLocaleString()} (${localTimeZoneLabel()})`
+            : ''}
+          . Open Assign and extend or clear the close time so take links work again.
+        </div>
+      ) : null}
+      {quiz?.is_assigned && assignWindow.status === 'open' && assignWindow.closesAt ? (
+        <div className="f-banner-info" role="status">
+          Closes {new Date(assignWindow.closesAt).toLocaleString()} ({localTimeZoneLabel()}). After that,
+          students cannot submit until you extend the window.
         </div>
       ) : null}
 

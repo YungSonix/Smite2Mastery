@@ -153,3 +153,116 @@ export function KpiStrip({ items }) {
     </div>
   );
 }
+
+/** Compact matrix: rows = questions, columns = variant letters. */
+export function VariantHeatmap({ title, questions, empty = 'No variant data yet' }) {
+  const rows = (questions || []).filter((q) => q.hasVariants && q.variants?.some((v) => v.n > 0));
+  if (!rows.length) {
+    return (
+      <div className="f-chart-card is-glow f-variant-heatmap">
+        <h3>{title}</h3>
+        <p className="f-muted">{empty}</p>
+      </div>
+    );
+  }
+
+  const letters = ['A', 'B', 'C', 'D', 'E'];
+
+  return (
+    <div className="f-chart-card is-glow f-variant-heatmap">
+      <h3>{title}</h3>
+      <div className="f-variant-heatmap-scroll">
+        <table className="f-variant-heatmap-table">
+          <thead>
+            <tr>
+              <th>Q</th>
+              {letters.map((l) => (
+                <th key={l}>{l}</th>
+              ))}
+              <th>Overall</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((q) => (
+              <tr key={q.id}>
+                <th scope="row">{q.label}</th>
+                {letters.map((letter, idx) => {
+                  const slot = q.variants[idx];
+                  if (!slot || slot.n === 0) {
+                    return (
+                      <td key={letter} className="is-empty">
+                        —
+                      </td>
+                    );
+                  }
+                  const tone = slot.pct >= 70 ? 'high' : slot.pct >= 40 ? 'mid' : 'low';
+                  return (
+                    <td key={letter} className={`is-${tone}`} title={`n=${slot.n}`}>
+                      <span className="f-heatmap-pct">{slot.pct}%</span>
+                      <span className="f-muted">n={slot.n}</span>
+                    </td>
+                  );
+                })}
+                <td className="f-heatmap-overall">{q.pct}%</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+function NextEventList({ title, items, empty }) {
+  if (!items?.length) {
+    return (
+      <div className="f-next-event-col">
+        <h4>{title}</h4>
+        <p className="f-muted">{empty}</p>
+      </div>
+    );
+  }
+  return (
+    <div className="f-next-event-col">
+      <h4>{title}</h4>
+      <ul className="f-next-event-list">
+        {items.map((item) => (
+          <li key={item.id}>
+            <span className="f-next-event-q">{item.label}</span>
+            <span className="f-next-event-reason">{item.reason || `${item.pct}%`}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export function NextEventSection({ data }) {
+  if (!data) return null;
+  return (
+    <div className="f-chart-card is-glow f-next-event">
+      <div className="f-next-event-head">
+        <h3>Prep for next event</h3>
+        <p className="f-muted">
+          Based on {data.summary?.submissions || 0} submission
+          {data.summary?.submissions === 1 ? '' : 's'} — rewrite skewed or confusing items, keep stable
+          questions, trim giveaways.
+        </p>
+      </div>
+      <div className="f-next-event-grid">
+        <NextEventList
+          title="Rewrite candidates"
+          items={data.rewrite}
+          empty="No weak questions flagged yet"
+        />
+        <NextEventList
+          title="Skewed variants"
+          items={data.skewed?.map((s) => ({ ...s, reason: s.reason }))}
+          empty="Variant balance looks OK"
+        />
+        <NextEventList title="Keep" items={data.keep?.map((k) => ({ ...k, reason: `${k.pct}% · stable` }))} empty="—" />
+        <NextEventList title="Trim / swap" items={data.trim} empty="Nothing too easy flagged" />
+      </div>
+    </div>
+  );
+}
