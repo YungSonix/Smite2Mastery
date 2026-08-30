@@ -38,6 +38,7 @@
     "trivia:smoke": "node scripts/trivia-prod-smoke.mjs",
     "trivia:submit-sanity": "node scripts/trivia-submit-sanity.mjs",
     "trivia:regrade-quiz": "node scripts/trivia-regrade-quiz.mjs",
+    "trivia:backfill-question-responses": "node scripts/trivia-backfill-question-responses.mjs",
     "trivia:presence-soak": "node scripts/trivia-presence-soak.mjs",
     "trivia:device-sims": "node scripts/formative-device-sims.mjs",
     "formative:trivia:device-sims": "node scripts/formative-device-sims.mjs",
