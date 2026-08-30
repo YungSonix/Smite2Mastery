@@ -216,7 +216,7 @@ export default function ResponsesGrid({
               <th className="col-rank" title="Rank in current sort">
                 #
               </th>
-              <th className="col-flag" title="Possible alt account: same name, timing, or pattern">
+              <th className="col-flag" title="Duplicate Discord, in-game name, or IP address">
                 ⚑
               </th>
               <th className="col-discord">Discord</th>

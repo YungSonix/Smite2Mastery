@@ -711,6 +711,7 @@ label.f-file-btn:hover {
   font-family: var(--f-font);
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
 }
 
 .f-topbar {
@@ -937,6 +938,31 @@ label.f-file-btn:hover {
   gap: 4px 8px;
   width: 100%;
   overflow: visible;
+}
+
+.f-host-workspace {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+}
+
+.f-host-workspace--edit .f-edit-search-wrap {
+  max-width: none;
+  margin: 0;
+  padding: 8px clamp(16px, 2.5vw, 32px) 0;
+}
+
+.f-host-workspace--edit .f-edit-layout {
+  grid-template-columns: 52px minmax(0, 1fr);
+  justify-content: stretch;
+  padding: 0 clamp(16px, 2.5vw, 32px);
+  box-sizing: border-box;
+}
+
+.f-host-workspace--edit .f-edit-scroll {
+  max-width: none;
+  margin: 0;
+  padding: 24px 0 max(240px, 32vh, calc(120px + env(safe-area-inset-bottom, 0px)));
 }
 
 .f-edit-search-wrap {
@@ -3761,7 +3787,7 @@ label.f-file-btn:hover {
 }
 
 .f-responses {
-  padding: 16px 20px 40px;
+  padding: 28px clamp(16px, 2.5vw, 32px) 64px;
   overflow: auto;
   display: flex;
   gap: 0;

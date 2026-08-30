@@ -177,7 +177,7 @@ export default function InsightsPanel({ questions, responses, timeLimitSeconds, 
               {flaggedCount} submission{flaggedCount === 1 ? '' : 's'} flagged for review
             </strong>
             {reviewPairs ? ` (${reviewPairs} linked pair${reviewPairs === 1 ? '' : 's'})` : ''}
-            . Possible alt accounts. Check Responses before awarding prizes.
+            . Possible duplicate Discord, in-game name, or IP. Shared networks can look like a match. Check Responses before awarding prizes.
           </span>
         </div>
       ) : null}

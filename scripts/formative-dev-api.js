@@ -331,7 +331,7 @@ async function handlePresence(req, res) {
       existing?.client_started_at ||
       (Number.isFinite(started) && started > 0 ? new Date(started).toISOString() : null),
     client_session_token: sessionToken || existing?.client_session_token || null,
-    ip_address: null,
+    ip_address: readIp(req) || existing?.ip_address || null,
     user_agent: req.headers['user-agent'] || existing?.user_agent || null,
   };
   dropMemorySession(record);
@@ -764,7 +764,7 @@ async function handleSubmit(req, res) {
     score: graded.score,
     max_score: graded.maxScore,
     per_question: graded.perQuestion,
-    ip_address: null,
+    ip_address: readIp(req) || null,
     user_agent: req.headers['user-agent'] || null,
     submitted_at: new Date().toISOString(),
   };

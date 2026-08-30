@@ -193,7 +193,7 @@ export default function Analytics() {
       </div>
 
       <p className="f-muted" style={{ marginTop: 16, fontSize: 12 }}>
-        Review flags use name, timing, and score patterns, not IP addresses. Host pages only.
+        Review flags use duplicate Discord, in-game name, or IP address (host only). Shared Wi‑Fi can flag unrelated players.
       </p>
     </HostShell>
   );

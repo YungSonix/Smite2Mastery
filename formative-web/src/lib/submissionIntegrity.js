@@ -1,6 +1,3 @@
-import { responseDurationMs } from './triviaInsights';
-import { responsePercent } from './sortResponses';
-
 function normDiscord(s) {
   return String(s || '')
     .trim()
@@ -17,25 +14,27 @@ function normIngame(s) {
     .replace(/[._\s-]+/g, '');
 }
 
+function normIp(ip) {
+  const raw = String(ip || '').trim();
+  if (!raw || raw.toLowerCase() === 'unknown') return '';
+  if (raw.startsWith('::ffff:')) return raw.slice(7);
+  return raw;
+}
+
 function peerLabel(peer) {
   if (!peer) return '?';
   if (peer.ingame && peer.discord) return `${peer.discord} (${peer.ingame})`;
   return peer.discord || peer.ingame || '?';
 }
 
-function submittedMs(r) {
-  const t = Date.parse(r?.submitted_at);
-  return Number.isFinite(t) ? t : null;
-}
-
 function integrityLevel(score) {
-  if (score >= 8) return 'high';
-  if (score >= 5) return 'strong';
-  if (score >= 3) return 'soft';
+  if (score >= 10) return 'high';
+  if (score >= 6) return 'strong';
+  if (score >= 5) return 'soft';
   return 'none';
 }
 
-/** Score pairs of submissions for likely same-person / alt accounts (no IP). */
+/** Flag duplicate Discord, in-game name, or IP (host-only; no timing heuristics). */
 export function buildSubmissionIntegrity(responses) {
   const rows = (responses || []).map((r) => ({
     id: r.id,
@@ -43,14 +42,12 @@ export function buildSubmissionIntegrity(responses) {
     ingame: String(r.ingame_name || '').trim(),
     discordKey: normDiscord(r.discord_username),
     ingameKey: normIngame(r.ingame_name),
-    submitted: submittedMs(r),
-    duration: responseDurationMs(r),
-    score: Number(r.score) || 0,
-    pct: responsePercent(r),
+    ipKey: normIp(r.ip_address),
   }));
 
   const byIngame = new Map();
   const byDiscord = new Map();
+  const byIp = new Map();
   for (const row of rows) {
     if (row.ingameKey.length >= 3) {
       if (!byIngame.has(row.ingameKey)) byIngame.set(row.ingameKey, []);
@@ -59,6 +56,10 @@ export function buildSubmissionIntegrity(responses) {
     if (row.discordKey) {
       if (!byDiscord.has(row.discordKey)) byDiscord.set(row.discordKey, []);
       byDiscord.get(row.discordKey).push(row);
+    }
+    if (row.ipKey) {
+      if (!byIp.has(row.ipKey)) byIp.set(row.ipKey, []);
+      byIp.get(row.ipKey).push(row);
     }
   }
 
@@ -83,6 +84,14 @@ export function buildSubmissionIntegrity(responses) {
       peers.set(other.id, existing);
     };
 
+    if (row.discordKey) {
+      for (const other of byDiscord.get(row.discordKey) || []) {
+        if (other.id !== row.id) {
+          addPeer(other, `Duplicate Discord: ${row.discord}`, 6);
+        }
+      }
+    }
+
     if (row.ingameKey.length >= 3) {
       for (const other of byIngame.get(row.ingameKey) || []) {
         if (other.discordKey !== row.discordKey) {
@@ -91,45 +100,16 @@ export function buildSubmissionIntegrity(responses) {
       }
     }
 
-    if (row.discordKey) {
-      for (const other of byDiscord.get(row.discordKey) || []) {
+    if (row.ipKey) {
+      for (const other of byIp.get(row.ipKey) || []) {
         if (other.id !== row.id) {
-          addPeer(other, `Same Discord: ${row.discord}`, 6);
+          addPeer(other, 'Same IP address', 5);
         }
-      }
-      for (const other of rows) {
-        if (other.id === row.id || !other.discordKey) continue;
-        if (
-          other.discordKey !== row.discordKey &&
-          (other.discordKey.startsWith(row.discordKey) ||
-            row.discordKey.startsWith(other.discordKey) ||
-            other.discordKey.slice(0, 4) === row.discordKey.slice(0, 4))
-        ) {
-          addPeer(other, `Similar Discord to ${other.discord}`, 3);
-        }
-      }
-    }
-
-    for (const other of rows) {
-      if (other.id === row.id) continue;
-      if (row.submitted != null && other.submitted != null) {
-        const delta = Math.abs(row.submitted - other.submitted);
-        if (delta <= 90_000) {
-          addPeer(other, 'Submitted within 90 seconds', 2);
-        }
-      }
-      if (
-        row.duration != null &&
-        other.duration != null &&
-        Math.abs(row.duration - other.duration) <= 5000 &&
-        Math.abs(row.score - other.score) <= 1
-      ) {
-        addPeer(other, 'Nearly identical finish time and score', 3);
       }
     }
 
     const peerList = [...peers.values()];
-    const level = integrityLevel(score);
+    const level = peerList.length ? integrityLevel(score) : 'none';
     out.set(row.id, {
       score,
       level,
@@ -138,10 +118,10 @@ export function buildSubmissionIntegrity(responses) {
       peerCount: peerList.length,
       title:
         peerList.length > 0
-          ? `Review suggested: ${peerList.map((p) => peerLabel(p)).join(' · ')}`
-          : reasons.length
-            ? `Review suggested: ${reasons.join(' · ')}`
-            : '',
+          ? peerList
+              .map((p) => `${peerLabel(p)} (${(p.reasons || []).join(', ')})`)
+              .join(' · ')
+          : '',
     });
   }
 

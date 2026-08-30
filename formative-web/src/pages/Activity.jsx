@@ -1146,7 +1146,7 @@ export default function Activity() {
       ) : null}
 
       {tab === 'edit' && (
-        <>
+        <div className="f-host-workspace f-host-workspace--edit">
           <EditQuestionSearch
             questions={questions}
             query={editSearchQuery}
@@ -1476,7 +1476,7 @@ export default function Activity() {
           </div>
           </div>
         </div>
-        </>
+        </div>
       )}
 
       {tab === 'responses' && (

@@ -348,9 +348,9 @@ export default function StudentResponsePanel({
             <span className={`f-dup-ip-flag is-${integrity.level}`} aria-hidden>
               ⚑
             </span>
-            Possible alt account
+            Possible duplicate
             {integrity.peers?.length
-              ? `, also ${integrity.peers.map((p) => p.discord || p.ingame).filter(Boolean).join(', ')}`
+              ? ` · also ${integrity.peers.map((p) => p.discord || p.ingame).filter(Boolean).join(', ')}`
               : ''}
           </span>
         ) : null}
