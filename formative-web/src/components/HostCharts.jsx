@@ -14,12 +14,15 @@ export function BarChart({
   empty = 'No data yet',
   tone = false,
   glow = false,
+  onRowClick,
+  hint,
 }) {
   const list = Array.isArray(rows) ? rows : [];
   const max = Math.max(1, maxHint || Math.max(0, ...list.map((r) => Number(r[valueKey]) || 0)));
   return (
     <div className={`f-chart-card${glow ? ' is-glow' : ''}`}>
       <h3>{title}</h3>
+      {hint ? <p className="f-chart-hint f-muted">{hint}</p> : null}
       {!list.length ? (
         <p className="f-muted">{empty}</p>
       ) : (
@@ -28,11 +31,24 @@ export function BarChart({
             const val = Number(r[valueKey]) || 0;
             const width = Math.round((val / max) * 100);
             const fillStyle = r.color ? { background: r.color, width: `${width}%` } : { width: `${width}%` };
+            const label = r[labelKey];
+            const clickable = Boolean(onRowClick && r.questionId);
             return (
-              <div className="f-bar-chart-row" key={r.id || `${r[labelKey]}-${i}`}>
-                <div className="f-bar-chart-label" title={r.title || r[labelKey]}>
-                  {r[labelKey]}
-                </div>
+              <div className="f-bar-chart-row" key={r.id || `${label}-${i}`}>
+                {clickable ? (
+                  <button
+                    type="button"
+                    className="f-bar-chart-label f-bar-chart-label-btn"
+                    title={r.title || `${label} — click to preview`}
+                    onClick={() => onRowClick(r)}
+                  >
+                    {label}
+                  </button>
+                ) : (
+                  <div className="f-bar-chart-label" title={r.title || label}>
+                    {label}
+                  </div>
+                )}
                 <div className="f-bar-chart-track">
                   <div
                     className={`f-bar-chart-fill${tone ? ` is-${barTone(val, maxHint || max)}` : ''}${r.color ? ' is-custom' : ''}`}
@@ -40,6 +56,41 @@ export function BarChart({
                   />
                 </div>
                 <div className="f-bar-chart-val">{r.display != null ? r.display : r[valueKey]}</div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/** Vertical histogram for time buckets or counts. */
+export function ColumnHistogram({ title, rows, empty = 'No data yet', glow = false, hint }) {
+  const list = (rows || []).filter((r) => Number(r.value) > 0);
+  const max = Math.max(1, ...list.map((r) => Number(r.value) || 0));
+  return (
+    <div className={`f-chart-card${glow ? ' is-glow' : ''}`}>
+      <h3>{title}</h3>
+      {hint ? <p className="f-chart-hint f-muted">{hint}</p> : null}
+      {!list.length ? (
+        <p className="f-muted">{empty}</p>
+      ) : (
+        <div className="f-col-histogram">
+          {list.map((r) => {
+            const val = Number(r.value) || 0;
+            const height = Math.max(8, Math.round((val / max) * 100));
+            return (
+              <div className="f-col-histogram-slot" key={r.label}>
+                <div className="f-col-histogram-val">{val}</div>
+                <div className="f-col-histogram-bar-wrap">
+                  <div
+                    className="f-col-histogram-bar"
+                    style={{ height: `${height}%`, background: r.color || 'var(--f-blue)' }}
+                    title={`${r.label}: ${val}`}
+                  />
+                </div>
+                <div className="f-col-histogram-label">{r.label}</div>
               </div>
             );
           })}
@@ -89,7 +140,7 @@ export function Donut({ title, parts, center, empty = 'No data yet', glow = fals
 }
 
 /** One row per question; stacked mini-bars per variant letter. */
-export function VariantStackChart({ title, questions, empty = 'No variant questions yet' }) {
+export function VariantStackChart({ title, questions, empty = 'No variant questions yet', onQuestionClick, hint }) {
   const rows = (questions || []).filter((q) => q.hasVariants && q.variants?.some((v) => v.n > 0));
   if (!rows.length) {
     return (
@@ -103,6 +154,7 @@ export function VariantStackChart({ title, questions, empty = 'No variant questi
   return (
     <div className="f-chart-card is-glow f-variant-stack-chart">
       <h3>{title}</h3>
+      {hint ? <p className="f-chart-hint f-muted">{hint}</p> : null}
       <div className="f-variant-stack-list">
         {rows.map((q) => {
           const label = q.label;
@@ -110,7 +162,18 @@ export function VariantStackChart({ title, questions, empty = 'No variant questi
           return (
             <div className="f-variant-stack-row" key={q.id}>
               <div className="f-variant-stack-head">
-                <span className="f-variant-stack-q">{label}</span>
+                {onQuestionClick ? (
+                  <button
+                    type="button"
+                    className="f-variant-stack-q f-variant-stack-q-btn"
+                    onClick={() => onQuestionClick(q)}
+                    title="Preview question"
+                  >
+                    {label}
+                  </button>
+                ) : (
+                  <span className="f-variant-stack-q">{label}</span>
+                )}
                 <span className="f-variant-stack-overall">{q.pct}% overall</span>
               </div>
               <div className="f-variant-stack-bars">
@@ -213,7 +276,7 @@ export function VariantHeatmap({ title, questions, empty = 'No variant data yet'
   );
 }
 
-function NextEventList({ title, items, empty }) {
+function NextEventList({ title, items, empty, onItemClick }) {
   if (!items?.length) {
     return (
       <div className="f-next-event-col">
@@ -228,8 +291,17 @@ function NextEventList({ title, items, empty }) {
       <ul className="f-next-event-list">
         {items.map((item) => (
           <li key={item.id}>
-            <span className="f-next-event-q">{item.label}</span>
-            <span className="f-next-event-reason">{item.reason || `${item.pct}%`}</span>
+            {onItemClick ? (
+              <button type="button" className="f-next-event-q-btn" onClick={() => onItemClick(item)}>
+                <span className="f-next-event-q">{item.label}</span>
+                <span className="f-next-event-reason">{item.reason || `${item.pct}%`}</span>
+              </button>
+            ) : (
+              <>
+                <span className="f-next-event-q">{item.label}</span>
+                <span className="f-next-event-reason">{item.reason || `${item.pct}%`}</span>
+              </>
+            )}
           </li>
         ))}
       </ul>
@@ -237,7 +309,7 @@ function NextEventList({ title, items, empty }) {
   );
 }
 
-export function NextEventSection({ data }) {
+export function NextEventSection({ data, onItemClick }) {
   if (!data) return null;
   return (
     <div className="f-chart-card is-glow f-next-event">
@@ -254,14 +326,21 @@ export function NextEventSection({ data }) {
           title="Rewrite candidates"
           items={data.rewrite}
           empty="No weak questions flagged yet"
+          onItemClick={onItemClick}
         />
         <NextEventList
           title="Skewed variants"
           items={data.skewed?.map((s) => ({ ...s, reason: s.reason }))}
           empty="Variant balance looks OK"
+          onItemClick={onItemClick}
         />
-        <NextEventList title="Keep" items={data.keep?.map((k) => ({ ...k, reason: `${k.pct}% · stable` }))} empty="—" />
-        <NextEventList title="Trim / swap" items={data.trim} empty="Nothing too easy flagged" />
+        <NextEventList
+          title="Keep"
+          items={data.keep?.map((k) => ({ ...k, reason: `${k.pct}% · stable` }))}
+          empty="—"
+          onItemClick={onItemClick}
+        />
+        <NextEventList title="Trim / swap" items={data.trim} empty="Nothing too easy flagged" onItemClick={onItemClick} />
       </div>
     </div>
   );

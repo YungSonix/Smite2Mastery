@@ -1316,6 +1316,10 @@ export default function Activity() {
           questions={questions}
           responses={responses}
           timeLimitSeconds={settings.time_limit_seconds}
+          onJumpToEditor={(id) => {
+            setTab('edit');
+            jumpToHostQuestion(id);
+          }}
         />
       )}
 
