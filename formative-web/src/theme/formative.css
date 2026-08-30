@@ -3621,9 +3621,25 @@ label.f-file-btn:hover {
 
 .f-responses-tools {
   display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.f-responses-search-wrap {
+  flex: 1 1 280px;
+  max-width: 440px;
+  min-width: 200px;
+}
+
+.f-responses-tools-actions {
+  display: flex;
+  flex-wrap: wrap;
   justify-content: flex-end;
   gap: 8px;
-  margin-bottom: 12px;
+  flex: 1 1 auto;
 }
 
 .f-student-panel {

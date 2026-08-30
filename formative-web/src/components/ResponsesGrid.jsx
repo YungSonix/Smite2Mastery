@@ -6,6 +6,8 @@ import { responsePercent, sortResponses } from '../lib/sortResponses';
 import { useLiveClock } from '../lib/useLiveClock';
 import { PaginationBar, usePagination } from '../lib/usePagination';
 import { buildSubmissionIntegrity, integrityFor } from '../lib/submissionIntegrity';
+import { responseMatchesQuery } from '../lib/responseSearch';
+import { RESPONSES_PAGE_SIZE } from '../lib/usePagination';
 
 function selectRow(r, e, onSelect) {
   if (!onSelect) return;
@@ -29,6 +31,8 @@ export default function ResponsesGrid({
   sessions,
   sessionsError,
   sortBy = 'submitted_desc',
+  searchQuery = '',
+  scrollToResponse,
   onSelect,
   selectedId,
   onLiveSelect,
@@ -43,19 +47,39 @@ export default function ResponsesGrid({
   const integrityIndex = useMemo(() => buildSubmissionIntegrity(responses), [responses]);
 
   const filteredResponses = useMemo(() => {
-    if (!flaggedOnly) return responses;
-    return (responses || []).filter((r) => {
-      const integrity = integrityFor(r.id, integrityIndex);
-      return integrity.level !== 'none';
-    });
-  }, [responses, flaggedOnly, integrityIndex]);
+    let list = responses || [];
+    if (flaggedOnly) {
+      list = list.filter((r) => {
+        const integrity = integrityFor(r.id, integrityIndex);
+        return integrity.level !== 'none';
+      });
+    }
+    const q = String(searchQuery || '').trim();
+    if (q) {
+      list = list.filter((r) => responseMatchesQuery(r, q));
+    }
+    return list;
+  }, [responses, flaggedOnly, integrityIndex, searchQuery]);
 
   const sorted = useMemo(() => sortResponses(filteredResponses, sortBy), [filteredResponses, sortBy]);
   const { page, setPage, pageCount, slice, from, to, reset } = usePagination(sorted.length);
 
   useEffect(() => {
     reset();
-  }, [sortBy, filteredResponses?.length, reset]);
+  }, [sortBy, filteredResponses?.length, searchQuery, reset]);
+
+  useEffect(() => {
+    if (!scrollToResponse?.id) return;
+    const idx = sorted.findIndex((r) => r.id === scrollToResponse.id);
+    if (idx < 0) return;
+    const targetPage = Math.floor(idx / RESPONSES_PAGE_SIZE);
+    setPage(targetPage);
+    requestAnimationFrame(() => {
+      document
+        .querySelector(`[data-response-id="${scrollToResponse.id}"]`)
+        ?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    });
+  }, [scrollToResponse, sorted, setPage]);
 
   const visibleRows = slice(sorted);
 
@@ -261,6 +285,7 @@ export default function ResponsesGrid({
               return (
                 <tr
                   key={r.id}
+                  data-response-id={r.id}
                   className={selectedId === r.id ? 'is-selected' : undefined}
                   style={{ cursor: onSelect ? 'pointer' : 'default' }}
                   onClick={(e) => selectRow(r, e, onSelect)}
@@ -356,6 +381,10 @@ export default function ResponsesGrid({
           <p className="f-muted" style={{ padding: '12px 4px' }}>
             No submissions yet. After someone takes the quiz, Discord and in-game name appear here
             (host-only).
+          </p>
+        ) : filteredResponses.length === 0 && String(searchQuery || '').trim() ? (
+          <p className="f-muted" style={{ padding: '12px 4px' }}>
+            No students match “{String(searchQuery).trim()}”. Try a shorter name or clear the search.
           </p>
         ) : null}
       </div>

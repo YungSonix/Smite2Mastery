@@ -6,6 +6,7 @@ import InstructionsEditor from '../components/InstructionsEditor';
 import QuestionCard from '../components/QuestionCard';
 import InsightsPanel from '../components/InsightsPanel';
 import ResponsesGrid from '../components/ResponsesGrid';
+import ResponsesStudentSearch from '../components/ResponsesStudentSearch';
 import StudentResponsePanel from '../components/StudentResponsePanel';
 import LiveSessionPanel from '../components/LiveSessionPanel';
 import QuestionReviewPanel from '../components/QuestionReviewPanel';
@@ -36,6 +37,7 @@ import {
 } from '../lib/editorDraftStorage';
 import { localTimeZoneLabel } from '../lib/formatWhen';
 import { searchQuestions } from '../lib/questionSearch';
+import { responseMatchesQuery } from '../lib/responseSearch';
 
 /** How long a deleted question stays recoverable from the Undo banner. */
 const UNDO_WINDOW_MS = 25000;
@@ -152,6 +154,8 @@ export default function Activity() {
   const [selectedSession, setSelectedSession] = useState(null);
   const [selectedQuestionId, setSelectedQuestionId] = useState(null);
   const [responseSort, setResponseSort] = useState('submitted_desc');
+  const [responseSearch, setResponseSearch] = useState('');
+  const [scrollToResponse, setScrollToResponse] = useState(null);
   const [saving, setSaving] = useState(false);
   const [autoSaveHint, setAutoSaveHint] = useState('');
   const [quizDirty, setQuizDirty] = useState(false);
@@ -230,6 +234,7 @@ export default function Activity() {
     setSelectedQuestionId(null);
     if (meta?.clientY != null) setResponsePanelAnchor(meta.clientY);
     setSelectedResponse(r);
+    setScrollToResponse({ id: r.id, token: Date.now() });
     if (hasResponseAnswers(r?.answers)) return;
     try {
       const data = await hostApi(`/api/trivia/host?action=response&id=${encodeURIComponent(r.id)}`);
@@ -1488,6 +1493,19 @@ export default function Activity() {
         >
           <div className="f-responses-main">
             <div className="f-responses-tools">
+              <ResponsesStudentSearch
+                responses={responses}
+                query={responseSearch}
+                onQueryChange={setResponseSearch}
+                totalCount={responses?.length || 0}
+                filteredCount={
+                  responseSearch.trim()
+                    ? (responses || []).filter((r) => responseMatchesQuery(r, responseSearch)).length
+                    : responses?.length || 0
+                }
+                onPick={(r) => openStudentResponse(r)}
+              />
+              <div className="f-responses-tools-actions">
               <SortStudentsMenu value={responseSort} onChange={setResponseSort} />
               <button type="button" className="f-outline-btn" disabled>
                 Grading method
@@ -1510,6 +1528,7 @@ export default function Activity() {
               <button type="button" className="f-outline-btn" onClick={load}>
                 Refresh
               </button>
+              </div>
             </div>
             <ResponsesGrid
               questions={questions}
@@ -1517,6 +1536,8 @@ export default function Activity() {
               sessions={sessions}
               sessionsError={sessionsError}
               sortBy={responseSort}
+              searchQuery={responseSearch}
+              scrollToResponse={scrollToResponse}
               selectedId={selectedResponse?.id}
               selectedLiveId={selectedSession?.id}
               selectedQuestionId={selectedQuestionId}
