@@ -7,6 +7,9 @@ import { buildSubmissionIntegrity } from '../lib/submissionIntegrity';
 import { buildPlayerLeaderboard } from '../lib/triviaPlayerStats';
 import { mergeClassroomStudent } from '../lib/classroomBadges';
 import ClassroomAvatarPicker from '../components/ClassroomAvatarPicker';
+import { PaginationBar, usePagination } from '../lib/usePagination';
+
+const CLASSROOM_PAGE_SIZE = 30;
 
 function PointControls({ student, onAdjust, busy, size = 'md' }) {
   if (!student) return null;
@@ -263,6 +266,22 @@ export default function DiscordClassroom() {
     return list;
   }, [students, search, filter, sort]);
 
+  const {
+    page,
+    setPage,
+    pageCount,
+    slice,
+    from,
+    to,
+    reset: resetPage,
+  } = usePagination(visible.length, CLASSROOM_PAGE_SIZE);
+
+  useEffect(() => {
+    resetPage();
+  }, [search, filter, sort, resetPage]);
+
+  const pageStudents = useMemo(() => slice(visible), [slice, visible]);
+
   const upsertProfile = useCallback((profile) => {
     if (!profile) return;
     setData((prev) => {
@@ -323,6 +342,13 @@ export default function DiscordClassroom() {
   const selected = visible.find((s) => s.discordKey === selectedKey) || null;
   const regularCount = students.filter((s) => s.isRegular).length;
   const totalPoints = students.reduce((n, s) => n + s.classroomPoints, 0);
+
+  const selectStudent = useCallback(
+    (key) => {
+      setSelectedKey((prev) => (prev === key ? null : key));
+    },
+    []
+  );
 
   return (
     <HostShell active="classroom">
@@ -388,13 +414,24 @@ export default function DiscordClassroom() {
             </label>
           </div>
 
+          <PaginationBar
+            page={page}
+            pageCount={pageCount}
+            from={from}
+            to={to}
+            total={visible.length}
+            onPage={setPage}
+            pageSize={CLASSROOM_PAGE_SIZE}
+            className="f-pagination-top"
+          />
+
           <div className="f-classroom-grid">
-            {visible.map((s) => (
+            {pageStudents.map((s) => (
               <ClassroomCard
                 key={s.discordKey}
                 student={s}
                 active={selectedKey === s.discordKey}
-                onSelect={(key) => setSelectedKey(selectedKey === key ? null : key)}
+                onSelect={selectStudent}
                 onAdjust={handleAdjust}
                 busy={busyKey === s.discordKey}
               />
@@ -403,7 +440,17 @@ export default function DiscordClassroom() {
 
           {!visible.length ? (
             <p className="f-muted f-classroom-empty">No students match — they will appear after trivia.</p>
-          ) : null}
+          ) : (
+            <PaginationBar
+              page={page}
+              pageCount={pageCount}
+              from={from}
+              to={to}
+              total={visible.length}
+              onPage={setPage}
+              pageSize={CLASSROOM_PAGE_SIZE}
+            />
+          )}
 
           {selected ? (
             <div className="f-classroom-sheet">
