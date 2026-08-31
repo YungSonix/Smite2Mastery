@@ -40,6 +40,7 @@ const {
   LIFELINES_PER_ATTEMPT,
   HINTS_PER_QUESTION,
 } = require('../lib/server/triviaHints');
+const { answerKeyChanged, regradeOneResponse } = require('../lib/server/triviaRegrade');
 
 const DATA_ROOT = path.resolve(__dirname, '../app/data');
 const MEDIA_TYPES = {
@@ -93,6 +94,36 @@ function recomputeScore(questions, perQuestion) {
     score += frac * pts;
   }
   return { score, maxScore };
+}
+
+function responsesForQuiz(quizId) {
+  return [...db.responses.values()].filter((r) => r.quiz_id === quizId);
+}
+
+function regradeMemoryQuiz(quiz, questions, questionIds) {
+  const list = responsesForQuiz(quiz.id);
+  let updated = 0;
+  let unchanged = 0;
+  for (const row of list) {
+    const result = regradeOneResponse({
+      questions,
+      quizSettings: quiz.settings,
+      response: row,
+      questionIds,
+    });
+    if (!result.changed) {
+      unchanged += 1;
+      continue;
+    }
+    Object.assign(row, {
+      per_question: result.perQuestion,
+      score: result.score,
+      max_score: result.maxScore,
+    });
+    db.responses.set(row.id, row);
+    updated += 1;
+  }
+  return { total: list.length, updated, unchanged, errors: 0 };
 }
 
 const PORT = Number(process.env.FORMATIVE_API_PORT || 3000);
@@ -540,6 +571,7 @@ async function handleHost(req, res, url) {
       if (!items.length) return json(res, 200, { ok: true });
       const now = new Date().toISOString();
       let quizIdForTouch = null;
+      const keyChangedIds = [];
       for (const item of items) {
         const q = db.questions.get(item.id);
         if (!q) return json(res, 404, { error: 'Question not found' });
@@ -549,28 +581,50 @@ async function handleHost(req, res, url) {
           return json(res, 400, { error: 'Questions must belong to one quiz' });
         }
         quizIdForTouch = quiz.id;
-        Object.assign(q, rewriteQuestionMedia({ ...q, ...(item.patch || {}) }), { updated_at: now });
+        const patch = { ...(item.patch || {}) };
+        if (answerKeyChanged(q, patch)) keyChangedIds.push(String(item.id));
+        Object.assign(q, rewriteQuestionMedia({ ...q, ...patch }), { updated_at: now });
         q.id = item.id;
         q.quiz_id = quiz.id;
         db.questions.set(q.id, q);
       }
       const quiz = db.quizzes.get(quizIdForTouch);
       if (quiz) quiz.updated_at = now;
-      return json(res, 200, { ok: true });
+      let regrade = null;
+      if (quiz && keyChangedIds.length) {
+        regrade = regradeMemoryQuiz(quiz, questionsForQuiz(quiz.id), keyChangedIds);
+      }
+      return json(res, 200, { ok: true, regrade: regrade || undefined });
     }
     if (body.action === 'update_question') {
       const q = db.questions.get(body.questionId);
       if (!q) return json(res, 404, { error: 'Question not found' });
       const quiz = db.quizzes.get(q.quiz_id);
       if (!quiz || quiz.owner_username !== username) return json(res, 403, { error: 'Forbidden' });
-      Object.assign(q, rewriteQuestionMedia({ ...q, ...(body.patch || {}) }), {
+      const patch = { ...(body.patch || {}) };
+      const keyChanged = answerKeyChanged(q, patch);
+      Object.assign(q, rewriteQuestionMedia({ ...q, ...patch }), {
         updated_at: new Date().toISOString(),
       });
       q.id = body.questionId;
       q.quiz_id = quiz.id;
       db.questions.set(q.id, q);
       quiz.updated_at = new Date().toISOString();
-      return json(res, 200, { question: q });
+      let regrade = null;
+      if (keyChanged) {
+        regrade = regradeMemoryQuiz(quiz, questionsForQuiz(quiz.id), [String(body.questionId)]);
+      }
+      return json(res, 200, { question: q, regrade: regrade || undefined });
+    }
+    if (body.action === 'regrade_responses') {
+      const key = body.quizId || body.id;
+      const quiz = findOwnedQuiz(username, key);
+      if (!quiz) return json(res, 404, { error: 'Quiz not found' });
+      const questionIds = Array.isArray(body.questionIds)
+        ? body.questionIds.map(String).filter(Boolean)
+        : undefined;
+      const regrade = regradeMemoryQuiz(quiz, questionsForQuiz(quiz.id), questionIds);
+      return json(res, 200, { ok: true, regrade });
     }
     if (body.action === 'update_response') {
       const row = db.responses.get(body.responseId);

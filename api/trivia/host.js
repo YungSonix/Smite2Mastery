@@ -17,6 +17,7 @@ const { flushQuizDrafts } = require('../../lib/server/triviaCommit');
 const { mapResponseForHost } = require('../../lib/server/triviaResponseMeta');
 const { shouldPurgeLiveSessions, purgeLiveSessions } = require('../../lib/server/triviaWindow');
 const { checkTriviaPayload, formatPayloadCheckReport } = require('../../lib/server/triviaPayloadCheck');
+const { answerKeyChanged, regradeOwnedQuiz } = require('../../lib/server/triviaRegrade');
 
 function recomputeScore(questions, perQuestion) {
   let score = 0;
@@ -472,18 +473,20 @@ module.exports = async function handler(req, res) {
         const items = Array.isArray(body.questions) ? body.questions : [];
         if (!items.length) return send(res, 200, { ok: true });
         const ids = items.map((item) => String(item.id || '')).filter(Boolean);
-        const { data: rows } = await sb.from('trivia_questions').select('id, quiz_id').in('id', ids);
+        const { data: rows } = await sb.from('trivia_questions').select('*').in('id', ids);
         const quizIds = [...new Set((rows || []).map((row) => row.quiz_id))];
         if (!rows?.length || quizIds.length !== 1 || rows.length !== ids.length) {
           return send(res, 400, { error: 'Questions must belong to one quiz' });
         }
         const { data: quiz } = await sb
           .from('trivia_quizzes')
-          .select('id, owner_username')
+          .select('id, owner_username, settings')
           .eq('id', quizIds[0])
           .eq('owner_username', username)
           .maybeSingle();
         if (!quiz) return send(res, 403, { error: 'Not your quiz' });
+        const beforeById = new Map((rows || []).map((row) => [String(row.id), row]));
+        const keyChangedIds = [];
         const now = new Date().toISOString();
         const updates = await Promise.all(
           items.map((item) => {
@@ -496,6 +499,8 @@ module.exports = async function handler(req, res) {
             });
             if (patch.image_url !== undefined) patch.image_url = rewritten.image_url;
             if (patch.meta !== undefined) patch.meta = rewritten.meta;
+            const before = beforeById.get(String(item.id));
+            if (before && answerKeyChanged(before, patch)) keyChangedIds.push(String(item.id));
             return sb.from('trivia_questions').update(patch).eq('id', item.id);
           }),
         );
@@ -519,7 +524,19 @@ module.exports = async function handler(req, res) {
         if (payloadCheck.level !== 'ok') {
           console.warn('[trivia-payload-check] after save:\n' + formatPayloadCheckReport(payloadCheck));
         }
-        return send(res, 200, { ok: true, payloadCheck: payloadCheck.level !== 'ok' ? payloadCheck : undefined });
+        let regrade = null;
+        if (keyChangedIds.length) {
+          regrade = await regradeOwnedQuiz(sb, {
+            quiz: quizRow || quiz,
+            questions: allQuestions || [],
+            questionIds: keyChangedIds,
+          });
+        }
+        return send(res, 200, {
+          ok: true,
+          payloadCheck: payloadCheck.level !== 'ok' ? payloadCheck : undefined,
+          regrade: regrade || undefined,
+        });
       }
       if (body.action === 'update_question') {
         const { data: qq } = await sb
@@ -530,7 +547,7 @@ module.exports = async function handler(req, res) {
         if (!qq) return send(res, 404, { error: 'Question not found' });
         const { data: quiz } = await sb
           .from('trivia_quizzes')
-          .select('id, owner_username')
+          .select('id, owner_username, settings')
           .eq('id', qq.quiz_id)
           .maybeSingle();
         if (!quiz || quiz.owner_username !== username) {
@@ -545,6 +562,7 @@ module.exports = async function handler(req, res) {
         });
         if (patch.image_url !== undefined) patch.image_url = rewritten.image_url;
         if (patch.meta !== undefined) patch.meta = rewritten.meta;
+        const keyChanged = answerKeyChanged(qq, patch);
         const { data, error } = await sb
           .from('trivia_questions')
           .update(patch)
@@ -570,10 +588,38 @@ module.exports = async function handler(req, res) {
         if (payloadCheck.level !== 'ok') {
           console.warn('[trivia-payload-check] after save:\n' + formatPayloadCheckReport(payloadCheck));
         }
+        let regrade = null;
+        if (keyChanged) {
+          regrade = await regradeOwnedQuiz(sb, {
+            quiz: quizRow || quiz,
+            questions: allQuestions || [],
+            questionIds: [String(body.questionId)],
+          });
+        }
         return send(res, 200, {
           question: rewriteQuestionMedia(data),
           payloadCheck: payloadCheck.level !== 'ok' ? payloadCheck : undefined,
+          regrade: regrade || undefined,
         });
+      }
+      if (body.action === 'regrade_responses') {
+        const key = body.quizId || body.id;
+        const { data: quiz } = await findOwnedQuiz(sb, username, key, '*');
+        if (!quiz) return send(res, 404, { error: 'Quiz not found' });
+        const { data: questions } = await sb
+          .from('trivia_questions')
+          .select('*')
+          .eq('quiz_id', quiz.id)
+          .order('sort_order', { ascending: true });
+        const questionIds = Array.isArray(body.questionIds)
+          ? body.questionIds.map(String).filter(Boolean)
+          : undefined;
+        const regrade = await regradeOwnedQuiz(sb, {
+          quiz,
+          questions: questions || [],
+          questionIds,
+        });
+        return send(res, 200, { ok: true, regrade });
       }
       if (body.action === 'reorder') {
         const orders = (Array.isArray(body.orders) ? body.orders : []).filter(

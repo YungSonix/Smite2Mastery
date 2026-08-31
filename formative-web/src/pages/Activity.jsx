@@ -108,6 +108,7 @@ export default function Activity() {
   const [includeTestTakes, setIncludeTestTakes] = useState(false);
   const [scrollToResponse, setScrollToResponse] = useState(null);
   const [saving, setSaving] = useState(false);
+  const [regrading, setRegrading] = useState(false);
   const [autoSaveHint, setAutoSaveHint] = useState('');
   const [quizDirty, setQuizDirty] = useState(false);
   const [bannerDirty, setBannerDirty] = useState(false);
@@ -406,8 +407,10 @@ export default function Activity() {
         setQuiz(data.quiz);
       }
       if (changed.length) {
+        let regraded = 0;
+        let regradeTotal = 0;
         for (const q of changed) {
-          await hostApi('/api/trivia/host', {
+          const data = await hostApi('/api/trivia/host', {
             method: 'PUT',
             body: {
               action: 'update_question',
@@ -415,7 +418,30 @@ export default function Activity() {
               patch: questionPatch(q),
             },
           });
+          if (data?.regrade?.updated) {
+            regraded += data.regrade.updated;
+            regradeTotal = Math.max(regradeTotal, data.regrade.total || 0);
+          }
         }
+        if (regraded > 0) {
+          setAutoSaveHint(
+            `Saved · regraded ${regraded}${regradeTotal ? ` of ${regradeTotal}` : ''} submission${regraded === 1 ? '' : 's'}`
+          );
+          clearTimeout(autoHintTimerRef.current);
+          autoHintTimerRef.current = setTimeout(() => setAutoSaveHint(''), 5000);
+        } else if (source === 'auto') {
+          setAutoSaveHint('Autosaved');
+          clearTimeout(autoHintTimerRef.current);
+          autoHintTimerRef.current = setTimeout(() => setAutoSaveHint(''), 3500);
+        } else {
+          setAutoSaveHint('');
+        }
+      } else if (source === 'auto') {
+        setAutoSaveHint('Autosaved');
+        clearTimeout(autoHintTimerRef.current);
+        autoHintTimerRef.current = setTimeout(() => setAutoSaveHint(''), 3500);
+      } else {
+        setAutoSaveHint('');
       }
       setQuizDirty(false);
       setBannerDirty(false);
@@ -423,13 +449,6 @@ export default function Activity() {
       setDraftWarning('');
       autoFailStampRef.current = '';
       clearEditorDraft(quizId);
-      if (source === 'auto') {
-        setAutoSaveHint('Autosaved');
-        clearTimeout(autoHintTimerRef.current);
-        autoHintTimerRef.current = setTimeout(() => setAutoSaveHint(''), 3500);
-      } else {
-        setAutoSaveHint('');
-      }
       return true;
     } catch (e) {
       setError(source === 'auto' ? `Autosave failed: ${e.message}` : e.message);
@@ -1534,6 +1553,42 @@ export default function Activity() {
                 }}
               >
                 Export Excel/CSV
+              </button>
+              <button
+                type="button"
+                className="f-outline-btn"
+                disabled={!visibleResponses?.length || regrading}
+                title="Rescore every submission from the current answer keys"
+                onClick={async () => {
+                  if (
+                    !window.confirm(
+                      'Regrade all submissions from the current answer keys?\n\nAuto-scored questions update to match the key. Manual grades on upload/drawing questions are kept.'
+                    )
+                  ) {
+                    return;
+                  }
+                  setRegrading(true);
+                  setError('');
+                  try {
+                    const data = await hostApi('/api/trivia/host', {
+                      method: 'PUT',
+                      body: { action: 'regrade_responses', quizId },
+                    });
+                    const r = data?.regrade || {};
+                    await load();
+                    setAutoSaveHint(
+                      `Regraded ${r.updated || 0} of ${r.total || 0} submission${(r.total || 0) === 1 ? '' : 's'}`
+                    );
+                    clearTimeout(autoHintTimerRef.current);
+                    autoHintTimerRef.current = setTimeout(() => setAutoSaveHint(''), 5000);
+                  } catch (e) {
+                    setError(e.message || 'Regrade failed');
+                  } finally {
+                    setRegrading(false);
+                  }
+                }}
+              >
+                {regrading ? 'Regrading…' : 'Regrade from answer key'}
               </button>
               <button type="button" className="f-outline-btn" onClick={load}>
                 Refresh
