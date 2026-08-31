@@ -286,12 +286,13 @@ module.exports = async function handler(req, res) {
 
     if (req.method === 'GET' && action === 'analytics') {
       try {
-        const shouldSync =
-          String(url.searchParams.get('syncProfiles') || '').toLowerCase() !== '0';
+        // Opt-in only — full profile rebuild is too slow for classroom/analytics page load.
+        const syncFlag = String(url.searchParams.get('syncProfiles') || '').toLowerCase();
+        const shouldSync = syncFlag === '1' || syncFlag === 'true';
         const payload = await fetchHostAnalytics(sb, username, { syncProfiles: shouldSync });
         return send(res, 200, payload);
       } catch (err) {
-        return send(res, 500, { error: err.message });
+        return send(res, 500, { error: err.message || 'Analytics load failed' });
       }
     }
 

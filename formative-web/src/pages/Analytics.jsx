@@ -102,10 +102,21 @@ export default function Analytics() {
     let alive = true;
     (async () => {
       try {
-        const res = await hostApi('/api/trivia/host?action=analytics');
+        const res = await hostApi('/api/trivia/host?action=analytics&syncProfiles=0');
         if (alive) setData(res);
       } catch (e) {
-        if (alive) setError(e.message || 'Failed to load analytics');
+        const network = e.message === 'Failed to fetch' || e.name === 'TypeError';
+        const timedOut =
+          e.status === 504 ||
+          e.status === 503 ||
+          /timeout|timed out|gateway|function_invocation|load failed/i.test(String(e.message || ''));
+        if (alive) {
+          setError(
+            network || timedOut
+              ? 'Analytics took too long to load. Refresh once — profile rebuild is no longer run on every open.'
+              : e.message || 'Failed to load analytics'
+          );
+        }
       } finally {
         if (alive) setLoading(false);
       }

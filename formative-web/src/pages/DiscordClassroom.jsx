@@ -184,7 +184,8 @@ export default function DiscordClassroom() {
   const [avatarBusy, setAvatarBusy] = useState(false);
 
   const load = useCallback(async () => {
-    const res = await hostApi('/api/trivia/host?action=analytics');
+    // syncProfiles=0: do not rebuild every student profile on open (Vercel 30s timeout).
+    const res = await hostApi('/api/trivia/host?action=analytics&syncProfiles=0');
     setData(res);
     return res;
   }, []);
@@ -195,7 +196,18 @@ export default function DiscordClassroom() {
       try {
         await load();
       } catch (e) {
-        if (alive) setError(e.message || 'Failed to load classroom');
+        const network = e.message === 'Failed to fetch' || e.name === 'TypeError';
+        const timedOut =
+          e.status === 504 ||
+          e.status === 503 ||
+          /timeout|timed out|gateway|function_invocation|load failed/i.test(String(e.message || ''));
+        if (alive) {
+          setError(
+            network || timedOut
+              ? 'Classroom took too long to load. Refresh once — student lists no longer rebuild every profile on open.'
+              : e.message || 'Failed to load classroom'
+          );
+        }
       } finally {
         if (alive) setLoading(false);
       }

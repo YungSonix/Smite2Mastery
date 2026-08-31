@@ -477,8 +477,8 @@ async function handleHost(req, res, url) {
     if (sb) {
       try {
         const { fetchHostAnalytics } = require('../lib/server/triviaHostClassroom');
-        const shouldSync =
-          String(url.searchParams.get('syncProfiles') || '').toLowerCase() !== '0';
+        const syncFlag = String(url.searchParams.get('syncProfiles') || '').toLowerCase();
+        const shouldSync = syncFlag === '1' || syncFlag === 'true';
         const payload = await fetchHostAnalytics(sb, username, { syncProfiles: shouldSync });
         return json(res, 200, { ...payload, devMode: 'supabase' });
       } catch (e) {
