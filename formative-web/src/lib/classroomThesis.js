@@ -4,6 +4,7 @@
  */
 
 import { promptPlain } from './promptPlain';
+import { applyVariant } from './triviaVariants';
 
 const SKIP_TYPES = new Set([
   'image',
@@ -192,9 +193,12 @@ export function buildStudentThesis(player, questions) {
   const attempts = player?.attempts || [];
   for (const attempt of attempts) {
     const per = attempt.perQuestion || {};
+    const vmap = attempt.variantMap || {};
     for (const [qid] of Object.entries(per)) {
-      const q = qById.get(qid);
-      if (!q) continue;
+      const base = qById.get(qid);
+      if (!base) continue;
+      const vi = Number(vmap[qid]);
+      const q = applyVariant(base, Number.isFinite(vi) ? vi : 0) || base;
       const frac = fracCorrect(per, qid);
       if (frac == null) continue;
       const gid = groupIdForQuestion(q);

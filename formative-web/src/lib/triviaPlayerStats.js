@@ -125,6 +125,7 @@ export function buildPlayerLeaderboard(responses, { quizzes = [], questions = []
           durationLabel: durationMs != null ? formatDuration(durationMs) : '—',
           submittedAt: r.submitted_at,
           perQuestion: r.per_question || {},
+          variantMap: r.answers?.__variant_map || {},
         };
       })
       .sort((a, b) => String(b.submittedAt || '').localeCompare(String(a.submittedAt || '')));
