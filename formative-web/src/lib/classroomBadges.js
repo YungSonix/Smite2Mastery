@@ -49,6 +49,13 @@ export function pickBadgeForDiscordKey(discordKey) {
   return { file, url: badgeUrl(file), label: badgeLabelFromFile(file) };
 }
 
+export function formatClassPoints(n) {
+  const v = Number(n);
+  if (!Number.isFinite(v)) return '0';
+  const rounded = Math.round(v * 10) / 10;
+  return Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(1);
+}
+
 /** ClassDojo-style points from trivia stats. */
 export function classroomPointsFromStats({ triviasDone = 0, passCount = 0, totalScore = 0 } = {}) {
   return triviasDone * 15 + passCount * 10 + Math.round(totalScore / 5);
