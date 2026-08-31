@@ -104,7 +104,19 @@ export default function ClassroomAvatarPicker({ open, student, onClose, onSave, 
                       })
                     }
                   >
-                    <img src={item.url} alt="" loading="lazy" />
+                    <img
+                      src={item.url}
+                      alt=""
+                      loading="lazy"
+                      referrerPolicy="no-referrer"
+                      onError={(e) => {
+                        e.currentTarget.src =
+                          'data:image/svg+xml,' +
+                          encodeURIComponent(
+                            '<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"><rect fill="#0b1220" width="64" height="64"/><text x="32" y="38" text-anchor="middle" fill="#7dd3fc" font-size="20">?</text></svg>'
+                          );
+                      }}
+                    />
                     <span>{item.label}</span>
                   </button>
                 );

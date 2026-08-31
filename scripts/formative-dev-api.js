@@ -37,7 +37,12 @@ function loadDotEnv() {
 
 loadDotEnv();
 
-const CLASSROOM_ACTIONS = new Set(['classroom-points', 'set-classroom-avatar', 'sync-player-profiles']);
+const CLASSROOM_ACTIONS = new Set([
+  'classroom-points',
+  'classroom-points-bulk',
+  'set-classroom-avatar',
+  'sync-player-profiles',
+]);
 
 function trySupabase() {
   try {
