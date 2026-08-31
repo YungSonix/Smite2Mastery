@@ -81,6 +81,7 @@ Git/
 
 # Local docs / agent notes (keep on disk; not for GitHub)
 *.md
+!AGENTS.md
 !formative-web/README.md
 !docs/trivia-security.md
 GOALS.md
