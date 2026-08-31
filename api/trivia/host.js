@@ -18,6 +18,11 @@ const { mapResponseForHost } = require('../../lib/server/triviaResponseMeta');
 const { shouldPurgeLiveSessions, purgeLiveSessions } = require('../../lib/server/triviaWindow');
 const { checkTriviaPayload, formatPayloadCheckReport } = require('../../lib/server/triviaPayloadCheck');
 const { answerKeyChanged, regradeOwnedQuiz } = require('../../lib/server/triviaRegrade');
+const { responseIsTestRow } = require('../../lib/server/triviaTestTake');
+const {
+  fetchHostAnalytics,
+  handleHostClassroomPost,
+} = require('../../lib/server/triviaHostClassroom');
 
 function recomputeScore(questions, perQuestion) {
   let score = 0;
@@ -280,30 +285,25 @@ module.exports = async function handler(req, res) {
     }
 
     if (req.method === 'GET' && action === 'analytics') {
-      const { data: quizzes, error } = await sb
-        .from('trivia_quizzes')
-        .select('id, slug, title, updated_at')
-        .eq('owner_username', username)
-        .order('updated_at', { ascending: false });
-      if (error) return send(res, 500, { error: error.message });
-      const quizIds = (quizzes || []).map((q) => q.id);
-      if (!quizIds.length) {
-        return send(res, 200, { quizzes: [], questions: [], responses: [] });
+      try {
+        const shouldSync =
+          String(url.searchParams.get('syncProfiles') || '').toLowerCase() !== '0';
+        const payload = await fetchHostAnalytics(sb, username, { syncProfiles: shouldSync });
+        return send(res, 200, payload);
+      } catch (err) {
+        return send(res, 500, { error: err.message });
       }
-      const [{ data: questions }, { data: responses, error: rErr }] = await Promise.all([
-        sb.from('trivia_questions').select('id, quiz_id, type, points, prompt').in('quiz_id', quizIds),
-        sb
-          .from('trivia_responses')
-          .select('id, quiz_id, discord_username, score, max_score, per_question, submitted_at, ip_address')
-          .in('quiz_id', quizIds)
-          .order('submitted_at', { ascending: false }),
-      ]);
-      if (rErr) return send(res, 500, { error: rErr.message });
-      return send(res, 200, {
-        quizzes: quizzes || [],
-        questions: questions || [],
-        responses: responses || [],
-      });
+    }
+
+    if (req.method === 'POST' && body?.action) {
+      try {
+        const classroomResult = await handleHostClassroomPost(sb, username, body);
+        if (classroomResult) {
+          return send(res, classroomResult.status, classroomResult.body);
+        }
+      } catch (err) {
+        return send(res, err.status || 500, { error: err.message });
+      }
     }
 
     if (req.method === 'POST') {

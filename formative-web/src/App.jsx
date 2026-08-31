@@ -3,6 +3,7 @@ import { getHostSession } from './lib/auth';
 import ScrapeGuard from './components/ScrapeGuard';
 import Activity from './pages/Activity';
 import Analytics from './pages/Analytics';
+import DiscordClassroom from './pages/DiscordClassroom';
 import Home from './pages/Home';
 import HostPreview from './pages/HostPreview';
 import StudentTakeView from './pages/StudentTakeView';
@@ -27,6 +28,14 @@ export default function App() {
         element={
           <RequireHost>
             <Home />
+          </RequireHost>
+        }
+      />
+      <Route
+        path="/classroom"
+        element={
+          <RequireHost>
+            <DiscordClassroom />
           </RequireHost>
         }
       />

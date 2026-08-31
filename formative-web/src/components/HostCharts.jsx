@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { ChartTitle, InsightTooltip } from './InsightTooltip';
+
+export { InsightTooltip };
 
 function barTone(value, max = 100) {
   const pct = max > 0 ? (Number(value) / max) * 100 : 0;
@@ -18,12 +21,13 @@ export function BarChart({
   glow = false,
   onRowClick,
   hint,
+  tooltip,
 }) {
   const list = Array.isArray(rows) ? rows : [];
   const max = Math.max(1, maxHint || Math.max(0, ...list.map((r) => Number(r[valueKey]) || 0)));
   return (
     <div className={`f-chart-card${glow ? ' is-glow' : ''}`}>
-      <h3>{title}</h3>
+      <ChartTitle title={title} tooltip={tooltip} />
       {hint ? <p className="f-chart-hint f-muted">{hint}</p> : null}
       {!list.length ? (
         <p className="f-muted">{empty}</p>
@@ -68,13 +72,13 @@ export function BarChart({
 }
 
 /** Vertical histogram for time buckets or counts. Empty buckets stay visible so gaps read as gaps. */
-export function ColumnHistogram({ title, rows, empty = 'No data yet', glow = false, hint, footNote }) {
+export function ColumnHistogram({ title, rows, empty = 'No data yet', glow = false, hint, footNote, tooltip }) {
   const list = Array.isArray(rows) ? rows : [];
   const hasData = list.some((r) => Number(r.value) > 0);
   const max = Math.max(1, ...list.map((r) => Number(r.value) || 0));
   return (
     <div className={`f-chart-card${glow ? ' is-glow' : ''}`}>
-      <h3>{title}</h3>
+      <ChartTitle title={title} tooltip={tooltip} />
       {hint ? <p className="f-chart-hint f-muted">{hint}</p> : null}
       {!hasData ? (
         <p className="f-muted">{empty}</p>
@@ -113,7 +117,7 @@ export function ColumnHistogram({ title, rows, empty = 'No data yet', glow = fal
   );
 }
 
-export function Donut({ title, parts, center, empty = 'No data yet', glow = false, size = 'md' }) {
+export function Donut({ title, parts, center, empty = 'No data yet', glow = false, size = 'md', tooltip }) {
   const usable = (parts || []).filter((p) => Number(p.value) > 0);
   const total = usable.reduce((s, p) => s + p.value, 0);
   let acc = 0;
@@ -127,7 +131,7 @@ export function Donut({ title, parts, center, empty = 'No data yet', glow = fals
     .join(', ');
   return (
     <div className={`f-chart-card${glow ? ' is-glow' : ''}`}>
-      <h3>{title}</h3>
+      <ChartTitle title={title} tooltip={tooltip} />
       {!total ? (
         <p className="f-muted">{empty}</p>
       ) : (
@@ -215,6 +219,7 @@ export function VariantStackChart({
   hint,
   minN = 5,
   skewThreshold = 20,
+  tooltip,
 }) {
   const [showAll, setShowAll] = useState(false);
   const rows = (questions || []).filter((q) => q.hasVariants && q.variants?.some((v) => v.n > 0));
@@ -222,7 +227,7 @@ export function VariantStackChart({
   if (!rows.length) {
     return (
       <div className="f-chart-card is-glow">
-        <h3>{title}</h3>
+        <ChartTitle title={title} tooltip={tooltip} />
         <p className="f-muted">{empty}</p>
       </div>
     );
@@ -236,7 +241,7 @@ export function VariantStackChart({
 
   return (
     <div className="f-chart-card is-glow f-variant-stack-chart">
-      <h3>{title}</h3>
+      <ChartTitle title={title} tooltip={tooltip} />
       {hint ? <p className="f-chart-hint f-muted">{hint}</p> : null}
       {!visible.length ? (
         <p className="f-muted">
@@ -270,7 +275,10 @@ export function KpiStrip({ items }) {
     <div className="f-kpi-row f-kpi-row--insights">
       {(items || []).map((item) => (
         <div className={`f-kpi f-kpi--${item.tone || 'default'}`} key={item.label}>
-          <div className="f-kpi-label">{item.label}</div>
+          <div className="f-kpi-label">
+            {item.label}
+            {item.tooltip ? <InsightTooltip label={`About ${item.label}`}>{item.tooltip}</InsightTooltip> : null}
+          </div>
           <div className="f-kpi-value">{item.value}</div>
           {item.hint ? <div className="f-kpi-hint">{item.hint}</div> : null}
         </div>
@@ -345,7 +353,7 @@ const TAG_COPY = {
 };
 
 /** One ranked to-do list — most urgent first, each row opens the question. */
-export function NextEventSection({ data, onItemClick, promptText }) {
+export function NextEventSection({ data, onItemClick, promptText, tooltip }) {
   if (!data) return null;
   const items = data.items || [];
   const { submissions = 0, minSampleN = 5 } = data.summary || {};
@@ -353,7 +361,7 @@ export function NextEventSection({ data, onItemClick, promptText }) {
   return (
     <div className="f-chart-card is-glow f-next-event">
       <div className="f-next-event-head">
-        <h3>Prep for next event</h3>
+        <ChartTitle title="Prep for next event" tooltip={tooltip} />
         <p className="f-muted">
           {items.length
             ? `Ranked by impact, based on ${submissions} submission${

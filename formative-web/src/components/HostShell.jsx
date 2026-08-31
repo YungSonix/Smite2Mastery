@@ -5,6 +5,7 @@ const ICON = `${import.meta.env.BASE_URL}scroll-icon.png`;
 
 const NAV_LEFT = [
   { id: 'home', label: 'Home', to: '/' },
+  { id: 'classroom', label: 'Discord Classroom', to: '/classroom' },
   { id: 'analytics', label: 'Analytics', to: '/analytics' },
 ];
 

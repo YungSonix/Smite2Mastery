@@ -1,14 +1,102 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import HostShell from '../components/HostShell';
-import { BarChart, Donut } from '../components/HostCharts';
+import { BarChart, Donut, KpiStrip } from '../components/HostCharts';
 import { hostApi } from '../lib/api';
-import { buildSubmissionIntegrity, integrityPairsCount } from '../lib/submissionIntegrity';
+import { PaginationBar, usePagination } from '../lib/usePagination';
+import { buildSubmissionIntegrity } from '../lib/submissionIntegrity';
+import {
+  buildPlayerLeaderboard,
+  filterGiveawayCandidates,
+  playersToCsv,
+} from '../lib/triviaPlayerStats';
+
+function downloadCsv(filename, text) {
+  const blob = new Blob([text], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function PlayerDetail({ player }) {
+  if (!player) return null;
+  return (
+    <div className="f-player-detail">
+      <div className="f-player-detail-grid">
+        <div>
+          <h4 className="f-player-detail-title">Per trivia</h4>
+          <ul className="f-player-attempt-list">
+            {player.attempts.map((a) => (
+              <li key={a.id}>
+                <span className="f-player-attempt-quiz">{a.quizTitle}</span>
+                <span className="f-player-attempt-score">
+                  {a.score}/{a.maxScore} ({a.pct != null ? `${a.pct}%` : '—'})
+                </span>
+                <span className="f-muted">{a.durationLabel}</span>
+                <span className="f-muted f-player-attempt-date">
+                  {String(a.submittedAt || '').slice(0, 10)}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h4 className="f-player-detail-title">Usually gets right</h4>
+          {player.strongQuestions.length ? (
+            <ul className="f-player-topic-list is-strong">
+              {player.strongQuestions.map((q) => (
+                <li key={q.label}>
+                  <span>{q.label}</span>
+                  <span className="f-muted">
+                    {q.avgPct}% · {q.attempts}×
+                  </span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="f-muted">Not enough repeat questions yet (needs 2+ tries).</p>
+          )}
+          <h4 className="f-player-detail-title">Usually misses</h4>
+          {player.weakQuestions.length ? (
+            <ul className="f-player-topic-list is-weak">
+              {player.weakQuestions.map((q) => (
+                <li key={q.label}>
+                  <span>{q.label}</span>
+                  <span className="f-muted">
+                    {q.avgPct}% · {q.attempts}×
+                  </span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="f-muted">No clear weak spots yet (or not enough repeat questions).</p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function Analytics() {
-  const [data, setData] = useState({ quizzes: [], questions: [], responses: [] });
+  const [data, setData] = useState({
+    quizzes: [],
+    questions: [],
+    responses: [],
+    playerProfiles: [],
+    profileSync: null,
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [tab, setTab] = useState('players');
   const [quizFilter, setQuizFilter] = useState('all');
+  const [search, setSearch] = useState('');
+  const [selectedKey, setSelectedKey] = useState(null);
+  const [minTrivias, setMinTrivias] = useState(1);
+  const [giveawayMinTrivias, setGiveawayMinTrivias] = useState(2);
+  const [excludeFlagged, setExcludeFlagged] = useState(true);
 
   useEffect(() => {
     let alive = true;
@@ -32,7 +120,48 @@ export default function Analytics() {
     return (data.responses || []).filter((r) => r.quiz_id === quizFilter);
   }, [data.responses, quizFilter]);
 
-  const stats = useMemo(() => {
+  const integrityIndex = useMemo(
+    () => buildSubmissionIntegrity(filteredResponses),
+    [filteredResponses]
+  );
+
+  const allPlayers = useMemo(
+    () =>
+      buildPlayerLeaderboard(filteredResponses, {
+        quizzes: data.quizzes,
+        questions: data.questions,
+        integrityIndex,
+      }),
+    [filteredResponses, data.quizzes, data.questions, integrityIndex]
+  );
+
+  const visiblePlayers = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    return allPlayers.filter((p) => {
+      if (p.triviasDone < minTrivias) return false;
+      if (!q) return true;
+      return (
+        p.discord.toLowerCase().includes(q) ||
+        p.ingame.toLowerCase().includes(q) ||
+        p.discordKey.includes(q.replace(/[._\s-]+/g, ''))
+      );
+    });
+  }, [allPlayers, search, minTrivias]);
+
+  const giveawayPool = useMemo(
+    () =>
+      filterGiveawayCandidates(allPlayers, {
+        minTrivias: giveawayMinTrivias,
+        excludeFlagged,
+      }),
+    [allPlayers, giveawayMinTrivias, excludeFlagged]
+  );
+
+  const { page, setPage, pageCount, slice, from, to } = usePagination(visiblePlayers.length, 25);
+  const pagePlayers = slice(visiblePlayers);
+  const selectedPlayer = visiblePlayers.find((p) => p.discordKey === selectedKey) || null;
+
+  const overviewStats = useMemo(() => {
     const responses = filteredResponses;
     const n = responses.length;
     const pcts = responses
@@ -42,8 +171,6 @@ export default function Analytics() {
       })
       .filter((x) => x != null);
     const avg = pcts.length ? Math.round(pcts.reduce((a, b) => a + b, 0) / pcts.length) : 0;
-    const integrityIndex = buildSubmissionIntegrity(responses);
-    const reviewPairs = integrityPairsCount(responses, integrityIndex);
     let flagged = 0;
     for (const r of responses) {
       const entry = integrityIndex.get(r.id);
@@ -51,7 +178,6 @@ export default function Analytics() {
     }
     const pass = pcts.filter((p) => p >= 70).length;
     const fail = pcts.length - pass;
-
     const buckets = [
       { label: '0–20%', value: 0 },
       { label: '21–40%', value: 0 },
@@ -66,7 +192,6 @@ export default function Analytics() {
       else if (p <= 80) buckets[3].value += 1;
       else buckets[4].value += 1;
     }
-
     const byDay = {};
     for (const r of responses) {
       const d = String(r.submitted_at || '').slice(0, 10) || 'unknown';
@@ -76,125 +201,304 @@ export default function Analytics() {
       .sort((a, b) => a[0].localeCompare(b[0]))
       .slice(-14)
       .map(([label, value]) => ({ label, value }));
-
-    const quizMap = Object.fromEntries((data.quizzes || []).map((q) => [q.id, q]));
-    const byQuiz = {};
-    for (const r of responses) {
-      if (!byQuiz[r.quiz_id]) byQuiz[r.quiz_id] = { n: 0, sum: 0 };
-      byQuiz[r.quiz_id].n += 1;
-      const max = Number(r.max_score) || 0;
-      byQuiz[r.quiz_id].sum += max > 0 ? (Number(r.score) / max) * 100 : 0;
-    }
-    const quizRows = Object.entries(byQuiz)
-      .map(([id, v]) => ({
-        label: (quizMap[id]?.title || id).slice(0, 28),
-        value: Math.round(v.sum / v.n),
-        n: v.n,
-        id,
-      }))
-      .sort((a, b) => b.n - a.n)
-      .slice(0, 8);
-
-    const qMap = {};
-    for (const q of data.questions || []) {
-      if (quizFilter !== 'all' && q.quiz_id !== quizFilter) continue;
-      if (Number(q.points) <= 0) continue;
-      qMap[q.id] = { label: (q.prompt || 'Q').slice(0, 36), ok: 0, n: 0 };
-    }
-    for (const r of responses) {
-      for (const [qid, v] of Object.entries(r.per_question || {})) {
-        if (!qMap[qid] || v == null) continue;
-        qMap[qid].n += 1;
-        qMap[qid].ok += Number(v) ? 1 : 0;
-      }
-    }
-    const questionRows = Object.values(qMap)
-      .filter((q) => q.n > 0)
-      .map((q) => ({ label: q.label, value: Math.round((q.ok / q.n) * 100) }))
-      .sort((a, b) => a.value - b.value)
-      .slice(0, 10);
-
-    const integrityRows = responses
-      .map((r) => integrityIndex.get(r.id))
-      .filter((entry) => entry?.level && entry.level !== 'none')
-      .slice(0, 8)
-      .map((entry, i) => ({
-        label: entry.peers?.[0]?.discord || `Flag ${i + 1}`,
-        value: entry.score,
-      }));
-
     return {
       n,
       avg,
       flagged,
-      reviewPairs,
       buckets,
       dayRows,
-      quizRows,
-      questionRows,
-      integrityRows,
       passFail: [
         { label: '≥70%', value: pass, color: '#2dd4bf' },
         { label: '<70%', value: fail, color: '#f87171' },
       ],
+      uniquePlayers: allPlayers.length,
+      repeatPlayers: allPlayers.filter((p) => p.triviasDone >= 2).length,
     };
-  }, [filteredResponses, data.questions, data.quizzes, quizFilter]);
+  }, [filteredResponses, integrityIndex, allPlayers.length]);
 
   return (
     <HostShell active="analytics">
       <div className="f-welcome-row">
         <h1>Analytics</h1>
-        <select
-          value={quizFilter}
-          onChange={(e) => setQuizFilter(e.target.value)}
-          style={{ maxWidth: 280 }}
+        <div className="f-analytics-toolbar">
+          <Link to="/classroom" className="f-outline-btn f-compact">
+            ← Discord Classroom
+          </Link>
+          <select
+            className="f-hub-select"
+            value={quizFilter}
+            onChange={(e) => setQuizFilter(e.target.value)}
+          >
+            <option value="all">All quizzes</option>
+            {(data.quizzes || []).map((q) => (
+              <option key={q.id} value={q.id}>
+                {q.title}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      <div className="f-seg-nav f-analytics-tabs">
+        <button
+          type="button"
+          className={tab === 'players' ? 'is-active' : ''}
+          onClick={() => setTab('players')}
         >
-          <option value="all">All quizzes</option>
-          {(data.quizzes || []).map((q) => (
-            <option key={q.id} value={q.id}>
-              {q.title}
-            </option>
-          ))}
-        </select>
+          Players
+        </button>
+        <button
+          type="button"
+          className={tab === 'giveaway' ? 'is-active' : ''}
+          onClick={() => setTab('giveaway')}
+        >
+          Giveaway pool
+        </button>
+        <button
+          type="button"
+          className={tab === 'overview' ? 'is-active' : ''}
+          onClick={() => setTab('overview')}
+        >
+          Overview
+        </button>
       </div>
 
       {error ? <div className="f-error">{error}</div> : null}
       {loading ? <p className="f-muted">Loading…</p> : null}
 
-      <div className="f-kpi-row">
-        <div className="f-kpi">
-          <div className="f-kpi-label">Submissions</div>
-          <div className="f-kpi-value">{stats.n}</div>
-        </div>
-        <div className="f-kpi">
-          <div className="f-kpi-label">Avg score</div>
-          <div className="f-kpi-value">{stats.avg}%</div>
-        </div>
-        <div className="f-kpi">
-          <div className="f-kpi-label">Review flags</div>
-          <div className="f-kpi-value">{stats.flagged}</div>
-        </div>
-        <div className="f-kpi">
-          <div className="f-kpi-label">Quizzes</div>
-          <div className="f-kpi-value">{(data.quizzes || []).length}</div>
-        </div>
-      </div>
+      {!loading && tab === 'players' ? (
+        <>
+          <KpiStrip
+            items={[
+              { label: 'Unique players', value: allPlayers.length, tone: 'cyan' },
+              { label: 'Repeat (2+ trivias)', value: allPlayers.filter((p) => p.triviasDone >= 2).length, tone: 'teal' },
+              { label: 'Submissions', value: filteredResponses.length, tone: 'gold' },
+              { label: 'Quizzes hosted', value: (data.quizzes || []).length, tone: 'violet' },
+            ]}
+          />
 
-      <div className="f-analytics-grid">
-        <BarChart title="Score distribution" rows={stats.buckets} />
-        <Donut title="Pass threshold (≥70%)" parts={stats.passFail} />
-        <BarChart title="Submissions by day (last 14)" rows={stats.dayRows} />
-        <BarChart title="Hardest questions (% correct)" rows={stats.questionRows} />
-        <BarChart
-          title="Avg score by quiz"
-          rows={stats.quizRows.map((r) => ({ label: r.label, value: r.value }))}
-        />
-        <BarChart title="Integrity signal strength" rows={stats.integrityRows} />
-      </div>
+          <div className="f-analytics-toolbar f-analytics-toolbar--players">
+            <input
+              type="search"
+              className="f-hub-input"
+              placeholder="Search Discord or in-game name…"
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setPage(0);
+              }}
+            />
+            <label className="f-inline-field">
+              Min trivias
+              <input
+                type="number"
+                min={1}
+                max={99}
+                value={minTrivias}
+                onChange={(e) => {
+                  setMinTrivias(Math.max(1, Number(e.target.value) || 1));
+                  setPage(0);
+                }}
+              />
+            </label>
+            <button
+              type="button"
+              className="f-outline-btn f-compact"
+              onClick={() =>
+                downloadCsv('trivia-players.csv', playersToCsv(visiblePlayers))
+              }
+            >
+              Export CSV
+            </button>
+          </div>
 
-      <p className="f-muted" style={{ marginTop: 16, fontSize: 12 }}>
-        Review flags use duplicate Discord, in-game name, or IP address (host only). Shared Wi‑Fi can flag unrelated players.
-      </p>
+          <div className="f-player-table-wrap">
+            <table className="f-grid f-player-table">
+              <thead>
+                <tr>
+                  <th className="col-rank">#</th>
+                  <th>Discord</th>
+                  <th>In-game</th>
+                  <th>Trivias</th>
+                  <th>Total pts</th>
+                  <th>Avg / trivia</th>
+                  <th>Avg %</th>
+                  <th>Avg time</th>
+                  <th>Last seen</th>
+                </tr>
+              </thead>
+              <tbody>
+                {pagePlayers.map((p, i) => {
+                  const rank = from + i;
+                  const active = selectedKey === p.discordKey;
+                  return (
+                    <Fragment key={p.discordKey}>
+                      <tr
+                        className={active ? 'is-selected' : undefined}
+                        onClick={() => setSelectedKey(active ? null : p.discordKey)}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        <td className="col-rank">{rank}</td>
+                        <td>
+                          {p.discord}
+                          {p.flagged ? (
+                            <span className="f-player-flag" title={`Review flag: ${p.flagLevel}`}>
+                              ⚑
+                            </span>
+                          ) : null}
+                        </td>
+                        <td>{p.ingame}</td>
+                        <td>{p.triviasDone}</td>
+                        <td>
+                          {p.totalScore}/{p.totalMax}
+                          {p.totalPct != null ? (
+                            <span className="f-muted"> ({p.totalPct}%)</span>
+                          ) : null}
+                        </td>
+                        <td>
+                          {p.avgScore}/{p.avgMax}
+                        </td>
+                        <td>{p.avgPct != null ? `${p.avgPct}%` : '—'}</td>
+                        <td>{p.avgDurationLabel}</td>
+                        <td className="f-muted">{String(p.lastSubmittedAt || '').slice(0, 10)}</td>
+                      </tr>
+                      {active ? (
+                        <tr key={`${p.discordKey}-detail`} className="f-player-detail-row">
+                          <td colSpan={9}>
+                            <PlayerDetail player={p} />
+                          </td>
+                        </tr>
+                      ) : null}
+                    </Fragment>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+
+          <PaginationBar
+            page={page}
+            pageCount={pageCount}
+            from={from}
+            to={to}
+            total={visiblePlayers.length}
+            onPage={setPage}
+            pageSize={25}
+          />
+
+          <p className="f-muted f-analytics-foot">
+            Click a row for per-trivia scores, time, and what they usually get right or wrong. Practice
+            test-link submissions are excluded.
+            {data.profileSync?.tableMissing ? (
+              <>
+                {' '}
+                Run <code>supabase/formative_trivia_player_profiles.sql</code> in Supabase, then reload —
+                player rows are not persisted yet.
+              </>
+            ) : data.profileSync?.synced != null ? (
+              <> {data.profileSync.synced} player(s) saved to database.</>
+            ) : (data.playerProfiles || []).length ? (
+              <> {(data.playerProfiles || []).length} player(s) in database.</>
+            ) : null}
+          </p>
+        </>
+      ) : null}
+
+      {!loading && tab === 'giveaway' ? (
+        <>
+          <p className="f-muted f-analytics-intro">
+            Players who show up consistently — filter for your giveaway. Export the list when ready.
+          </p>
+          <div className="f-analytics-toolbar f-analytics-toolbar--players">
+            <label className="f-inline-field">
+              Min trivias entered
+              <input
+                type="number"
+                min={1}
+                max={99}
+                value={giveawayMinTrivias}
+                onChange={(e) => setGiveawayMinTrivias(Math.max(1, Number(e.target.value) || 1))}
+              />
+            </label>
+            <label className="f-inline-check">
+              <input
+                type="checkbox"
+                checked={excludeFlagged}
+                onChange={(e) => setExcludeFlagged(e.target.checked)}
+              />
+              Exclude review flags
+            </label>
+            <button
+              type="button"
+              className="f-outline-btn f-compact"
+              onClick={() => downloadCsv('trivia-giveaway-pool.csv', playersToCsv(giveawayPool))}
+            >
+              Export pool ({giveawayPool.length})
+            </button>
+          </div>
+          <div className="f-player-table-wrap">
+            <table className="f-grid f-player-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Discord</th>
+                  <th>In-game</th>
+                  <th>Trivias</th>
+                  <th>Avg %</th>
+                  <th>Total pts</th>
+                  <th>Avg time</th>
+                </tr>
+              </thead>
+              <tbody>
+                {giveawayPool.slice(0, 100).map((p, i) => (
+                  <tr key={p.discordKey}>
+                    <td>{i + 1}</td>
+                    <td>{p.discord}</td>
+                    <td>{p.ingame}</td>
+                    <td>{p.triviasDone}</td>
+                    <td>{p.avgPct != null ? `${p.avgPct}%` : '—'}</td>
+                    <td>
+                      {p.totalScore}/{p.totalMax}
+                    </td>
+                    <td>{p.avgDurationLabel}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          {giveawayPool.length > 100 ? (
+            <p className="f-muted">Showing first 100 — export CSV for the full list.</p>
+          ) : null}
+        </>
+      ) : null}
+
+      {!loading && tab === 'overview' ? (
+        <>
+          <div className="f-kpi-row">
+            <div className="f-kpi">
+              <div className="f-kpi-label">Submissions</div>
+              <div className="f-kpi-value">{overviewStats.n}</div>
+            </div>
+            <div className="f-kpi">
+              <div className="f-kpi-label">Avg score</div>
+              <div className="f-kpi-value">{overviewStats.avg}%</div>
+            </div>
+            <div className="f-kpi">
+              <div className="f-kpi-label">Unique players</div>
+              <div className="f-kpi-value">{overviewStats.uniquePlayers}</div>
+            </div>
+            <div className="f-kpi">
+              <div className="f-kpi-label">Review flags</div>
+              <div className="f-kpi-value">{overviewStats.flagged}</div>
+            </div>
+          </div>
+          <div className="f-analytics-grid f-analytics-grid--insights">
+            <BarChart title="Score distribution" rows={overviewStats.buckets} glow tone />
+            <Donut title="Pass threshold (≥70%)" parts={overviewStats.passFail} glow />
+            <BarChart title="Submissions by day (last 14)" rows={overviewStats.dayRows} glow tone />
+          </div>
+        </>
+      ) : null}
     </HostShell>
   );
 }

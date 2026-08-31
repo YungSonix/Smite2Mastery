@@ -2,6 +2,9 @@
  * Local formative trivia API (in-memory) for Vite proxy on :3000.
  * Mirrors /api/trivia/host|public|submit without Supabase.
  *
+ * When SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY are set (.env / .env.local),
+ * analytics + classroom routes use real Supabase (same as production).
+ *
  *   node scripts/formative-dev-api.js
  *   npm run trivia:api
  *   npm run trivia:dev
@@ -11,6 +14,39 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const { randomUUID } = require('crypto');
+
+function loadDotEnv() {
+  const root = path.resolve(__dirname, '..');
+  for (const name of ['.env.local', '.env']) {
+    const envPath = path.join(root, name);
+    if (!fs.existsSync(envPath)) continue;
+    for (const line of fs.readFileSync(envPath, 'utf8').split('\n')) {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith('#')) continue;
+      const eq = trimmed.indexOf('=');
+      if (eq <= 0) continue;
+      const key = trimmed.slice(0, eq).trim();
+      let val = trimmed.slice(eq + 1).trim();
+      if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+        val = val.slice(1, -1);
+      }
+      if (!process.env[key]) process.env[key] = val;
+    }
+  }
+}
+
+loadDotEnv();
+
+const CLASSROOM_ACTIONS = new Set(['classroom-points', 'set-classroom-avatar', 'sync-player-profiles']);
+
+function trySupabase() {
+  try {
+    const { supabaseAdmin } = require('../lib/server/triviaApi');
+    return supabaseAdmin();
+  } catch {
+    return null;
+  }
+}
 const {
   scoreAnswers,
   playerFacingScore,
@@ -437,13 +473,46 @@ async function handleHost(req, res, url) {
   }
 
   if (req.method === 'GET' && action === 'analytics') {
+    const sb = trySupabase();
+    if (sb) {
+      try {
+        const { fetchHostAnalytics } = require('../lib/server/triviaHostClassroom');
+        const shouldSync =
+          String(url.searchParams.get('syncProfiles') || '').toLowerCase() !== '0';
+        const payload = await fetchHostAnalytics(sb, username, { syncProfiles: shouldSync });
+        return json(res, 200, { ...payload, devMode: 'supabase' });
+      } catch (e) {
+        return json(res, e.status || 500, { error: e.message });
+      }
+    }
     const quizzes = [...db.quizzes.values()].filter((q) => q.owner_username === username);
     const quizIds = new Set(quizzes.map((q) => q.id));
     const questions = [...db.questions.values()].filter((q) => quizIds.has(q.quiz_id));
     const responses = [...db.responses.values()]
       .filter((r) => quizIds.has(r.quiz_id))
       .sort((a, b) => String(b.submitted_at).localeCompare(String(a.submitted_at)));
-    return json(res, 200, { quizzes, questions, responses });
+    return json(res, 200, { quizzes, questions, responses, playerProfiles: [] });
+  }
+
+  if (
+    req.method === 'POST' &&
+    body?.action &&
+    CLASSROOM_ACTIONS.has(String(body.action))
+  ) {
+    const sb = trySupabase();
+    if (sb) {
+      try {
+        const { handleHostClassroomPost } = require('../lib/server/triviaHostClassroom');
+        const result = await handleHostClassroomPost(sb, username, body);
+        if (result) return json(res, result.status, result.body);
+      } catch (e) {
+        return json(res, e.status || 500, { error: e.message });
+      }
+    }
+    return json(res, 503, {
+      error:
+        'Classroom actions need SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY in .env for local dev',
+    });
   }
 
   if (req.method === 'POST') {
