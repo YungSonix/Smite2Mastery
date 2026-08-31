@@ -643,8 +643,9 @@ export default function DiscordClassroom() {
             />
 
             <p className="f-muted f-classroom-foot">
-              +/− adjusts your manual bonus (saved in Supabase). Trivia auto-points refresh on sync.
-              Class points = trivia auto-points + your manual bonus.
+              +/− adjusts your manual bonus (saved in Supabase), including half points. Trivia
+              auto-points refresh on sync. Class points = trivia auto-points + your manual bonus.
+              For ±½, run <code>supabase/formative_trivia_classroom_bonus_half.sql</code> once.
               {data.profileSync?.tableMissing ? (
                 <>
                   {' '}
