@@ -6,11 +6,53 @@ import { hostApi } from '../lib/api';
 import { buildSubmissionIntegrity } from '../lib/submissionIntegrity';
 import { buildPlayerLeaderboard } from '../lib/triviaPlayerStats';
 import { formatClassPoints, mergeClassroomStudent } from '../lib/classroomBadges';
+import { attachThesesToStudents, buildClassNextTriviaRecipe } from '../lib/classroomThesis';
 import { formatWhenLocal } from '../lib/formatWhen';
 import ClassroomAvatarPicker from '../components/ClassroomAvatarPicker';
 import { PaginationBar, usePagination } from '../lib/usePagination';
 
 const CLASSROOM_PAGE_SIZE = 30;
+
+const THESIS_ENTITY_KEYS = [
+  { id: 'gods', label: 'Gods' },
+  { id: 'skins', label: 'Skins' },
+  { id: 'voice', label: 'Voice lines' },
+  { id: 'ability_sfx', label: 'Ability SFX' },
+];
+
+function ThesisEntityBlock({ title, bag }) {
+  if (!bag) return null;
+  const rows = THESIS_ENTITY_KEYS.map(({ id, label }) => {
+    const items = bag[id] || [];
+    return { id, label, items };
+  }).filter((r) => r.items.length);
+  if (!rows.length) {
+    return (
+      <div className="f-classroom-thesis-entities">
+        <h4 className="f-player-detail-title">{title}</h4>
+        <p className="f-muted">Nothing tagged yet.</p>
+      </div>
+    );
+  }
+  return (
+    <div className="f-classroom-thesis-entities">
+      <h4 className="f-player-detail-title">{title}</h4>
+      {rows.map(({ id, label, items }) => (
+        <div key={id} className="f-classroom-recognize-group">
+          <div className="f-classroom-recognize-head">
+            <span>{label}</span>
+            <span className="f-muted">{items.length}</span>
+          </div>
+          <ul className="f-classroom-recognize-list">
+            {items.map((ent) => (
+              <li key={ent.key}>{ent.label}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 const BULK_DELTAS = [
   { delta: 1, label: '+1 everyone' },
@@ -83,12 +125,15 @@ function PlayerDetail({ student, onAdjust, busy, onChangeAvatar }) {
   if (!student) return null;
 
   const attempts = student.attempts || [];
+  const thesis = student.thesis;
   const firstAttempt = attempts.length ? attempts[attempts.length - 1] : null;
   const firstSeen =
     formatWhenLocal(firstAttempt?.submittedAt) ||
     formatWhenLocal(student.lastSubmittedAt) ||
     '—';
   const lastSeen = formatWhenLocal(student.lastSubmittedAt) || '—';
+  const trendLabel =
+    thesis?.trend === 'up' ? 'Improving' : thesis?.trend === 'down' ? 'Slipping' : 'Steady';
 
   return (
     <div className="f-classroom-detail f-classroom-profile-deep">
@@ -106,6 +151,9 @@ function PlayerDetail({ student, onAdjust, busy, onChangeAvatar }) {
           <h3>{student.ingame}</h3>
           <p className="f-muted">{student.discord}</p>
           <p className="f-classroom-detail-badge-label">{student.badgeLabel}</p>
+          {thesis?.oneLiner ? (
+            <p className="f-classroom-thesis-oneliner">{thesis.oneLiner}</p>
+          ) : null}
           {student.flagged ? (
             <p className="f-classroom-flag-note">
               ⚑ Review flagged ({student.flagLevel})
@@ -146,6 +194,95 @@ function PlayerDetail({ student, onAdjust, busy, onChangeAvatar }) {
         <StatCell label="First seen" value={firstSeen} />
         <StatCell label="Last seen" value={lastSeen} />
       </div>
+
+      {thesis ? (
+        <div className="f-classroom-thesis">
+          <h4 className="f-player-detail-title">Style report card</h4>
+          <div className="f-classroom-style-grid">
+            {(thesis.styleCards || []).map((card) => (
+              <div
+                key={card.id}
+                className={`f-classroom-style-card is-${String(card.verdict || 'thin')
+                  .toLowerCase()
+                  .replace(/\s+/g, '-')}`}
+              >
+                <div className="f-classroom-style-label">{card.label}</div>
+                <div className="f-classroom-style-ratio">
+                  {card.right}/{card.seen}
+                </div>
+                <div className="f-classroom-style-pct">
+                  {card.pct != null ? `${card.pct}%` : '—'}
+                </div>
+                <div className="f-classroom-style-verdict">{card.verdict}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="f-classroom-thesis-split">
+            <ThesisEntityBlock title="Recognizes" bag={thesis.recognizes} />
+            <ThesisEntityBlock title="Misses" bag={thesis.misses} />
+          </div>
+
+          <div className="f-classroom-thesis-split">
+            <div>
+              <h4 className="f-player-detail-title">Good at</h4>
+              {thesis.goodQuestions?.length ? (
+                <ul className="f-player-topic-list is-strong">
+                  {thesis.goodQuestions.map((q) => (
+                    <li key={`good-${q.label}`}>
+                      <span>{q.label}</span>
+                      <span className="f-muted">
+                        {q.avgPct}% · {q.attempts}×
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="f-muted">Needs more repeat prompts.</p>
+              )}
+            </div>
+            <div>
+              <h4 className="f-player-detail-title">Struggles with</h4>
+              {thesis.toughQuestions?.length ? (
+                <ul className="f-player-topic-list is-weak">
+                  {thesis.toughQuestions.map((q) => (
+                    <li key={`tough-${q.label}`}>
+                      <span>{q.label}</span>
+                      <span className="f-muted">
+                        {q.avgPct}% · {q.attempts}×
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="f-muted">No tough prompts flagged yet.</p>
+              )}
+            </div>
+          </div>
+
+          <div className="f-classroom-thesis-trend">
+            <h4 className="f-player-detail-title">Trend</h4>
+            <p className={`f-classroom-trend-pill is-${thesis.trend || 'flat'}`}>{trendLabel}</p>
+            {thesis.recent?.length ? (
+              <ul className="f-classroom-recent-list">
+                {thesis.recent.map((r, idx) => (
+                  <li key={`${r.quizTitle}-${r.submittedAt || idx}`}>
+                    <span className="f-player-attempt-quiz">{r.quizTitle}</span>
+                    <span className="f-player-attempt-score">
+                      {r.pct != null ? `${r.pct}%` : '—'}
+                    </span>
+                    <span className="f-muted f-player-attempt-when">
+                      {formatWhenLocal(r.submittedAt) || '—'}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="f-muted">No recent events yet.</p>
+            )}
+          </div>
+        </div>
+      ) : null}
 
       {student.ingameNames?.length ? (
         <div className="f-classroom-ingame-names">
@@ -337,9 +474,24 @@ export default function DiscordClassroom() {
     return players.map((p) => mergeClassroomStudent(p, profileByKey[p.discordKey]));
   }, [data, integrityIndex, profileByKey]);
 
+  const studentsWithThesis = useMemo(
+    () => attachThesesToStudents(students, data.questions),
+    [students, data.questions]
+  );
+
+  const nextTrivia = useMemo(
+    () =>
+      buildClassNextTriviaRecipe({
+        students: studentsWithThesis,
+        questions: data.questions,
+        responses: data.responses,
+      }),
+    [studentsWithThesis, data.questions, data.responses]
+  );
+
   const visible = useMemo(() => {
     const q = search.trim().toLowerCase();
-    let list = students.filter((s) => {
+    let list = studentsWithThesis.filter((s) => {
       if (filter === 'regulars' && !s.isRegular) return false;
       if (filter === 'new' && s.triviasDone > 1) return false;
       if (!q) return true;
@@ -362,7 +514,7 @@ export default function DiscordClassroom() {
       );
     });
     return list;
-  }, [students, search, filter, sort]);
+  }, [studentsWithThesis, search, filter, sort]);
 
   const {
     page,
@@ -473,8 +625,8 @@ export default function DiscordClassroom() {
   );
 
   const selected = visible.find((s) => s.discordKey === selectedKey) || null;
-  const regularCount = students.filter((s) => s.isRegular).length;
-  const totalPoints = students.reduce((n, s) => n + s.classroomPoints, 0);
+  const regularCount = studentsWithThesis.filter((s) => s.isRegular).length;
+  const totalPoints = studentsWithThesis.reduce((n, s) => n + s.classroomPoints, 0);
 
   const selectStudent = useCallback((key) => {
     setSelectedKey((prev) => (prev === key ? null : key));
@@ -527,7 +679,7 @@ export default function DiscordClassroom() {
           <>
             <KpiStrip
               items={[
-                { label: 'Students', value: students.length, tone: 'cyan' },
+                { label: 'Students', value: studentsWithThesis.length, tone: 'cyan' },
                 { label: 'Regulars (2+ trivias)', value: regularCount, tone: 'teal' },
                 {
                   label: 'Class points',
@@ -537,6 +689,47 @@ export default function DiscordClassroom() {
                 { label: 'Trivias hosted', value: (data.quizzes || []).length, tone: 'violet' },
               ]}
             />
+
+            <section className="f-classroom-recipe" aria-label="What to put in next trivia">
+              <h2 className="f-classroom-recipe-title">What to put in next trivia</h2>
+              <p className="f-classroom-recipe-headline">{nextTrivia.headline}</p>
+              {nextTrivia.mix?.length ? (
+                <div className="f-classroom-recipe-mix" aria-label="Style mix">
+                  {nextTrivia.mix.map((m) => (
+                    <span
+                      key={m.id}
+                      className={`f-classroom-recipe-chip is-${String(m.verdict || 'thin')
+                        .toLowerCase()
+                        .replace(/\s+/g, '-')}`}
+                      title={`${m.seen} answers · ${m.questionCount} questions`}
+                    >
+                      <span className="f-classroom-recipe-chip-label">{m.label}</span>
+                      <span className="f-classroom-recipe-chip-pct">
+                        {m.pct != null ? `${m.pct}%` : '—'}
+                      </span>
+                    </span>
+                  ))}
+                </div>
+              ) : null}
+              {nextTrivia.bullets?.length ? (
+                <ul className="f-classroom-recipe-list">
+                  {nextTrivia.bullets.map((b, idx) => {
+                    const action = String(b.action || 'KEEP').toUpperCase();
+                    const actionClass = action.toLowerCase();
+                    return (
+                      <li key={`${action}-${idx}`} className="f-classroom-recipe-bullet">
+                        <span className={`f-classroom-recipe-action is-${actionClass}`}>
+                          {action}
+                        </span>
+                        <span>{b.text}</span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              ) : (
+                <p className="f-muted">Not enough tagged answers yet for recipe tips.</p>
+              )}
+            </section>
 
             <div className="f-classroom-toolbar">
               <input

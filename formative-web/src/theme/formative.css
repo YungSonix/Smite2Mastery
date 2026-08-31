@@ -9084,6 +9084,291 @@ button.f-next-event-action-btn:hover {
   background: rgba(248, 113, 113, 0.08);
 }
 
+.f-classroom-recipe {
+  margin: 0 0 16px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(125, 211, 252, 0.28);
+  background:
+    linear-gradient(145deg, rgba(14, 28, 48, 0.92), rgba(8, 14, 28, 0.88));
+}
+
+.f-classroom-recipe-title {
+  margin: 0 0 6px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #e6eef8;
+}
+
+.f-classroom-recipe-headline {
+  margin: 0 0 12px;
+  font-size: 0.86rem;
+  color: #94a3b8;
+  line-height: 1.4;
+}
+
+.f-classroom-recipe-mix {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 12px;
+}
+
+.f-classroom-recipe-chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(125, 211, 252, 0.22);
+  background: rgba(15, 23, 42, 0.7);
+  font-size: 0.78rem;
+  color: #cbd5e1;
+}
+
+.f-classroom-recipe-chip-label {
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+.f-classroom-recipe-chip-pct {
+  color: #7dd3fc;
+  font-variant-numeric: tabular-nums;
+}
+
+.f-classroom-recipe-chip.is-solid {
+  border-color: rgba(45, 212, 191, 0.45);
+}
+
+.f-classroom-recipe-chip.is-shaky {
+  border-color: rgba(248, 113, 113, 0.45);
+}
+
+.f-classroom-recipe-chip.is-untested,
+.f-classroom-recipe-chip.is-thin {
+  border-color: rgba(148, 163, 184, 0.35);
+  opacity: 0.9;
+}
+
+.f-classroom-recipe-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.f-classroom-recipe-bullet {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: #e2e8f0;
+}
+
+.f-classroom-recipe-action {
+  flex: 0 0 auto;
+  min-width: 3.4rem;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-align: center;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+}
+
+.f-classroom-recipe-action.is-add {
+  color: #99f6e4;
+  background: rgba(45, 212, 191, 0.14);
+  border-color: rgba(45, 212, 191, 0.4);
+}
+
+.f-classroom-recipe-action.is-cut {
+  color: #fca5a5;
+  background: rgba(248, 113, 113, 0.12);
+  border-color: rgba(248, 113, 113, 0.4);
+}
+
+.f-classroom-recipe-action.is-keep {
+  color: #93c5fd;
+  background: rgba(59, 130, 246, 0.14);
+  border-color: rgba(96, 165, 250, 0.4);
+}
+
+.f-classroom-recipe-action.is-fresh {
+  color: #fde68a;
+  background: rgba(234, 179, 8, 0.12);
+  border-color: rgba(234, 179, 8, 0.4);
+}
+
+.f-classroom-thesis {
+  margin: 0 0 18px;
+  padding: 14px 14px 4px;
+  border-radius: 12px;
+  border: 1px solid rgba(125, 211, 252, 0.2);
+  background: rgba(8, 14, 28, 0.55);
+}
+
+.f-classroom-thesis-oneliner {
+  margin: 6px 0 0;
+  font-size: 0.86rem;
+  line-height: 1.35;
+  color: #bae6fd;
+}
+
+.f-classroom-style-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+  gap: 8px;
+  margin: 0 0 14px;
+}
+
+.f-classroom-style-card {
+  padding: 10px 10px 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(125, 211, 252, 0.18);
+  background: rgba(15, 23, 42, 0.65);
+}
+
+.f-classroom-style-card.is-solid {
+  border-color: rgba(45, 212, 191, 0.4);
+  background: rgba(13, 40, 36, 0.55);
+}
+
+.f-classroom-style-card.is-shaky {
+  border-color: rgba(248, 113, 113, 0.4);
+  background: rgba(48, 18, 22, 0.45);
+}
+
+.f-classroom-style-card.is-ok {
+  border-color: rgba(96, 165, 250, 0.35);
+}
+
+.f-classroom-style-card.is-untested,
+.f-classroom-style-card.is-thin {
+  opacity: 0.85;
+}
+
+.f-classroom-style-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #e2e8f0;
+}
+
+.f-classroom-style-ratio {
+  margin-top: 4px;
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  color: #94a3b8;
+}
+
+.f-classroom-style-pct {
+  margin-top: 2px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #7dd3fc;
+}
+
+.f-classroom-style-verdict {
+  margin-top: 4px;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #cbd5e1;
+}
+
+.f-classroom-thesis-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 0 0 14px;
+}
+
+.f-classroom-thesis-entities {
+  min-width: 0;
+}
+
+.f-classroom-recognize-group {
+  margin: 0 0 10px;
+}
+
+.f-classroom-recognize-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0 0 4px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #cbd5e1;
+}
+
+.f-classroom-recognize-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.f-classroom-recognize-list li {
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(125, 211, 252, 0.22);
+  background: rgba(30, 58, 95, 0.4);
+  font-size: 0.74rem;
+  color: #e2e8f0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.f-classroom-thesis-trend {
+  margin: 0 0 12px;
+}
+
+.f-classroom-trend-pill {
+  display: inline-block;
+  margin: 0 0 8px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  color: #cbd5e1;
+  background: rgba(15, 23, 42, 0.6);
+}
+
+.f-classroom-trend-pill.is-up {
+  color: #99f6e4;
+  border-color: rgba(45, 212, 191, 0.45);
+}
+
+.f-classroom-trend-pill.is-down {
+  color: #fca5a5;
+  border-color: rgba(248, 113, 113, 0.45);
+}
+
+.f-classroom-recent-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.f-classroom-recent-list li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(30, 58, 95, 0.6);
+  font-size: 0.85rem;
+}
+
 .f-player-attempt-when {
   flex-basis: 100%;
   font-size: 0.75rem;
@@ -9135,8 +9420,22 @@ button.f-next-event-action-btn:hover {
 }
 
 @media (max-width: 720px) {
-  .f-player-detail-grid {
+  .f-player-detail-grid,
+  .f-classroom-thesis-split {
     grid-template-columns: 1fr;
+  }
+
+  .f-classroom-recipe {
+    padding: 12px;
+  }
+
+  .f-classroom-recipe-bullet {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .f-classroom-style-grid {
+    grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
   }
 
   .f-classroom-grid {
