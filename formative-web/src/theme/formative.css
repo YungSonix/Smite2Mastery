@@ -9292,3 +9292,241 @@ button.f-next-event-action-btn:hover {
   box-shadow: 0 0 0 1000px rgba(8, 12, 22, 0.95) inset;
   caret-color: var(--f-text);
 }
+
+/* iPhone / small-phone classroom + avatar picker (mobile only) */
+@media (max-width: 430px) {
+  .f-classroom-page {
+    padding-bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .f-classroom-hero {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .f-classroom-title {
+    font-size: 1.55rem;
+    line-height: 1.15;
+  }
+
+  .f-classroom-subtitle {
+    font-size: 0.84rem;
+    line-height: 1.4;
+  }
+
+  .f-classroom-toolbar {
+    gap: 10px;
+  }
+
+  .f-classroom-toolbar .f-hub-input {
+    width: 100%;
+    min-height: 44px;
+    font-size: 1rem;
+  }
+
+  .f-classroom-filters {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .f-classroom-filters button {
+    flex: 1 1 auto;
+    min-height: 40px;
+    padding: 8px 10px;
+    font-size: 0.78rem;
+  }
+
+  .f-classroom-sort {
+    width: 100%;
+  }
+
+  .f-classroom-sort select {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+  }
+
+  .f-classroom-bulk {
+    padding: 12px;
+  }
+
+  .f-classroom-bulk-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .f-classroom-bulk-row .f-classroom-pt-btn {
+    width: 100%;
+    min-height: 44px;
+    font-size: 0.8rem;
+  }
+
+  .f-classroom-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .f-classroom-card {
+    padding: 14px 10px 12px;
+  }
+
+  .f-classroom-avatar-ring {
+    width: 64px;
+    height: 64px;
+  }
+
+  .f-classroom-points-bubble {
+    font-size: 0.72rem;
+    padding: 3px 7px;
+  }
+
+  .f-classroom-points-ctrl {
+    justify-content: center;
+  }
+
+  .f-classroom-pt-btn {
+    min-width: 40px;
+    min-height: 40px;
+  }
+
+  .f-classroom-sheet,
+  .f-classroom-profile-deep {
+    padding: 16px 14px 18px;
+    border-radius: 16px;
+    margin-top: 10px;
+  }
+
+  .f-classroom-detail-head {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-right: 28px;
+  }
+
+  .f-classroom-detail-avatar {
+    width: 72px;
+    height: 72px;
+  }
+
+  .f-classroom-pts-card {
+    padding: 12px;
+  }
+
+  .f-classroom-detail-points {
+    font-size: 1.55rem;
+  }
+
+  .f-classroom-points-ctrl--lg {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    width: 100%;
+  }
+
+  .f-classroom-points-ctrl--lg .f-classroom-points-ctrl-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+
+  .f-classroom-points-ctrl--lg .f-classroom-pt-btn {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  .f-classroom-stat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .f-classroom-stat-cell {
+    padding: 10px;
+  }
+
+  .f-classroom-stat-value {
+    font-size: 0.84rem;
+  }
+
+  .f-pagination {
+    padding: 8px 4px;
+    justify-content: space-between;
+  }
+
+  .f-pagination .f-outline-btn {
+    min-height: 40px;
+    min-width: 72px;
+  }
+
+  .f-avatar-picker {
+    width: 100%;
+    max-width: 100%;
+    max-height: min(92dvh, 920px);
+    margin: 0;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .f-avatar-picker-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 10px 12px;
+  }
+
+  .f-avatar-picker-search {
+    width: 100%;
+    min-height: 44px;
+    font-size: 1rem;
+  }
+
+  .f-avatar-picker-filters {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+  }
+
+  .f-avatar-picker-filters button {
+    flex: 0 0 auto;
+    min-height: 36px;
+  }
+
+  .f-avatar-picker-preview {
+    padding: 10px 12px;
+  }
+
+  .f-avatar-picker-grid-wrap {
+    padding: 10px 12px;
+    min-height: 180px;
+  }
+
+  .f-avatar-picker-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .f-avatar-picker-option {
+    padding: 8px 4px;
+    min-height: 0;
+  }
+
+  .f-avatar-picker-option img {
+    width: 44px;
+    height: 44px;
+  }
+
+  .f-avatar-picker-option span {
+    font-size: 0.62rem;
+  }
+
+  .f-avatar-picker-actions {
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .f-avatar-picker-actions .f-outline-btn,
+  .f-avatar-picker-actions .f-ghost-btn {
+    min-height: 44px;
+  }
+}
+

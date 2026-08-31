@@ -37,6 +37,27 @@ function godFallbackUrl(godName) {
   return `${GOD_INFO_BASE}/${encodeURIComponent(`${base}Image.webp`)}`;
 }
 
+/** Assets-branch NewGodSkins folders that do not match simple space-stripping. */
+const GOD_PORTRAIT_SPECIAL = {
+  'Guan Yu': 'NewGodSkins/Guan_Yu/Default/t_GodPortrait_Guan_Yu.png',
+  'Hou Yi': 'NewGodSkins/Hou_Yi/Default/t_GodPortrait_Hou_Yi.png',
+  'Hun Batz': 'NewGodSkins/Hun_Batz/Default/t_GodPortrait_Hun_Batz.png',
+  'Ne Zha': 'NewGodSkins/Ne_Zha/Default/t_GodPortrait_Ne_Zha.png',
+  'Sun Wukong': 'NewGodSkins/Sun_Wukong/Default/t_GodPortrait_Sun_Wukong.png',
+  'Da Ji': 'NewGodSkins/DaJi/Default/t_GodPortrait_Daji.png',
+  'Hua Mulan': 'NewGodSkins/Mulan/Default/t_GodPortrait_Mulan.png',
+  'Princess Bari': 'NewGodSkins/Bari/Default/t_GodPortrait_Bari.png',
+  Chronos: null, // no NewGodSkins folder — use God Info webp fallback
+};
+
+function godSkinFolderCandidates(godName) {
+  const raw = String(godName || '').trim();
+  const noSpace = raw.replace(/\s+/g, '');
+  const alnum = raw.replace(/[^a-zA-Z0-9]/g, '');
+  const unders = raw.replace(/[^a-zA-Z0-9]+/g, '_').replace(/^_|_$/g, '');
+  return [...new Set([noSpace, alnum, unders].filter(Boolean))];
+}
+
 function normSearch(...parts) {
   return parts
     .flat()
@@ -84,8 +105,17 @@ for (const file of badges) {
 for (const god of gods) {
   const godName = god.godName;
   if (!godName) continue;
-  const iconPath = String(god.icon || '').trim();
-  const url = iconPath ? assetsUrl(iconPath) : godFallbackUrl(godName);
+  // Prefer NewGodSkins Default portraits — `God Icons/` is not on the assets branch (404).
+  const folderHints = godSkinFolderCandidates(godName);
+  let url = null;
+  for (const folder of folderHints) {
+    url = assetsUrl(`NewGodSkins/${folder}/Default/t_GodPortrait_${folder}.png`);
+    // Keep first candidate; runtime/regenerator can verify. Special cases below.
+    break;
+  }
+  const special = GOD_PORTRAIT_SPECIAL[godName];
+  if (special) url = assetsUrl(special);
+  if (!url) url = godFallbackUrl(godName);
   if (!url) continue;
   push({
     id: `god:${godName}`,
