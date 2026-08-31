@@ -252,13 +252,15 @@ function ClassroomCard({ student, active, onSelect, onAdjust, busy }) {
           </span>
           <span>{student.avgPct != null ? `${student.avgPct}% avg` : '—'}</span>
         </div>
+        <span className="f-classroom-card-open-hint">Tap for full report</span>
         {student.flagged ? (
           <span className="f-classroom-flag" title={`Review: ${student.flagLevel}`}>
             ⚑
           </span>
         ) : null}
       </button>
-      <PointControls student={student} onAdjust={onAdjust} busy={busy} />
+      {/* Card roster: ±1 only — half points live in the profile sheet (cleaner mobile taps). */}
+      <PointControls student={student} onAdjust={onAdjust} busy={busy} steps={[1]} />
     </div>
   );
 }
@@ -478,6 +480,27 @@ export default function DiscordClassroom() {
     setSelectedKey((prev) => (prev === key ? null : key));
   }, []);
 
+  // Mobile: profile used to render under 30 cards — felt like tap did nothing.
+  useEffect(() => {
+    if (!selectedKey) return undefined;
+    const prevOverflow = document.body.style.overflow;
+    const isMobile =
+      typeof window !== 'undefined' && window.matchMedia('(max-width: 720px)').matches;
+    if (isMobile) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      requestAnimationFrame(() => {
+        document.getElementById('classroom-student-sheet')?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+      });
+    }
+    return () => {
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [selectedKey]);
+
   return (
     <HostShell active="classroom">
       <div className="f-classroom-page">
@@ -616,21 +639,34 @@ export default function DiscordClassroom() {
             )}
 
             {selected ? (
-              <div className="f-classroom-sheet">
-                <button
-                  type="button"
-                  className="f-classroom-sheet-close"
-                  onClick={() => setSelectedKey(null)}
-                  aria-label="Close"
+              <div
+                className="f-classroom-sheet-overlay"
+                role="presentation"
+                onClick={() => setSelectedKey(null)}
+              >
+                <div
+                  id="classroom-student-sheet"
+                  className="f-classroom-sheet"
+                  role="dialog"
+                  aria-modal="true"
+                  aria-label={`${selected.ingame} student report`}
+                  onClick={(e) => e.stopPropagation()}
                 >
-                  ×
-                </button>
-                <PlayerDetail
-                  student={selected}
-                  onAdjust={handleAdjust}
-                  busy={busyKey === selected.discordKey || bulkBusy}
-                  onChangeAvatar={() => setAvatarStudent(selected)}
-                />
+                  <button
+                    type="button"
+                    className="f-classroom-sheet-close"
+                    onClick={() => setSelectedKey(null)}
+                    aria-label="Close"
+                  >
+                    ×
+                  </button>
+                  <PlayerDetail
+                    student={selected}
+                    onAdjust={handleAdjust}
+                    busy={busyKey === selected.discordKey || bulkBusy}
+                    onChangeAvatar={() => setAvatarStudent(selected)}
+                  />
+                </div>
               </div>
             ) : null}
 
