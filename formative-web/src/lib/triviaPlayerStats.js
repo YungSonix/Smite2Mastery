@@ -22,6 +22,16 @@ function shortLabel(text, max = 48) {
   return t.length > max ? `${t.slice(0, max - 1)}…` : t;
 }
 
+/** Earlier ISO timestamp ranks first (missing dates last). */
+function cmpEarlierDate(a, b) {
+  const sa = String(a || '');
+  const sb = String(b || '');
+  if (!sa && !sb) return 0;
+  if (!sa) return 1;
+  if (!sb) return -1;
+  return sa.localeCompare(sb);
+}
+
 /** Aggregate per-question performance for one player across attempts. */
 function buildQuestionPatterns(responses, questionById) {
   const byPrompt = new Map();
@@ -142,6 +152,7 @@ export function buildPlayerLeaderboard(responses, { quizzes = [], questions = []
       : null;
     const patterns = buildQuestionPatterns(row.rawResponses, questionById);
     const last = attempts[0];
+    const first = attempts.length ? attempts[attempts.length - 1] : null;
     const flagged = row.flaggedLevels.size > 0;
 
     return {
@@ -163,6 +174,7 @@ export function buildPlayerLeaderboard(responses, { quizzes = [], questions = []
       avgDurationMs,
       avgDurationLabel: avgDurationMs != null ? formatDuration(avgDurationMs) : '—',
       lastSubmittedAt: last?.submittedAt || null,
+      firstSubmittedAt: first?.submittedAt || null,
       attempts,
       strongQuestions: patterns.strong,
       weakQuestions: patterns.weak,
@@ -184,7 +196,13 @@ export function buildPlayerLeaderboard(responses, { quizzes = [], questions = []
   return players.sort((a, b) => {
     if (b.triviasDone !== a.triviasDone) return b.triviasDone - a.triviasDone;
     if (b.eventsEntered !== a.eventsEntered) return b.eventsEntered - a.eventsEntered;
-    return (b.avgPct || 0) - (a.avgPct || 0);
+    const avgDiff = (b.avgPct || 0) - (a.avgPct || 0);
+    if (avgDiff !== 0) return avgDiff;
+    const totalPctDiff = (b.totalPct || 0) - (a.totalPct || 0);
+    if (totalPctDiff !== 0) return totalPctDiff;
+    const scoreDiff = b.totalScore - a.totalScore;
+    if (scoreDiff !== 0) return scoreDiff;
+    return cmpEarlierDate(a.firstSubmittedAt, b.firstSubmittedAt);
   });
 }
 
