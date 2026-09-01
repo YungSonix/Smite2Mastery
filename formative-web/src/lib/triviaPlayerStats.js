@@ -293,6 +293,8 @@ export function buildSpinWheelNames({
       label,
       source,
       discordKey: player.discordKey || null,
+      discord: player.discord || '',
+      ingame: player.ingame || '',
     });
   };
 
@@ -314,7 +316,12 @@ export function wheelPoolToCsv(entries) {
   const lines = [header.join(',')];
   for (const entry of entries || []) {
     lines.push(
-      [csvCell(entry.label), csvCell(entry.source), '', ''].join(',')
+      [
+        csvCell(entry.label),
+        csvCell(entry.source),
+        csvCell(entry.discord || ''),
+        csvCell(entry.ingame || ''),
+      ].join(',')
     );
   }
   return lines.join('\n');

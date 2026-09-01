@@ -8459,6 +8459,112 @@ button.f-next-event-action-btn:hover {
   box-shadow: 0 0 0 1px rgba(45, 212, 191, 0.2);
 }
 
+.f-analytics-page {
+  width: 100%;
+}
+
+.f-analytics-loading {
+  padding: 28px 20px;
+  border-radius: 12px;
+  border: 1px dashed rgba(125, 211, 252, 0.28);
+  background: rgba(8, 12, 22, 0.55);
+  text-align: center;
+}
+
+.f-analytics-loading-hint {
+  margin: 8px 0 0;
+  font-size: 0.8125rem;
+}
+
+.f-analytics-empty {
+  margin: 20px 0;
+  padding: 24px 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(125, 211, 252, 0.22);
+  background: rgba(8, 12, 22, 0.72);
+  text-align: center;
+}
+
+.f-analytics-empty-title {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--f-text);
+}
+
+.f-analytics-empty-body {
+  margin: 0 auto 14px;
+  max-width: 42rem;
+  line-height: 1.45;
+}
+
+.f-analytics-empty-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.f-analytics-pool-count {
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.f-player-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid rgba(125, 211, 252, 0.18);
+  background: rgba(8, 12, 22, 0.45);
+}
+
+.f-player-table-wrap .f-player-table {
+  width: 100%;
+  min-width: 720px;
+}
+
+.f-analytics-player-row {
+  cursor: pointer;
+}
+
+.f-analytics-player-row:hover td {
+  background: color-mix(in srgb, var(--f-blue) 10%, var(--f-card));
+}
+
+.f-link-btn {
+  padding: 0;
+  border: none;
+  background: none;
+  color: #7dd3fc;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.f-link-btn:hover {
+  color: #bae6fd;
+}
+
+.f-analytics-grid--insights .f-chart-card {
+  min-width: 0;
+}
+
+.f-analytics-grid--insights .f-donut-wrap {
+  flex-wrap: wrap;
+}
+
+.f-inline-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--f-muted);
+  white-space: nowrap;
+}
+
 .f-analytics-tabs {
   margin-bottom: 20px;
 }

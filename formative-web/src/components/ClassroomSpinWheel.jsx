@@ -491,7 +491,7 @@ export default function ClassroomSpinWheel({
                         : 'No classroom roster loaded yet'
                     }
                   >
-                    Add all from classroom ({classRoster.length})
+                    Add all from class ({classRoster.length})
                   </button>
                 </>
               }
