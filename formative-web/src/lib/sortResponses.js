@@ -1,4 +1,10 @@
 import { responseDurationMs } from './triviaInsights';
+import {
+  cmpNumNullLast,
+  cmpResponsesByScore,
+  responsePercentRounded,
+  submittedMsFromResponse,
+} from '@repo-lib/triviaRankTiebreak';
 
 export const RESPONSE_SORT_OPTIONS = [
   { id: 'submitted_desc', label: 'Submission date (newest)' },
@@ -14,9 +20,7 @@ export const RESPONSE_SORT_OPTIONS = [
 ];
 
 export function responsePercent(r) {
-  const max = Number(r?.max_score) || 0;
-  if (max <= 0) return 0;
-  return Math.round((Number(r?.score) / max) * 100);
+  return responsePercentRounded(r);
 }
 
 function cmpStr(a, b, dir = 1) {
@@ -28,27 +32,8 @@ function cmpStr(a, b, dir = 1) {
   return sa.localeCompare(sb) * dir;
 }
 
-/** Null / missing numeric values sort last (not as 0). */
-function cmpNumNullLast(a, b, dir = 1) {
-  const aNull = a == null || !Number.isFinite(a);
-  const bNull = b == null || !Number.isFinite(b);
-  if (aNull && bNull) return 0;
-  if (aNull) return 1;
-  if (bNull) return -1;
-  return (a - b) * dir;
-}
-
 function submittedMs(r) {
-  if (!r?.submitted_at) return null;
-  const t = new Date(r.submitted_at).getTime();
-  return Number.isFinite(t) ? t : null;
-}
-
-/** Same score % → earlier submit ranks higher (tie-break for leaderboards). */
-function cmpScoreWithSubmitTie(a, b, dir = -1) {
-  const pctDiff = (responsePercent(b) - responsePercent(a)) * dir;
-  if (pctDiff !== 0) return pctDiff;
-  return cmpNumNullLast(submittedMs(a), submittedMs(b), 1);
+  return submittedMsFromResponse(r);
 }
 
 export function sortResponses(responses, sortId) {
@@ -63,9 +48,9 @@ export function sortResponses(responses, sortId) {
     case 'ingame_za':
       return list.sort((a, b) => cmpStr(a.ingame_name, b.ingame_name, -1));
     case 'score_hi':
-      return list.sort((a, b) => cmpScoreWithSubmitTie(a, b, -1));
+      return list.sort((a, b) => cmpResponsesByScore(a, b, true));
     case 'score_lo':
-      return list.sort((a, b) => cmpScoreWithSubmitTie(a, b, 1));
+      return list.sort((a, b) => cmpResponsesByScore(a, b, false));
     case 'time_hi':
       return list.sort((a, b) =>
         cmpNumNullLast(responseDurationMs(a), responseDurationMs(b), -1)

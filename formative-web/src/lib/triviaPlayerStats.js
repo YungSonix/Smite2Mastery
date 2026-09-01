@@ -2,6 +2,7 @@ import { buildSubmissionIntegrity } from './submissionIntegrity';
 import { filterProductionResponses } from './responseFilters';
 import { formatDuration, responseDurationMs, scoredInsightQuestions } from './triviaInsights';
 import { promptPlain } from './promptPlain';
+import { cmpEarlierIsoDate, cmpResponsesByScore } from '@repo-lib/triviaRankTiebreak';
 
 function normDiscord(s) {
   return String(s || '')
@@ -22,15 +23,6 @@ function shortLabel(text, max = 48) {
   return t.length > max ? `${t.slice(0, max - 1)}…` : t;
 }
 
-/** Earlier ISO timestamp ranks first (missing dates last). */
-function cmpEarlierDate(a, b) {
-  const sa = String(a || '');
-  const sb = String(b || '');
-  if (!sa && !sb) return 0;
-  if (!sa) return 1;
-  if (!sb) return -1;
-  return sa.localeCompare(sb);
-}
 
 /** Aggregate per-question performance for one player across attempts. */
 function buildQuestionPatterns(responses, questionById) {
@@ -202,8 +194,13 @@ export function buildPlayerLeaderboard(responses, { quizzes = [], questions = []
     if (totalPctDiff !== 0) return totalPctDiff;
     const scoreDiff = b.totalScore - a.totalScore;
     if (scoreDiff !== 0) return scoreDiff;
-    return cmpEarlierDate(a.firstSubmittedAt, b.firstSubmittedAt);
+    return cmpEarlierIsoDate(a.firstSubmittedAt, b.firstSubmittedAt);
   });
+}
+
+/** Per-quiz response ranking (Responses / host leaderboard). */
+export function rankResponsesByScore(responses) {
+  return [...(responses || [])].sort((a, b) => cmpResponsesByScore(a, b, true));
 }
 
 export function filterGiveawayCandidates(

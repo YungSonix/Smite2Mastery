@@ -23,8 +23,8 @@ import {
 const PANEL_SORT = [
   { id: 'discord_az', label: 'Discord (A–Z)' },
   { id: 'discord_za', label: 'Discord (Z–A)' },
-  { id: 'score_hi', label: 'Score % (Hi–Lo)' },
-  { id: 'score_lo', label: 'Score % (Lo–Hi)' },
+  { id: 'score_hi', label: 'Score % (Hi–Lo · earlier submit wins ties)' },
+  { id: 'score_lo', label: 'Score % (Lo–Hi · earlier submit wins ties)' },
   { id: 'submitted_desc', label: 'Submission date (newest)' },
 ];
 
