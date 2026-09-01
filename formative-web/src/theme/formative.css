@@ -10423,6 +10423,65 @@ button.f-next-event-action-btn:hover {
   align-items: start;
 }
 
+.f-classroom-wheel-dual {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin-bottom: 12px;
+}
+
+.f-classroom-wheel-dual-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.f-classroom-wheel-stage-title {
+  margin: 0 0 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(125, 211, 252, 0.85);
+  text-align: center;
+}
+
+.f-classroom-wheel-stage-hint {
+  margin: 6px 0 0;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.f-classroom-wheel-result-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px 16px;
+  margin: 4px 0 14px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(125, 211, 252, 0.18);
+  background: rgba(11, 18, 32, 0.45);
+}
+
+.f-classroom-wheel-result-row .f-classroom-wheel-winner {
+  flex: 1 1 200px;
+  margin: 0;
+}
+
+.f-classroom-wheel-import {
+  align-self: flex-start;
+}
+
+@media (max-width: 900px) {
+  .f-classroom-wheel-dual,
+  .f-classroom-wheel-dual-controls {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 720px) {
   .f-classroom-wheel-layout {
     grid-template-columns: 1fr;
@@ -10439,8 +10498,9 @@ button.f-next-event-action-btn:hover {
 
 .f-classroom-wheel-wrap {
   position: relative;
-  width: min(240px, 70vw);
-  height: min(240px, 70vw);
+  width: min(220px, 38vw);
+  height: min(220px, 38vw);
+  margin: 0 auto;
 }
 
 .f-classroom-wheel {
@@ -10543,10 +10603,10 @@ button.f-next-event-action-btn:hover {
 .f-classroom-wheel-pool {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 6px;
   flex: 1 1 auto;
-  min-height: 0;
-  max-height: 220px;
+  min-height: 120px;
+  max-height: 200px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;

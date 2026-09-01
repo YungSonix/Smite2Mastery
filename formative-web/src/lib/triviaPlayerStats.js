@@ -266,3 +266,56 @@ function csvCell(s) {
   if (/[",\n]/.test(v)) return `"${v.replace(/"/g, '""')}"`;
   return v;
 }
+
+/** Preferred wheel / export label: in-game name, else Discord. */
+export function playerDisplayName(player) {
+  const ingame = String(player?.ingame || '').trim();
+  if (ingame && ingame !== '—') return ingame;
+  return String(player?.discord || '').trim();
+}
+
+/** Build deduped wheel entries from giveaway filter + manual names. */
+export function buildSpinWheelNames({
+  filteredStudents = [],
+  manualNames = [],
+  includeFiltered = true,
+} = {}) {
+  const seen = new Set();
+  const list = [];
+
+  const push = (player, source) => {
+    const label = playerDisplayName(player);
+    const key = label.trim().toLowerCase();
+    if (!key || seen.has(key)) return;
+    seen.add(key);
+    list.push({
+      id: player.discordKey || `${source}-${key}`,
+      label,
+      source,
+      discordKey: player.discordKey || null,
+    });
+  };
+
+  if (includeFiltered) {
+    for (const student of filteredStudents) push(student, 'giveaway');
+  }
+  for (const raw of manualNames) {
+    const label = String(raw || '').trim();
+    const key = label.toLowerCase();
+    if (!key || seen.has(key)) continue;
+    seen.add(key);
+    list.push({ id: `manual-${key}`, label, source: 'manual', discordKey: null });
+  }
+  return list;
+}
+
+export function wheelPoolToCsv(entries) {
+  const header = ['display_name', 'source', 'discord', 'ingame_name'];
+  const lines = [header.join(',')];
+  for (const entry of entries || []) {
+    lines.push(
+      [csvCell(entry.label), csvCell(entry.source), '', ''].join(',')
+    );
+  }
+  return lines.join('\n');
+}

@@ -9,6 +9,7 @@ import {
   buildPlayerLeaderboard,
   filterGiveawayCandidates,
   playersToCsv,
+  wheelPoolToCsv,
 } from '../lib/triviaPlayerStats';
 import ClassroomSpinWheel from '../components/ClassroomSpinWheel';
 
@@ -98,6 +99,7 @@ export default function Analytics() {
   const [minTrivias, setMinTrivias] = useState(1);
   const [giveawayMinTrivias, setGiveawayMinTrivias] = useState(2);
   const [excludeFlagged, setExcludeFlagged] = useState(true);
+  const [wheelExportPool, setWheelExportPool] = useState([]);
 
   useEffect(() => {
     let alive = true;
@@ -443,13 +445,25 @@ export default function Analytics() {
             <button
               type="button"
               className="f-outline-btn f-compact"
-              onClick={() => downloadCsv('trivia-giveaway-pool.csv', playersToCsv(giveawayPool))}
+              onClick={() =>
+                downloadCsv(
+                  'trivia-giveaway-pool.csv',
+                  wheelExportPool.length
+                    ? wheelPoolToCsv(wheelExportPool)
+                    : playersToCsv(giveawayPool)
+                )
+              }
             >
-              Export pool ({giveawayPool.length})
+              Export pool ({wheelExportPool.length || giveawayPool.length})
             </button>
           </div>
 
-          <ClassroomSpinWheel visibleStudents={giveawayPool} poolLabel="giveaway pool" />
+          <ClassroomSpinWheel
+            filteredStudents={giveawayPool}
+            classRoster={allPlayers}
+            poolLabel="giveaway pool"
+            onPoolChange={setWheelExportPool}
+          />
 
           <div className="f-player-table-wrap">
             <table className="f-grid f-player-table">
