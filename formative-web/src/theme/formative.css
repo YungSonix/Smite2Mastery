@@ -8996,6 +8996,16 @@ button.f-next-event-action-btn:hover {
   min-width: 148px;
 }
 
+.f-classroom-grid-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 0 0 4px;
+  padding: 0 4px;
+}
+
 .f-classroom-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));

@@ -6,9 +6,13 @@ import { hostApi } from '../lib/api';
 import { formatClassPoints } from '../lib/classroomBadges';
 import { buildClassNextTriviaRecipe } from '../lib/classroomThesis';
 import { useClassroomData } from '../lib/useClassroomData';
-import { PaginationBar, usePagination } from '../lib/usePagination';
-
-const CLASSROOM_PAGE_SIZE = 30;
+import {
+  PageSizePicker,
+  PaginationBar,
+  readClassroomPageSize,
+  usePagination,
+  writeClassroomPageSize,
+} from '../lib/usePagination';
 const SCORING_HELP_STORAGE_KEY = 'classroom_scoring_help_open';
 
 function readScoringHelpOpen() {
@@ -86,6 +90,7 @@ export default function DiscordClassroom() {
   const [syncNote, setSyncNote] = useState('');
   const [scoringHelpOpen, setScoringHelpOpen] = useState(readScoringHelpOpen);
   const [recipeCategory, setRecipeCategory] = useState(null);
+  const [pageSize, setPageSize] = useState(() => readClassroomPageSize());
 
   const nextTrivia = useMemo(
     () =>
@@ -143,11 +148,16 @@ export default function DiscordClassroom() {
     from,
     to,
     reset: resetPage,
-  } = usePagination(visible.length, CLASSROOM_PAGE_SIZE);
+  } = usePagination(visible.length, pageSize);
+
+  const onPageSizeChange = useCallback((n) => {
+    setPageSize(n);
+    writeClassroomPageSize(n);
+  }, []);
 
   useEffect(() => {
     resetPage();
-  }, [search, filter, sort, resetPage]);
+  }, [search, filter, sort, pageSize, resetPage]);
 
   const pageStudents = useMemo(() => slice(visible), [slice, visible]);
 
@@ -418,16 +428,22 @@ export default function DiscordClassroom() {
               </div>
             </div>
 
-            <PaginationBar
-              page={page}
-              pageCount={pageCount}
-              from={from}
-              to={to}
-              total={visible.length}
-              onPage={setPage}
-              pageSize={CLASSROOM_PAGE_SIZE}
-              className="f-pagination-top"
-            />
+            <div className="f-classroom-grid-toolbar">
+              <PageSizePicker value={pageSize} onChange={onPageSizeChange} />
+            </div>
+
+            {visible.length > 0 ? (
+              <PaginationBar
+                page={page}
+                pageCount={pageCount}
+                from={from}
+                to={to}
+                total={visible.length}
+                onPage={setPage}
+                pageSize={pageSize}
+                className="f-pagination-top"
+              />
+            ) : null}
 
             <div className="f-classroom-grid">
               {pageStudents.map((s) => (
@@ -447,7 +463,7 @@ export default function DiscordClassroom() {
                 to={to}
                 total={visible.length}
                 onPage={setPage}
-                pageSize={CLASSROOM_PAGE_SIZE}
+                pageSize={pageSize}
               />
             )}
           </>

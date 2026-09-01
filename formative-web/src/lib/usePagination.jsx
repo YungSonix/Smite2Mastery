@@ -3,11 +3,12 @@ import { useCallback, useEffect, useState } from 'react';
 export const RESPONSES_PAGE_SIZE = 50;
 export const RESPONSES_PAGE_SIZE_OPTIONS = [25, 50, 100, 200];
 
-const PAGE_SIZE_STORAGE_KEY = 'trivia_responses_page_size';
+const RESPONSES_PAGE_SIZE_STORAGE_KEY = 'trivia_responses_page_size';
+const CLASSROOM_PAGE_SIZE_STORAGE_KEY = 'trivia_classroom_page_size';
 
-export function readResponsesPageSize() {
+function readStoredPageSize(key) {
   try {
-    const n = Number(localStorage.getItem(PAGE_SIZE_STORAGE_KEY));
+    const n = Number(localStorage.getItem(key));
     if (RESPONSES_PAGE_SIZE_OPTIONS.includes(n)) return n;
   } catch {
     /* ignore */
@@ -15,14 +16,30 @@ export function readResponsesPageSize() {
   return RESPONSES_PAGE_SIZE;
 }
 
-export function writeResponsesPageSize(n) {
+function writeStoredPageSize(key, n) {
   try {
     if (RESPONSES_PAGE_SIZE_OPTIONS.includes(n)) {
-      localStorage.setItem(PAGE_SIZE_STORAGE_KEY, String(n));
+      localStorage.setItem(key, String(n));
     }
   } catch {
     /* ignore */
   }
+}
+
+export function readResponsesPageSize() {
+  return readStoredPageSize(RESPONSES_PAGE_SIZE_STORAGE_KEY);
+}
+
+export function writeResponsesPageSize(n) {
+  writeStoredPageSize(RESPONSES_PAGE_SIZE_STORAGE_KEY, n);
+}
+
+export function readClassroomPageSize() {
+  return readStoredPageSize(CLASSROOM_PAGE_SIZE_STORAGE_KEY);
+}
+
+export function writeClassroomPageSize(n) {
+  writeStoredPageSize(CLASSROOM_PAGE_SIZE_STORAGE_KEY, n);
 }
 
 export function usePagination(total, pageSize = RESPONSES_PAGE_SIZE) {
