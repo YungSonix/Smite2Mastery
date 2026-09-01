@@ -10,6 +10,15 @@ import { PaginationBar, usePagination } from '../lib/usePagination';
 import { PointControls } from '../components/ClassroomStudentDetail';
 
 const CLASSROOM_PAGE_SIZE = 30;
+const SCORING_HELP_STORAGE_KEY = 'classroom_scoring_help_open';
+
+function readScoringHelpOpen() {
+  try {
+    return localStorage.getItem(SCORING_HELP_STORAGE_KEY) === 'expanded';
+  } catch {
+    return false;
+  }
+}
 
 const BULK_DELTAS = [
   { delta: 1, label: '+1 everyone' },
@@ -73,6 +82,7 @@ export default function DiscordClassroom() {
   const [bulkBusy, setBulkBusy] = useState(false);
   const [syncBusy, setSyncBusy] = useState(false);
   const [syncNote, setSyncNote] = useState('');
+  const [scoringHelpOpen, setScoringHelpOpen] = useState(readScoringHelpOpen);
 
   const nextTrivia = useMemo(
     () =>
@@ -185,6 +195,16 @@ export default function DiscordClassroom() {
     [visible, bulkBusy, upsertProfile, setError]
   );
 
+  const handleScoringHelpToggle = useCallback((e) => {
+    const open = e.currentTarget.open;
+    setScoringHelpOpen(open);
+    try {
+      localStorage.setItem(SCORING_HELP_STORAGE_KEY, open ? 'expanded' : 'collapsed');
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
   const handleRecalculatePoints = useCallback(async () => {
     setSyncBusy(true);
     setSyncNote('');
@@ -222,15 +242,45 @@ export default function DiscordClassroom() {
     <HostShell active="classroom">
       <div className="f-classroom-page">
         <div className="f-classroom-hero">
-          <div>
+          <div className="f-classroom-hero-main">
             <h1 className="f-classroom-title">Discord Classroom</h1>
-            <p className="f-classroom-subtitle">
-              ClassDojo energy — tap +/− to reward or deduct manual bonus points. Trivia auto-points
-              factor in passes, first-day submits, placement, streaks, and perfect scores.
-            </p>
-            <p className="f-muted f-pts-explain">
-              Class points = trivia auto-points + your manual bonus. Half points (+/− ½) supported.
-            </p>
+            <details
+              className="f-classroom-scoring-details"
+              open={scoringHelpOpen}
+              onToggle={handleScoringHelpToggle}
+            >
+              <summary>
+                How scoring works
+                <span className="f-chevron" aria-hidden="true" />
+              </summary>
+              <div className="f-classroom-scoring-body">
+                <p className="f-classroom-subtitle">
+                  ClassDojo energy — tap +/− to reward or deduct manual bonus points. Trivia
+                  auto-points factor in passes, first-day submits, placement, streaks, and perfect
+                  scores.
+                </p>
+                <p className="f-muted f-pts-explain">
+                  Class points = trivia auto-points + your manual bonus. Half points (+/− ½)
+                  supported.
+                </p>
+                <div className="f-classroom-scoring-actions">
+                  <button
+                    type="button"
+                    className="f-outline-btn f-compact"
+                    disabled={syncBusy || loading}
+                    onClick={handleRecalculatePoints}
+                    title="Recompute trivia auto-points from submissions and save to database"
+                  >
+                    {syncBusy ? 'Recalculating…' : 'Recalculate class points'}
+                  </button>
+                  {syncNote ? (
+                    <p className="f-muted f-classroom-sync-note" role="status">
+                      {syncNote}
+                    </p>
+                  ) : null}
+                </div>
+              </div>
+            </details>
           </div>
           <Link to="/analytics" className="f-outline-btn f-compact">
             Charts &amp; giveaway →
@@ -304,15 +354,6 @@ export default function DiscordClassroom() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
-              <button
-                type="button"
-                className="f-outline-btn f-compact"
-                disabled={syncBusy || loading}
-                onClick={handleRecalculatePoints}
-                title="Recompute trivia auto-points from submissions and save to database"
-              >
-                {syncBusy ? 'Recalculating…' : 'Recalculate class points'}
-              </button>
               <div className="f-classroom-toolbar-right">
                 <div className="f-classroom-filters">
                   {[
@@ -345,8 +386,6 @@ export default function DiscordClassroom() {
                 </label>
               </div>
             </div>
-
-            {syncNote ? <p className="f-muted f-classroom-sync-note">{syncNote}</p> : null}
 
             <div className="f-classroom-bulk">
               <p className="f-muted f-classroom-bulk-hint">

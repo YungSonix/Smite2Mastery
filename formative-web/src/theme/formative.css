@@ -8705,6 +8705,83 @@ button.f-next-event-action-btn:hover {
   color: transparent;
 }
 
+.f-classroom-hero-main {
+  flex: 1 1 280px;
+  min-width: 0;
+}
+
+.f-classroom-scoring-details {
+  margin: 8px 0 0;
+  max-width: 56ch;
+  border: 1px solid rgba(125, 211, 252, 0.22);
+  border-radius: 12px;
+  background: rgba(8, 12, 22, 0.65);
+}
+
+.f-classroom-scoring-details > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+  list-style: none;
+  padding: 10px 14px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--f-blue);
+  user-select: none;
+}
+
+.f-classroom-scoring-details > summary:hover {
+  color: #bae6fd;
+}
+
+.f-classroom-scoring-details > summary::-webkit-details-marker,
+.f-classroom-scoring-details > summary::marker {
+  display: none;
+  content: '';
+}
+
+.f-classroom-scoring-details .f-chevron {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  margin-top: -4px;
+  transition: transform 180ms var(--f-ease);
+}
+
+.f-classroom-scoring-details[open] .f-chevron {
+  transform: rotate(-135deg);
+  margin-top: 4px;
+}
+
+.f-classroom-scoring-details[open] > summary {
+  border-bottom: 1px solid rgba(125, 211, 252, 0.18);
+}
+
+.f-classroom-scoring-body {
+  padding: 12px 14px 14px;
+}
+
+.f-classroom-scoring-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(125, 211, 252, 0.12);
+}
+
+.f-classroom-sync-note {
+  margin: 0;
+  font-size: 0.8125rem;
+  flex: 1 1 180px;
+}
+
 .f-classroom-subtitle {
   margin: 0;
   max-width: 52ch;
