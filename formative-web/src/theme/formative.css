@@ -386,6 +386,10 @@ a {
   margin: 0 auto;
 }
 
+.f-content--wide {
+  max-width: min(1680px, 98vw);
+}
+
 .f-welcome-row {
   display: flex;
   align-items: center;
@@ -8863,21 +8867,39 @@ button.f-next-event-action-btn:hover {
 
 .f-classroom-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+  gap: 8px;
   margin-bottom: 16px;
+}
+
+@media (min-width: 1280px) {
+  .f-classroom-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+  }
+}
+
+@media (min-width: 1600px) {
+  .f-classroom-grid {
+    grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+  }
+}
+
+.f-classroom-page {
+  width: 100%;
 }
 
 .f-classroom-card-wrap {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  min-width: 0;
 }
 
 .f-classroom-card-row {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  align-items: stretch;
+  gap: 0;
   width: 100%;
 }
 
@@ -9224,6 +9246,7 @@ button.f-next-event-action-btn:hover {
   border: 1px solid rgba(125, 211, 252, 0.28);
   background:
     linear-gradient(145deg, rgba(14, 28, 48, 0.92), rgba(8, 14, 28, 0.88));
+  width: 100%;
 }
 
 .f-classroom-recipe-title {
@@ -9381,9 +9404,21 @@ button.f-next-event-action-btn:hover {
 
 .f-classroom-style-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
   margin: 0 0 14px;
+}
+
+@media (min-width: 640px) {
+  .f-classroom-style-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 960px) {
+  .f-classroom-style-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
 }
 
 .f-classroom-style-card {
@@ -9407,7 +9442,7 @@ button.f-next-event-action-btn:hover {
 }
 
 .f-classroom-style-card.is-expanded {
-  grid-column: 1 / -1;
+  box-shadow: 0 0 0 1px rgba(125, 211, 252, 0.35);
 }
 
 .f-classroom-style-card.is-solid {
@@ -9532,8 +9567,11 @@ button.f-next-event-action-btn:hover {
   margin-top: 8px;
   padding-top: 8px;
   border-top: 1px solid rgba(125, 211, 252, 0.15);
-  font-size: 0.74rem;
-  line-height: 1.4;
+  font-size: 0.68rem;
+  line-height: 1.35;
+  max-height: 4.5em;
+  overflow: auto;
+  text-align: left;
 }
 
 .f-classroom-style-expand p {
@@ -9546,6 +9584,7 @@ button.f-next-event-action-btn:hover {
   border-radius: 12px;
   border: 1px solid rgba(125, 211, 252, 0.42);
   background: rgba(8, 12, 22, 0.98);
+  cursor: pointer;
 }
 
 .f-classroom-entity-modal-head {
@@ -9612,8 +9651,20 @@ button.f-next-event-action-btn:hover {
 }
 
 .f-classroom-student-page {
-  max-width: 960px;
+  max-width: 1280px;
   margin: 0 auto;
+  width: 100%;
+}
+
+.f-classroom-profile-deep {
+  width: 100%;
+}
+
+@media (min-width: 960px) {
+  .f-classroom-profile-deep .f-classroom-thesis-split {
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
 }
 
 .f-classroom-student-nav {

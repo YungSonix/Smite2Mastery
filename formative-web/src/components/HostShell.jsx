@@ -11,7 +11,7 @@ const NAV_LEFT = [
 
 const NAV_RIGHT = [{ id: 'instructions', label: 'Instructions', to: '/instructions' }];
 
-export default function HostShell({ active = 'home', children, banner }) {
+export default function HostShell({ active = 'home', children, banner, wide = false }) {
   const nav = useNavigate();
   const session = getHostSession();
   const initial = (session?.username || 'H').charAt(0).toUpperCase();
@@ -70,7 +70,7 @@ export default function HostShell({ active = 'home', children, banner }) {
 
       <div className="f-main">
         {banner}
-        <div className="f-content">{children}</div>
+        <div className={`f-content${wide ? ' f-content--wide' : ''}`}>{children}</div>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { formatClassPoints } from '../lib/classroomBadges';
 import { formatWhenLocal } from '../lib/formatWhen';
 import ClassroomAutoPointsBreakdown from './ClassroomAutoPointsBreakdown';
@@ -16,7 +16,12 @@ function EntityChipModal({ entity, onClose }) {
   if (!entity) return null;
   const questions = entity.questions || [];
   return (
-    <div className="f-classroom-entity-modal" role="dialog" aria-label={`${entity.label} questions`}>
+    <div
+      className="f-classroom-entity-modal"
+      role="dialog"
+      aria-label={`${entity.label} questions`}
+      onDoubleClick={onClose}
+    >
       <div className="f-classroom-entity-modal-head">
         <strong>{entity.label}</strong>
         <button type="button" className="f-classroom-entity-modal-close" onClick={onClose} aria-label="Close">
@@ -195,7 +200,7 @@ export default function ClassroomStudentDetail({ student, onAdjust, busy, onChan
     thesis?.trend === 'up' ? 'Improving' : thesis?.trend === 'down' ? 'Slipping' : 'Steady';
 
   const handleStyleCardClick = (card) => {
-    setExpandedStyle((prev) => (prev === card.id ? null : card.id));
+    setExpandedStyle(card.id);
     setHighlightGroup(card.id);
     requestAnimationFrame(() => {
       document.getElementById(`thesis-entity-${card.id}`)?.scrollIntoView({
@@ -205,6 +210,33 @@ export default function ClassroomStudentDetail({ student, onAdjust, busy, onChan
     });
     setTimeout(() => setHighlightGroup(null), 2400);
   };
+
+  const handleStyleCardDoubleClick = (card, e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setExpandedStyle(null);
+    setHighlightGroup(null);
+  };
+
+  useEffect(() => {
+    if (!expandedStyle && !entityModal) return undefined;
+
+    const onPointerDown = (e) => {
+      const target = e.target;
+      if (!(target instanceof Element)) return;
+      if (target.closest('.f-classroom-style-card')) return;
+      if (target.closest('.f-classroom-entity-modal')) return;
+      if (target.closest('.f-classroom-entity-chip')) return;
+      if (expandedStyle) {
+        setExpandedStyle(null);
+        setHighlightGroup(null);
+      }
+      if (entityModal) setEntityModal(null);
+    };
+
+    document.addEventListener('pointerdown', onPointerDown);
+    return () => document.removeEventListener('pointerdown', onPointerDown);
+  }, [expandedStyle, entityModal]);
 
   return (
     <div className="f-classroom-detail f-classroom-profile-deep">
@@ -292,6 +324,7 @@ export default function ClassroomStudentDetail({ student, onAdjust, busy, onChan
                   aria-label={`${card.label} — ${card.verdict}. Click to jump to entities.`}
                   aria-expanded={expanded}
                   onClick={() => handleStyleCardClick(card)}
+                  onDoubleClick={(e) => handleStyleCardDoubleClick(card, e)}
                 >
                   <div className="f-classroom-style-label">{card.label}</div>
                   <div className="f-classroom-style-ratio">

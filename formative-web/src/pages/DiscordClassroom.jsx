@@ -7,7 +7,6 @@ import { formatClassPoints } from '../lib/classroomBadges';
 import { buildClassNextTriviaRecipe } from '../lib/classroomThesis';
 import { useClassroomData } from '../lib/useClassroomData';
 import { PaginationBar, usePagination } from '../lib/usePagination';
-import { PointControls } from '../components/ClassroomStudentDetail';
 
 const CLASSROOM_PAGE_SIZE = 30;
 const SCORING_HELP_STORAGE_KEY = 'classroom_scoring_help_open';
@@ -29,47 +28,42 @@ const BULK_DELTAS = [
   { delta: -5, label: '−5 everyone' },
 ];
 
-function ClassroomCard({ student, onSelect, onAdjust, busy }) {
+function ClassroomCard({ student, onSelect }) {
   return (
-    <div
-      className={`f-classroom-card-wrap ${student.isRegular ? 'is-regular' : ''}`}
-    >
-      <div className="f-classroom-card-row">
-        <button
-          type="button"
-          className="f-classroom-card"
-          onClick={() => onSelect(student.discordKey)}
-        >
-          {student.isRegular ? <span className="f-classroom-regular-tag">Regular</span> : null}
-          <span className="f-classroom-points-bubble">
-            {formatClassPoints(student.classroomPoints)}
-          </span>
-          <div className="f-classroom-card-body">
-            <div className="f-classroom-avatar-ring">
-              <img src={student.avatarUrl} alt="" className="f-classroom-avatar" loading="lazy" />
-            </div>
-            <div className="f-classroom-card-text">
-              <div className="f-classroom-card-discord">{student.discord}</div>
-              <div className="f-classroom-card-name">{student.ingame}</div>
-              {student.profileTitle ? (
-                <div className="f-classroom-profile-title">{student.profileTitle}</div>
-              ) : null}
-              <div className="f-classroom-card-stats">
-                <span>
-                  {student.triviasDone} trivia{student.triviasDone === 1 ? '' : 's'}
-                </span>
-                <span>{student.avgPct != null ? `${student.avgPct}% avg` : '—'}</span>
-              </div>
+    <div className={`f-classroom-card-wrap ${student.isRegular ? 'is-regular' : ''}`}>
+      <button
+        type="button"
+        className="f-classroom-card"
+        onClick={() => onSelect(student.discordKey)}
+      >
+        {student.isRegular ? <span className="f-classroom-regular-tag">Regular</span> : null}
+        <span className="f-classroom-points-bubble">
+          {formatClassPoints(student.classroomPoints)}
+        </span>
+        <div className="f-classroom-card-body">
+          <div className="f-classroom-avatar-ring">
+            <img src={student.avatarUrl} alt="" className="f-classroom-avatar" loading="lazy" />
+          </div>
+          <div className="f-classroom-card-text">
+            <div className="f-classroom-card-discord">{student.discord}</div>
+            <div className="f-classroom-card-name">{student.ingame}</div>
+            {student.profileTitle ? (
+              <div className="f-classroom-profile-title">{student.profileTitle}</div>
+            ) : null}
+            <div className="f-classroom-card-stats">
+              <span>
+                {student.triviasDone} trivia{student.triviasDone === 1 ? '' : 's'}
+              </span>
+              <span>{student.avgPct != null ? `${student.avgPct}% avg` : '—'}</span>
             </div>
           </div>
-          {student.flagged ? (
-            <span className="f-classroom-flag" title={`Review: ${student.flagLevel}`}>
-              ⚑
-            </span>
-          ) : null}
-        </button>
-        <PointControls student={student} onAdjust={onAdjust} busy={busy} steps={[1]} />
-      </div>
+        </div>
+        {student.flagged ? (
+          <span className="f-classroom-flag" title={`Review: ${student.flagLevel}`}>
+            ⚑
+          </span>
+        ) : null}
+      </button>
     </div>
   );
 }
@@ -81,7 +75,6 @@ export default function DiscordClassroom() {
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState('all');
   const [sort, setSort] = useState('regulars');
-  const [busyKey, setBusyKey] = useState(null);
   const [bulkBusy, setBulkBusy] = useState(false);
   const [syncBusy, setSyncBusy] = useState(false);
   const [syncNote, setSyncNote] = useState('');
@@ -151,25 +144,6 @@ export default function DiscordClassroom() {
   }, [search, filter, sort, resetPage]);
 
   const pageStudents = useMemo(() => slice(visible), [slice, visible]);
-
-  const handleAdjust = useCallback(
-    async (discordKey, delta) => {
-      setBusyKey(discordKey);
-      setError('');
-      try {
-        const res = await hostApi('/api/trivia/host', {
-          method: 'POST',
-          body: { action: 'classroom-points', discordKey, delta },
-        });
-        if (res.profile) upsertProfile(res.profile);
-      } catch (e) {
-        setError(e.message || 'Could not update points');
-      } finally {
-        setBusyKey(null);
-      }
-    },
-    [upsertProfile, setError]
-  );
 
   const handleBulkAdjust = useCallback(
     async (delta) => {
@@ -250,7 +224,7 @@ export default function DiscordClassroom() {
   const totalPoints = studentsWithThesis.reduce((n, s) => n + s.classroomPoints, 0);
 
   return (
-    <HostShell active="classroom">
+    <HostShell active="classroom" wide>
       <div className="f-classroom-page">
         <div className="f-classroom-hero">
           <div className="f-classroom-hero-main">
@@ -266,9 +240,9 @@ export default function DiscordClassroom() {
               </summary>
               <div className="f-classroom-scoring-body">
                 <p className="f-classroom-subtitle">
-                  ClassDojo energy — tap +/− to reward or deduct manual bonus points. Trivia
-                  auto-points factor in passes, first-day submits, placement, streaks, and perfect
-                  scores.
+                  ClassDojo energy — open a student profile to reward or deduct manual bonus points.
+                  Trivia auto-points factor in passes, first-day submits, placement, streaks, and
+                  perfect scores.
                 </p>
                 <p className="f-muted f-pts-explain">
                   Class points = trivia auto-points + your manual bonus. Half points (+/− ½)
@@ -451,13 +425,7 @@ export default function DiscordClassroom() {
 
             <div className="f-classroom-grid">
               {pageStudents.map((s) => (
-                <ClassroomCard
-                  key={s.discordKey}
-                  student={s}
-                  onSelect={openStudent}
-                  onAdjust={handleAdjust}
-                  busy={busyKey === s.discordKey || bulkBusy}
-                />
+                <ClassroomCard key={s.discordKey} student={s} onSelect={openStudent} />
               ))}
             </div>
 
@@ -478,10 +446,10 @@ export default function DiscordClassroom() {
             )}
 
             <p className="f-muted f-classroom-foot">
-              +/− adjusts your manual bonus (saved in Supabase), including half points. Trivia
-              auto-points recompute on profile sync (pass ≥70%, first-day, placement, perfect,
-              streak). Class points = auto + manual bonus.
-              For ±½, run <code>supabase/formative_trivia_classroom_bonus_half.sql</code> once.
+              Open a student profile to adjust manual bonus with +/− (saved in Supabase), including
+              half points. Trivia auto-points recompute on profile sync (pass ≥70%, first-day,
+              placement, perfect, streak). Class points = auto + manual bonus. For ±½, run{' '}
+              <code>supabase/formative_trivia_classroom_bonus_half.sql</code> once.
               {data.profileSync?.tableMissing ? (
                 <>
                   {' '}

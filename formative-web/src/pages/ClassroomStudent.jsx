@@ -67,7 +67,7 @@ export default function ClassroomStudent() {
   );
 
   return (
-    <HostShell active="classroom">
+    <HostShell active="classroom" wide>
       <div className="f-classroom-page f-classroom-student-page">
         <div className="f-classroom-student-nav">
           <button

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { hostApi } from './api';
 import { mergeClassroomStudent } from './classroomBadges';
+import { resolveClassroomProfileTitle } from './classroomProfileTitles';
 import { attachThesesToStudents } from './classroomThesis';
 import { buildSubmissionIntegrity } from './submissionIntegrity';
 import { buildPlayerLeaderboard } from './triviaPlayerStats';
@@ -71,7 +72,7 @@ export function useClassroomData() {
       mergeClassroomStudent(p, profileByKey[p.discordKey], {
         responses: data.responses || [],
         quizzes: data.quizzes || [],
-        profileTitle: titles[p.discordKey] || '',
+        profileTitle: resolveClassroomProfileTitle(p.discordKey, titles[p.discordKey]),
       })
     );
   }, [data, integrityIndex, profileByKey]);
