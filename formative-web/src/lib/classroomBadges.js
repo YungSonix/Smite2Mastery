@@ -77,7 +77,7 @@ export function classroomPointsFromStatsLegacy(stats) {
 export function mergeClassroomStudent(
   player,
   profileRow,
-  { responses = [], quizzes = [] } = {}
+  { responses = [], quizzes = [], profileTitle = '' } = {}
 ) {
   const avatar = resolveAvatarFromProfile(profileRow, player.discordKey);
   const breakdown =
@@ -113,5 +113,6 @@ export function mergeClassroomStudent(
     isRegular: player.triviasDone >= 2,
     notes: profileRow?.notes || '',
     giveawayEligible: profileRow?.giveaway_eligible !== false,
+    profileTitle: String(profileTitle || '').trim(),
   };
 }

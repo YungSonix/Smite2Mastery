@@ -8994,6 +8994,18 @@ button.f-next-event-action-btn:hover {
   white-space: nowrap;
 }
 
+.f-classroom-profile-title {
+  margin: 2px 0 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  line-height: 1.2;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .f-classroom-card-discord {
   font-size: 0.68rem;
   color: color-mix(in srgb, var(--f-muted) 92%, var(--f-text));

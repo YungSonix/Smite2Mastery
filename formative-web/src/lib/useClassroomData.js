@@ -11,6 +11,7 @@ export function useClassroomData() {
     questions: [],
     responses: [],
     playerProfiles: [],
+    appProfileTitles: {},
     profileSync: null,
   });
   const [loading, setLoading] = useState(true);
@@ -65,10 +66,12 @@ export function useClassroomData() {
       questions: data.questions,
       integrityIndex,
     });
+    const titles = data.appProfileTitles || {};
     return players.map((p) =>
       mergeClassroomStudent(p, profileByKey[p.discordKey], {
         responses: data.responses || [],
         quizzes: data.quizzes || [],
+        profileTitle: titles[p.discordKey] || '',
       })
     );
   }, [data, integrityIndex, profileByKey]);

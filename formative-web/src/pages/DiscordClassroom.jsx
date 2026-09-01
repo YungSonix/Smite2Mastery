@@ -51,6 +51,9 @@ function ClassroomCard({ student, onSelect, onAdjust, busy }) {
             <div className="f-classroom-card-text">
               <div className="f-classroom-card-discord">{student.discord}</div>
               <div className="f-classroom-card-name">{student.ingame}</div>
+              {student.profileTitle ? (
+                <div className="f-classroom-profile-title">{student.profileTitle}</div>
+              ) : null}
               <div className="f-classroom-card-stats">
                 <span>
                   {student.triviasDone} trivia{student.triviasDone === 1 ? '' : 's'}

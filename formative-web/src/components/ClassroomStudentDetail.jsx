@@ -220,6 +220,9 @@ export default function ClassroomStudentDetail({ student, onAdjust, busy, onChan
         </button>
         <div>
           <h3>{student.ingame}</h3>
+          {student.profileTitle ? (
+            <p className="f-classroom-profile-title">{student.profileTitle}</p>
+          ) : null}
           <p className="f-muted">{student.discord}</p>
           <p className="f-classroom-detail-badge-label">{student.badgeLabel}</p>
           {thesis?.oneLiner ? (
