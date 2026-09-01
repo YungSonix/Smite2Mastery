@@ -9,6 +9,8 @@ import { formatClassPoints, mergeClassroomStudent } from '../lib/classroomBadges
 import { attachThesesToStudents, buildClassNextTriviaRecipe } from '../lib/classroomThesis';
 import { formatWhenLocal } from '../lib/formatWhen';
 import ClassroomAvatarPicker from '../components/ClassroomAvatarPicker';
+import ClassroomSpinWheel from '../components/ClassroomSpinWheel';
+import ClassroomAutoPointsBreakdown from '../components/ClassroomAutoPointsBreakdown';
 import { PaginationBar, usePagination } from '../lib/usePagination';
 
 const CLASSROOM_PAGE_SIZE = 30;
@@ -180,6 +182,7 @@ function PlayerDetail({ student, onAdjust, busy, onChangeAvatar }) {
           </span>
         </p>
         <PointControls student={student} onAdjust={onAdjust} busy={busy} size="lg" />
+        <ClassroomAutoPointsBreakdown breakdown={student.classroomAutoBreakdown} />
       </div>
 
       <div className="f-classroom-stat-grid">
@@ -483,7 +486,12 @@ export default function DiscordClassroom() {
       questions: data.questions,
       integrityIndex,
     });
-    return players.map((p) => mergeClassroomStudent(p, profileByKey[p.discordKey]));
+    return players.map((p) =>
+      mergeClassroomStudent(p, profileByKey[p.discordKey], {
+        responses: data.responses || [],
+        quizzes: data.quizzes || [],
+      })
+    );
   }, [data, integrityIndex, profileByKey]);
 
   const studentsWithThesis = useMemo(
@@ -676,8 +684,8 @@ export default function DiscordClassroom() {
           <div>
             <h1 className="f-classroom-title">Discord Classroom</h1>
             <p className="f-classroom-subtitle">
-              ClassDojo energy — tap +/− to reward or deduct points. Trivia stats auto-fill; your
-              adjustments save to the database.
+              ClassDojo energy — tap +/− to reward or deduct manual bonus points. Trivia auto-points
+              factor in passes, first-day submits, placement, streaks, and perfect scores.
             </p>
             <p className="f-muted f-pts-explain">
               Class points = trivia auto-points + your manual bonus. Half points (+/− ½) supported.
@@ -809,6 +817,8 @@ export default function DiscordClassroom() {
               </div>
             </div>
 
+            <ClassroomSpinWheel visibleStudents={visible} />
+
             <PaginationBar
               page={page}
               pageCount={pageCount}
@@ -891,7 +901,8 @@ export default function DiscordClassroom() {
 
             <p className="f-muted f-classroom-foot">
               +/− adjusts your manual bonus (saved in Supabase), including half points. Trivia
-              auto-points refresh on sync. Class points = trivia auto-points + your manual bonus.
+              auto-points recompute on profile sync (pass ≥70%, first-day, placement, perfect,
+              streak). Class points = auto + manual bonus.
               For ±½, run <code>supabase/formative_trivia_classroom_bonus_half.sql</code> once.
               {data.profileSync?.tableMissing ? (
                 <>

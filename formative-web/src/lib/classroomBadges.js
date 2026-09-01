@@ -1,5 +1,18 @@
 import badgeFiles from '@repo-lib/classroomBadges.generated.json';
+import {
+  CLASSROOM_PASS_THRESHOLD,
+  classroomPointsFromStats,
+  computeClassroomAutoPointsBreakdown,
+  classroomAutoPointsTotal,
+} from '@repo-lib/classroomScoring';
 import { resolveAvatarFromProfile } from './classroomAvatars';
+
+export {
+  CLASSROOM_PASS_THRESHOLD,
+  classroomPointsFromStats,
+  computeClassroomAutoPointsBreakdown,
+  classroomAutoPointsTotal,
+};
 
 export const BADGE_BASE_URL =
   'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Badges';
@@ -56,21 +69,31 @@ export function formatClassPoints(n) {
   return Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(1);
 }
 
-/** ClassDojo-style points from trivia stats. */
-export function classroomPointsFromStats({ triviasDone = 0, passCount = 0, totalScore = 0 } = {}) {
-  return triviasDone * 15 + passCount * 10 + Math.round(totalScore / 5);
+/** @deprecated use classroomAutoPointsTotal / computeClassroomAutoPointsBreakdown */
+export function classroomPointsFromStatsLegacy(stats) {
+  return classroomPointsFromStats(stats);
 }
 
-export function mergeClassroomStudent(player, profileRow) {
+export function mergeClassroomStudent(
+  player,
+  profileRow,
+  { responses = [], quizzes = [] } = {}
+) {
   const avatar = resolveAvatarFromProfile(profileRow, player.discordKey);
+  const breakdown =
+    responses.length && player.discordKey
+      ? computeClassroomAutoPointsBreakdown(player.discordKey, responses, quizzes)
+      : null;
+  const computedAuto = breakdown?.total ?? null;
   const classroomAutoPoints =
-    profileRow?.classroom_points != null
+    profileRow?.classroom_points != null && profileRow.classroom_points !== ''
       ? Number(profileRow.classroom_points)
-      : classroomPointsFromStats({
-          triviasDone: player.triviasDone,
-          passCount: player.passCount,
-          totalScore: player.totalScore,
-        });
+      : computedAuto != null
+        ? computedAuto
+        : classroomPointsFromStats({
+            triviasDone: player.triviasDone,
+            passCount: player.passCount,
+          });
   const classroomBonus = Number(profileRow?.classroom_bonus) || 0;
   return {
     ...player,
@@ -80,6 +103,7 @@ export function mergeClassroomStudent(player, profileRow) {
     avatarUrl: avatar.url,
     badgeLabel: avatar.label,
     classroomAutoPoints,
+    classroomAutoBreakdown: breakdown,
     classroomBonus,
     classroomPoints: classroomAutoPoints + classroomBonus,
     isRegular: player.triviasDone >= 2,
