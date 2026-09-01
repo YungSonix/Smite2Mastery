@@ -52,7 +52,7 @@ export default function ClassroomAvatarPicker({ open, student, onClose, onSave, 
   }, []);
 
   const results = useMemo(
-    () => searchAvatarCatalog({ query, kind, limit: 84, useSkinJsonIcons }),
+    () => searchAvatarCatalog({ query, kind, useSkinJsonIcons }),
     [query, kind, useSkinJsonIcons]
   );
 

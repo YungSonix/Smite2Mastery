@@ -152,7 +152,10 @@ export function searchAvatarCatalog({
     });
   }
 
-  return list.slice(0, limit).map((entry) => ({
+  // Empty query: show full filtered catalog (Skins tab = all ~800+ icons). Cap only typed search.
+  const capped = tokens.length > 0 ? list.slice(0, limit) : list;
+
+  return capped.map((entry) => ({
     ...entry,
     url: resolveAvatarEntryUrl(entry, { useSkinJsonIcons }),
     fallbackUrl:
