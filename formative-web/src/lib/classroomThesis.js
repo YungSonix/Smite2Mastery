@@ -122,10 +122,17 @@ function verdictFor(seen, pct) {
   return 'Shaky';
 }
 
-function uniquePush(list, key, label, max = 5) {
-  if (!label || list.some((x) => x.key === key)) return;
-  if (list.length >= max) return;
-  list.push({ key, label });
+function uniquePush(list, key, label, max = 5, questionMeta = null) {
+  if (!label) return;
+  let row = list.find((x) => x.key === key);
+  if (!row) {
+    if (list.length >= max) return;
+    row = { key, label, questions: [] };
+    list.push(row);
+  }
+  if (questionMeta && !row.questions.some((q) => q.label === questionMeta.label)) {
+    row.questions.push(questionMeta);
+  }
 }
 
 function entityLabels(q, groupId) {
@@ -224,8 +231,11 @@ export function buildStudentThesis(player, questions) {
                     ? 'vgs'
                     : null;
       if (!listKey || !target[listKey]) continue;
+      const qPlain = promptPlain(q.prompt) || qid;
+      const qShort = qPlain.length > 56 ? `${qPlain.slice(0, 55)}…` : qPlain;
+      const questionMeta = { label: qShort, correct: frac >= 0.999 };
       for (const ent of entities) {
-        uniquePush(target[listKey], ent.key, ent.label, 8);
+        uniquePush(target[listKey], ent.key, ent.label, 8, questionMeta);
       }
     }
   }
@@ -288,7 +298,12 @@ export function buildStudentThesis(player, questions) {
       const key = promptPlain(q.prompt) || qid;
       let row = byPrompt.get(key);
       if (!row) {
-        row = { label: key.length > 56 ? `${key.slice(0, 55)}…` : key, attempts: 0, sum: 0 };
+        row = {
+          label: key.length > 56 ? `${key.slice(0, 55)}…` : key,
+          fullLabel: key,
+          attempts: 0,
+          sum: 0,
+        };
         byPrompt.set(key, row);
       }
       row.attempts += 1;
@@ -299,6 +314,7 @@ export function buildStudentThesis(player, questions) {
     .filter((r) => r.attempts >= 2)
     .map((r) => ({
       label: r.label,
+      fullLabel: r.fullLabel || r.label,
       attempts: r.attempts,
       avgPct: Math.round((r.sum / r.attempts) * 100),
     }));

@@ -4,6 +4,7 @@ import ScrapeGuard from './components/ScrapeGuard';
 import Activity from './pages/Activity';
 import Analytics from './pages/Analytics';
 import DiscordClassroom from './pages/DiscordClassroom';
+import ClassroomStudent from './pages/ClassroomStudent';
 import Home from './pages/Home';
 import HostPreview from './pages/HostPreview';
 import StudentTakeView from './pages/StudentTakeView';
@@ -36,6 +37,14 @@ export default function App() {
         element={
           <RequireHost>
             <DiscordClassroom />
+          </RequireHost>
+        }
+      />
+      <Route
+        path="/classroom/student/:discordKey"
+        element={
+          <RequireHost>
+            <ClassroomStudent />
           </RequireHost>
         }
       />

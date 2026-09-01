@@ -9276,6 +9276,23 @@ button.f-next-event-action-btn:hover {
   border-radius: 10px;
   border: 1px solid rgba(125, 211, 252, 0.18);
   background: rgba(15, 23, 42, 0.65);
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  font: inherit;
+  color: inherit;
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.15s ease;
+}
+
+.f-classroom-style-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.f-classroom-style-card.is-expanded {
+  grid-column: 1 / -1;
 }
 
 .f-classroom-style-card.is-solid {
@@ -9360,6 +9377,14 @@ button.f-next-event-action-btn:hover {
 }
 
 .f-classroom-recognize-list li {
+  padding: 0;
+  border: none;
+  background: none;
+  max-width: 100%;
+}
+
+.f-classroom-entity-chip {
+  display: inline-block;
   padding: 3px 8px;
   border-radius: 999px;
   border: 1px solid rgba(125, 211, 252, 0.22);
@@ -9370,6 +9395,124 @@ button.f-next-event-action-btn:hover {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.f-classroom-entity-chip:hover {
+  background: rgba(125, 211, 252, 0.15);
+  border-color: rgba(125, 211, 252, 0.45);
+}
+
+.f-classroom-recognize-group.is-highlighted {
+  border-radius: 10px;
+  outline: 2px solid rgba(125, 211, 252, 0.55);
+  outline-offset: 4px;
+  transition: outline-color 0.3s ease;
+}
+
+.f-classroom-style-expand {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(125, 211, 252, 0.15);
+  font-size: 0.74rem;
+  line-height: 1.4;
+}
+
+.f-classroom-style-expand p {
+  margin: 0 0 4px;
+}
+
+.f-classroom-entity-modal {
+  margin: 12px 0;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(125, 211, 252, 0.42);
+  background: rgba(8, 12, 22, 0.98);
+}
+
+.f-classroom-entity-modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.f-classroom-entity-modal-close {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid rgba(125, 211, 252, 0.35);
+  background: rgba(30, 58, 95, 0.85);
+  color: #e6eef8;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.f-classroom-entity-modal-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.f-classroom-entity-modal-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(125, 211, 252, 0.1);
+  font-size: 0.8rem;
+}
+
+.f-classroom-entity-modal-list li.is-correct span:last-child {
+  color: #6ee7b7;
+}
+
+.f-classroom-entity-modal-list li.is-wrong span:last-child {
+  color: #fca5a5;
+}
+
+.f-classroom-question-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  padding: 6px 8px;
+  margin: 0 -8px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+
+.f-classroom-question-row:hover {
+  background: rgba(125, 211, 252, 0.08);
+}
+
+.f-classroom-student-page {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.f-classroom-student-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.f-classroom-student-missing {
+  padding: 24px;
+  text-align: center;
 }
 
 .f-classroom-thesis-trend {
