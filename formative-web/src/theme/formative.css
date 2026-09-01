@@ -10213,6 +10213,7 @@ button.f-next-event-action-btn:hover {
 .f-classroom-wheel-add .f-hub-input {
   flex: 1 1 140px;
   min-width: 0;
+  border-radius: 10px;
 }
 
 .f-classroom-wheel-filter {
@@ -10225,7 +10226,9 @@ button.f-next-event-action-btn:hover {
   width: 100%;
   min-width: 0;
   max-width: none;
+  min-height: 38px;
   height: 38px;
+  border-radius: 10px;
 }
 
 .f-classroom-wheel-pool {

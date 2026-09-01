@@ -85,11 +85,16 @@ export function mergeClassroomStudent(
       ? computeClassroomAutoPointsBreakdown(player.discordKey, responses, quizzes)
       : null;
   const computedAuto = breakdown?.total ?? null;
-  const classroomAutoPoints =
+  const dbAuto =
     profileRow?.classroom_points != null && profileRow.classroom_points !== ''
       ? Number(profileRow.classroom_points)
-      : computedAuto != null
-        ? computedAuto
+      : null;
+  // Prefer live breakdown from responses — DB classroom_points may be stale (e.g. 0 before sync).
+  const classroomAutoPoints =
+    computedAuto != null
+      ? computedAuto
+      : dbAuto != null
+        ? dbAuto
         : classroomPointsFromStats({
             triviasDone: player.triviasDone,
             passCount: player.passCount,

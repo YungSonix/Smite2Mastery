@@ -434,6 +434,8 @@ export default function DiscordClassroom() {
   const [bulkBusy, setBulkBusy] = useState(false);
   const [avatarStudent, setAvatarStudent] = useState(null);
   const [avatarBusy, setAvatarBusy] = useState(false);
+  const [syncBusy, setSyncBusy] = useState(false);
+  const [syncNote, setSyncNote] = useState('');
 
   const load = useCallback(async () => {
     // syncProfiles=0: do not rebuild every student profile on open (Vercel 30s timeout).
@@ -621,6 +623,29 @@ export default function DiscordClassroom() {
     [visible, bulkBusy, upsertProfile]
   );
 
+  const handleRecalculatePoints = useCallback(async () => {
+    setSyncBusy(true);
+    setSyncNote('');
+    setError('');
+    try {
+      const res = await hostApi('/api/trivia/host', {
+        method: 'POST',
+        body: { action: 'sync-player-profiles', scope: 'host' },
+      });
+      await load();
+      const n = res.synced ?? 0;
+      setSyncNote(
+        n
+          ? `Recalculated trivia auto-points for ${n} student${n === 1 ? '' : 's'}.`
+          : 'No student profiles needed updating.'
+      );
+    } catch (e) {
+      setError(e.message || 'Could not recalculate class points');
+    } finally {
+      setSyncBusy(false);
+    }
+  }, [load]);
+
   const handleSaveAvatar = useCallback(
     async ({ kind, ref }) => {
       if (!avatarStudent) return;
@@ -762,6 +787,15 @@ export default function DiscordClassroom() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
+              <button
+                type="button"
+                className="f-outline-btn f-compact"
+                disabled={syncBusy || loading}
+                onClick={handleRecalculatePoints}
+                title="Recompute trivia auto-points from submissions and save to database"
+              >
+                {syncBusy ? 'Recalculating…' : 'Recalculate class points'}
+              </button>
               <div className="f-classroom-toolbar-right">
                 <div className="f-classroom-filters">
                   {[
@@ -794,6 +828,8 @@ export default function DiscordClassroom() {
                 </label>
               </div>
             </div>
+
+            {syncNote ? <p className="f-muted f-classroom-sync-note">{syncNote}</p> : null}
 
             <div className="f-classroom-bulk">
               <p className="f-muted f-classroom-bulk-hint">
