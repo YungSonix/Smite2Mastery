@@ -2,7 +2,9 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   KIND_LABELS,
   AVATAR_ENTRIES,
+  getAvatarCatalogCounts,
   getUseSkinJsonIcons,
+  pickRandomAvatarEntry,
   resolveAvatarEntryUrl,
   resolveGodPortraitUrl,
   searchAvatarCatalog,
@@ -51,10 +53,38 @@ export default function ClassroomAvatarPicker({ open, student, onClose, onSave, 
     });
   }, []);
 
+  const catalogCounts = useMemo(() => getAvatarCatalogCounts(), []);
+
   const results = useMemo(
     () => searchAvatarCatalog({ query, kind, useSkinJsonIcons }),
     [query, kind, useSkinJsonIcons]
   );
+
+  const emptyPrompt = useMemo(() => {
+    const q = query.trim();
+    if (q) return 'No matches — try another name or filter.';
+    if (kind === 'badge') {
+      return `Search badges to browse ${catalogCounts.badge}+ icons (e.g. Thor, Pride, SWC).`;
+    }
+    if (kind === 'god') return `Search gods by name — ${catalogCounts.god} portraits available.`;
+    if (kind === 'skin') {
+      return `Search skins to browse ${catalogCounts.skin}+ icons (e.g. Athena Star Guardian).`;
+    }
+    return 'Type to search badges, gods, and skins…';
+  }, [query, kind, catalogCounts]);
+
+  const handleRandomize = useCallback(() => {
+    const item = pickRandomAvatarEntry({ kind, useSkinJsonIcons });
+    if (!item) return;
+    setPicked({
+      kind: item.kind,
+      ref: item.ref,
+      url: item.url,
+      label: item.label,
+      godName: item.godName,
+      fallbackUrl: item.fallbackUrl,
+    });
+  }, [kind, useSkinJsonIcons]);
 
   const handleAvatarImgError = useCallback((e, item) => {
     const img = e.currentTarget;
@@ -145,11 +175,19 @@ export default function ClassroomAvatarPicker({ open, student, onClose, onSave, 
               })
             }
           />
-          <div>
+          <div className="f-avatar-picker-preview-meta">
             <div className="f-avatar-picker-preview-label">{picked?.label || student.badgeLabel}</div>
             <div className="f-muted f-avatar-picker-preview-kind">
               {picked?.kind ? KIND_LABELS[picked.kind] || picked.kind : 'Avatar'}
             </div>
+            <button
+              type="button"
+              className="f-ghost-btn f-avatar-picker-randomize"
+              onClick={handleRandomize}
+              disabled={busy}
+            >
+              Randomize
+            </button>
           </div>
         </div>
 
@@ -188,7 +226,7 @@ export default function ClassroomAvatarPicker({ open, student, onClose, onSave, 
               })}
             </div>
           ) : (
-            <p className="f-muted f-avatar-picker-empty">No matches — try another name or filter.</p>
+            <p className="f-muted f-avatar-picker-empty">{emptyPrompt}</p>
           )}
         </div>
 

@@ -10061,6 +10061,14 @@ button.f-next-event-action-btn:hover {
   background: #0b1220;
 }
 
+.f-avatar-picker-preview-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  min-width: 0;
+}
+
 .f-avatar-picker-preview-label {
   font-weight: 700;
   font-size: 0.95rem;
@@ -10068,7 +10076,13 @@ button.f-next-event-action-btn:hover {
 
 .f-avatar-picker-preview-kind {
   font-size: 0.78rem;
+  margin-top: 0;
+}
+
+.f-avatar-picker-randomize {
   margin-top: 2px;
+  padding: 4px 10px;
+  font-size: 0.78rem;
 }
 
 .f-avatar-picker-grid-wrap {

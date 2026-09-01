@@ -117,6 +117,15 @@ export function resolveAvatarEntryUrl(entry, { useSkinJsonIcons = getUseSkinJson
   if (entry.kind === 'god') {
     return entry.url || godPortraitUrlFromName(entry.ref);
   }
+  if (entry.kind === 'badge') {
+    if (entry.url) return entry.url;
+    const ref = String(entry.ref || '');
+    if (ref.startsWith('app/data/')) {
+      const mediaPath = appDataRefToMediaPath(ref);
+      return mediaPath ? resolveMediaUrl(mediaPath) : null;
+    }
+    return badgeUrl(ref);
+  }
   return entry.url;
 }
 
@@ -124,12 +133,7 @@ export function resolveGodPortraitUrl(godName) {
   return godPortraitUrlFromName(godName);
 }
 
-export function searchAvatarCatalog({
-  query = '',
-  kind = 'all',
-  limit = 72,
-  useSkinJsonIcons = getUseSkinJsonIcons(),
-} = {}) {
+function filterAvatarEntries({ query = '', kind = 'all' } = {}) {
   const q = normAvatarSearch(query);
   const tokens = q ? q.split(' ').filter(Boolean) : [];
 
@@ -143,24 +147,54 @@ export function searchAvatarCatalog({
       const hay = e.search || normAvatarSearch(e.label);
       return tokens.every((t) => hay.includes(t));
     });
+    list = [...list].sort((a, b) => a.label.localeCompare(b.label));
   }
 
-  if (!tokens.length && kind === 'all') {
-    list = [...list].sort((a, b) => {
-      const rank = (k) => (k === 'god' ? 0 : k === 'skin' ? 1 : 2);
-      return rank(a.kind) - rank(b.kind) || a.label.localeCompare(b.label);
-    });
-  }
+  return { list, tokens };
+}
 
-  // Empty query: show full filtered catalog (Skins tab = all ~800+ icons). Cap only typed search.
-  const capped = tokens.length > 0 ? list.slice(0, limit) : list;
-
-  return capped.map((entry) => ({
+function mapAvatarSearchResult(entry, { useSkinJsonIcons = getUseSkinJsonIcons() } = {}) {
+  return {
     ...entry,
     url: resolveAvatarEntryUrl(entry, { useSkinJsonIcons }),
     fallbackUrl:
       entry.kind === 'skin' && entry.godName ? godPortraitUrlFromName(entry.godName) : null,
-  }));
+  };
+}
+
+export function searchAvatarCatalog({
+  query = '',
+  kind = 'all',
+  limit = 72,
+  useSkinJsonIcons = getUseSkinJsonIcons(),
+} = {}) {
+  const { list, tokens } = filterAvatarEntries({ query, kind });
+  if (!tokens.length) return [];
+
+  return list.slice(0, limit).map((entry) => mapAvatarSearchResult(entry, { useSkinJsonIcons }));
+}
+
+/** Pick a random catalog entry (respects kind tab: all | badge | god | skin). */
+export function pickRandomAvatarEntry({
+  kind = 'all',
+  useSkinJsonIcons = getUseSkinJsonIcons(),
+} = {}) {
+  let list = AVATAR_ENTRIES;
+  if (kind && kind !== 'all') {
+    list = list.filter((e) => e.kind === kind);
+  }
+  if (!list.length) return null;
+  const entry = list[Math.floor(Math.random() * list.length)];
+  return mapAvatarSearchResult(entry, { useSkinJsonIcons });
+}
+
+export function getAvatarCatalogCounts() {
+  const counts = { badge: 0, god: 0, skin: 0, total: 0 };
+  for (const entry of AVATAR_ENTRIES) {
+    if (entry.kind && counts[entry.kind] != null) counts[entry.kind] += 1;
+    counts.total += 1;
+  }
+  return counts;
 }
 
 export function resolveAvatarFromProfile(profile, discordKey) {
@@ -172,7 +206,11 @@ export function resolveAvatarFromProfile(profile, discordKey) {
     if (kind === 'skin') {
       url = resolveSkinIconFromRef(ref);
     } else if (kind === 'badge') {
-      url = hit?.url || badgeUrl(ref);
+      url =
+        hit?.url ||
+        (String(ref).startsWith('app/data/')
+          ? resolveMediaUrl(appDataRefToMediaPath(ref))
+          : badgeUrl(ref));
     } else if (kind === 'god') {
       url = hit?.url || godPortraitUrlFromName(ref);
     } else {
