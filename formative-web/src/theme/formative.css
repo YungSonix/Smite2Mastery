@@ -8523,6 +8523,31 @@ button.f-next-event-action-btn:hover {
   min-width: 720px;
 }
 
+.f-player-table-wrap .f-player-table th,
+.f-player-table-wrap .f-player-table td {
+  padding: 7px 10px;
+  font-size: 13px;
+}
+
+.f-player-table-wrap .f-player-table th:nth-child(2),
+.f-player-table-wrap .f-player-table th:nth-child(3),
+.f-player-table-wrap .f-player-table td:nth-child(2),
+.f-player-table-wrap .f-player-table td:nth-child(3) {
+  text-align: left;
+}
+
+.f-player-profile-link {
+  color: #7dd3fc;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.f-player-profile-link:hover {
+  color: #bae6fd;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .f-analytics-player-row {
   cursor: pointer;
 }
