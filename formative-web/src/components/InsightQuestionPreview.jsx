@@ -92,6 +92,8 @@ export default function InsightQuestionPreview({
   onNext,
   onClose,
   onOpenInEditor,
+  onAdjustQuestionCredit,
+  creditBusy = false,
 }) {
   const [variantIndex, setVariantIndex] = useState(initialVariantIndex);
   const displayQ = useMemo(() => applyVariant(question, variantIndex), [question, variantIndex]);
@@ -205,6 +207,37 @@ export default function InsightQuestionPreview({
         </div>
 
         <footer className="f-insight-preview-foot">
+          {onAdjustQuestionCredit && question?.id && !isGate && !isContent ? (
+            <div className="f-insight-preview-credit-actions">
+              <button
+                type="button"
+                className="f-outline-btn f-compact"
+                disabled={creditBusy}
+                title="Full credit on this question for every submission (all versions)"
+                onClick={() => onAdjustQuestionCredit(question.id, 'full')}
+              >
+                Credit all
+              </button>
+              <button
+                type="button"
+                className="f-outline-btn f-compact"
+                disabled={creditBusy}
+                title="Zero this question for every submission"
+                onClick={() => onAdjustQuestionCredit(question.id, 'zero')}
+              >
+                Zero all
+              </button>
+              <button
+                type="button"
+                className="f-outline-btn f-compact"
+                disabled={creditBusy}
+                title="Re-score from current answer keys (respects each player's version)"
+                onClick={() => onAdjustQuestionCredit(question.id, 'regrade')}
+              >
+                Regrade from key
+              </button>
+            </div>
+          ) : null}
           {onOpenInEditor ? (
             <button type="button" className="f-outline-btn" onClick={() => onOpenInEditor(question.id, variantIndex)}>
               Open in editor

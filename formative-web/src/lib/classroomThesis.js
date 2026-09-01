@@ -277,9 +277,12 @@ export function buildStudentThesis(player, questions) {
 
   const byPrompt = new Map();
   for (const attempt of attempts) {
+    const vmap = attempt.variantMap || {};
     for (const [qid] of Object.entries(attempt.perQuestion || {})) {
-      const q = qById.get(qid);
-      if (!q) continue;
+      const base = qById.get(qid);
+      if (!base) continue;
+      const vi = Number(vmap[qid]);
+      const q = applyVariant(base, Number.isFinite(vi) ? vi : 0) || base;
       const frac = fracCorrect(attempt.perQuestion, qid);
       if (frac == null) continue;
       const key = promptPlain(q.prompt) || qid;
@@ -332,9 +335,15 @@ export function buildClassNextTriviaRecipe({ students = [], questions = [], resp
 
   for (const r of responses || []) {
     const per = r.per_question || {};
+    const vmap =
+      r.answers && typeof r.answers === 'object' && r.answers.__variant_map
+        ? r.answers.__variant_map
+        : {};
     for (const [qid] of Object.entries(per)) {
-      const q = qById.get(qid);
-      if (!q) continue;
+      const base = qById.get(qid);
+      if (!base) continue;
+      const vi = Number(vmap[qid]);
+      const q = applyVariant(base, Number.isFinite(vi) ? vi : 0) || base;
       const frac = fracCorrect(per, qid);
       if (frac == null) continue;
       const gid = groupIdForQuestion(q);

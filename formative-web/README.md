@@ -157,6 +157,7 @@ TRIVIA_LOAD_PROD=1 FORMATIVE_API_BASE=https://smitescroll.com TRIVIA_SLUG=your-s
    `formative_trivia_types_expand.sql`  
    `formative_trivia_ingame_name.sql`  
    Notes: `formative_trivia_notes.sql`  
+   Player profiles (giveaways): `formative_trivia_player_profiles.sql` — then `npm run trivia:sync-players` to backfill existing entrants  
    Contest: `trivia_smite2_community_seed.sql` (SMITE 2 TRIVIA)
 2. Vercel env (server only, never `VITE_` / `EXPO_PUBLIC_`):  
    `SUPABASE_URL`  

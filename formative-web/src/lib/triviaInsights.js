@@ -1,4 +1,4 @@
-import { applyVariant, extractVariantMap, variantCount, variantLetter } from './triviaVariants';
+import { applyVariant, extractVariantMap, variantCount, variantLetter, pickVariantIndex } from './triviaVariants';
 import { correctChoiceIndexes } from './correctAnswer';
 import { promptPlain } from './promptPlain';
 
@@ -182,10 +182,23 @@ const HARD_THRESHOLD_PCT = 40;
 const EASY_THRESHOLD_PCT = 90;
 const PASS_THRESHOLD_PCT = 70;
 
-export function buildQuizInsights({ questions, responses, timeLimitSeconds } = {}) {
+function variantIndexForInsight(r, q, vCount, quizSlug) {
+  const variantMap = extractVariantMap(r?.answers);
+  const raw = variantMap?.[q.id] ?? variantMap?.[String(q.id)];
+  if (raw != null && raw !== '') {
+    return Math.max(0, Math.min(vCount - 1, Number(raw) || 0));
+  }
+  if (quizSlug && r?.discord_username && vCount > 1) {
+    return pickVariantIndex(quizSlug, r.discord_username, q.id, vCount, null, '');
+  }
+  return 0;
+}
+
+export function buildQuizInsights({ questions, responses, timeLimitSeconds, quizSlug } = {}) {
   const scored = scoredInsightQuestions(questions);
   const rows = responses || [];
   const n = rows.length;
+  const submissionsWithVariantMap = rows.filter((r) => extractVariantMap(r?.answers)).length;
 
   const pcts = rows
     .map((r) => {
@@ -240,8 +253,7 @@ export function buildQuizInsights({ questions, responses, timeLimitSeconds } = {
       const v = r.per_question?.[q.id];
       if (v == null) continue;
       seen += 1;
-      const variantMap = extractVariantMap(r.answers) || {};
-      const vi = Math.max(0, Math.min(vCount - 1, Number(variantMap[q.id]) || 0));
+      const vi = variantIndexForInsight(r, q, vCount, quizSlug);
       const slot = byVariant[vi];
       slot.n += 1;
       if (Number(v)) {
@@ -367,6 +379,11 @@ export function buildQuizInsights({ questions, responses, timeLimitSeconds } = {
     variantUsageParts,
     variantCompareRows,
     hardestVariants,
+    variantMapCoverage: {
+      recorded: submissionsWithVariantMap,
+      total: n,
+      inferred: Math.max(0, n - submissionsWithVariantMap),
+    },
     perQuestion,
     durations,
     avgDurationMs: durations.length

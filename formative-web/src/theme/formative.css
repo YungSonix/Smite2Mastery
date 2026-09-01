@@ -3913,25 +3913,28 @@ a.f-outline-btn.f-compact {
 
 .f-responses-tools {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 12px;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 6px;
+  padding: 2px 0 6px;
   flex-wrap: wrap;
 }
 
 .f-responses-search-wrap {
-  flex: 1 1 280px;
-  max-width: 440px;
-  min-width: 200px;
+  flex: 1 1 200px;
+  min-width: 180px;
+  max-width: none;
 }
 
 .f-responses-tools-actions {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   justify-content: flex-end;
   gap: 8px;
-  flex: 1 1 auto;
+  margin-left: auto;
+  flex-shrink: 0;
 }
 
 .f-student-panel {
@@ -6140,7 +6143,7 @@ a.f-outline-btn.f-compact {
   border-radius: 10px;
   background: rgba(250, 204, 21, 0.12);
   border: 1px solid rgba(250, 204, 21, 0.42);
-  color: #fde68a;
+  color: var(--f-text);
   font-size: 13px;
   line-height: 1.45;
 }
@@ -6281,10 +6284,6 @@ a.f-outline-btn.f-compact {
   border: none;
   box-shadow: none;
   border-radius: 0 0 14px 14px;
-}
-
-.f-responses-tools {
-  padding: 4px 0 8px;
 }
 
 .f-responses-tools .f-outline-btn {
@@ -6618,9 +6617,17 @@ a.f-outline-btn.f-compact {
 .f-insight-preview-foot {
   display: flex;
   justify-content: flex-end;
+  flex-wrap: wrap;
   gap: 10px;
   padding: 12px 18px;
   border-top: 1px solid var(--f-border);
+}
+
+.f-insight-preview-credit-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-right: auto;
 }
 
 .f-variant-stack-q-btn {
@@ -7147,6 +7154,7 @@ a.f-outline-btn.f-compact {
 .f-insights-alert--info {
   border-color: color-mix(in srgb, var(--f-blue) 40%, transparent);
   background: color-mix(in srgb, var(--f-blue) 8%, var(--f-card));
+  color: var(--f-text);
 }
 
 .f-insights-v3 .f-bar-chart-track {
@@ -8114,6 +8122,7 @@ html.f-scrape-guard-active #root > *:not(.f-scrape-guard-scrim) {
   border-radius: 12px;
   border: 1px solid color-mix(in srgb, #fbbf24 45%, var(--f-border));
   background: color-mix(in srgb, #fbbf24 10%, var(--f-card));
+  color: var(--f-text);
   font-size: 13px;
   line-height: 1.45;
 }
@@ -8579,7 +8588,8 @@ button.f-next-event-action-btn:hover {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  justify-content: center;
+  justify-content: flex-end;
+  flex-shrink: 0;
 }
 
 .f-classroom-points-ctrl-pair {
@@ -8679,8 +8689,8 @@ button.f-next-event-action-btn:hover {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 20px;
+  gap: 12px;
+  margin-bottom: 10px;
   flex-wrap: wrap;
 }
 
@@ -8706,13 +8716,31 @@ button.f-next-event-action-btn:hover {
 .f-classroom-toolbar {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 12px;
+  gap: 8px 12px;
   align-items: center;
-  margin: 16px 0 20px;
-  padding: 12px 14px;
+  margin: 6px 0 12px;
+  padding: 8px 12px;
   border-radius: 12px;
   border: 1px solid rgba(125, 211, 252, 0.22);
   background: rgba(8, 12, 22, 0.65);
+}
+
+.f-classroom-search {
+  flex: 1 1 200px;
+  min-width: 180px;
+  max-width: 440px;
+}
+
+.f-classroom-toolbar .f-classroom-search {
+  max-width: 440px;
+}
+
+.f-classroom-toolbar-right {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-left: auto;
 }
 
 .f-classroom-filters {
@@ -8758,15 +8786,22 @@ button.f-next-event-action-btn:hover {
 
 .f-classroom-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
-  gap: 14px;
-  margin-bottom: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: 10px;
+  margin-bottom: 16px;
 }
 
 .f-classroom-card-wrap {
   display: flex;
   flex-direction: column;
+  gap: 6px;
+}
+
+.f-classroom-card-row {
+  display: flex;
+  align-items: center;
   gap: 8px;
+  width: 100%;
 }
 
 .f-classroom-card-wrap.is-active .f-classroom-card {
@@ -8782,15 +8817,30 @@ button.f-next-event-action-btn:hover {
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 100%;
-  padding: 18px 12px 14px;
-  border-radius: 16px;
+  align-items: stretch;
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+  border-radius: 14px;
   border: 2px solid rgba(125, 211, 252, 0.22);
   background: linear-gradient(180deg, rgba(11, 18, 32, 0.98) 0%, rgba(8, 12, 22, 0.98) 100%);
   cursor: pointer;
-  text-align: center;
+  text-align: left;
   transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.f-classroom-card-body {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.f-classroom-card-text {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
 }
 
 .f-classroom-card:hover {
@@ -8838,12 +8888,13 @@ button.f-next-event-action-btn:hover {
 }
 
 .f-classroom-avatar-ring {
-  width: 76px;
-  height: 76px;
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
   border-radius: 50%;
-  padding: 4px;
+  padding: 3px;
   background: linear-gradient(135deg, #7dd3fc, #2dd4bf, #fde68a);
-  margin-bottom: 10px;
+  margin-bottom: 0;
 }
 
 .f-classroom-avatar {
@@ -8867,9 +8918,9 @@ button.f-next-event-action-btn:hover {
 }
 
 .f-classroom-card-discord {
-  font-size: 0.72rem;
-  color: var(--f-muted);
-  margin-top: 2px;
+  font-size: 0.68rem;
+  color: color-mix(in srgb, var(--f-muted) 92%, var(--f-text));
+  margin: 0 0 2px;
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -8879,11 +8930,11 @@ button.f-next-event-action-btn:hover {
 .f-classroom-card-stats {
   display: flex;
   gap: 8px;
-  margin-top: 8px;
-  font-size: 0.7rem;
+  margin-top: 4px;
+  font-size: 0.68rem;
   color: var(--f-muted);
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .f-classroom-flag {
@@ -8909,14 +8960,7 @@ button.f-next-event-action-btn:hover {
 }
 
 .f-classroom-card-open-hint {
-  display: none;
-  margin-top: 8px;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: #7dd3fc;
-  opacity: 0.85;
+  display: none !important;
 }
 
 .f-classroom-sheet-close {
@@ -9439,11 +9483,11 @@ button.f-next-event-action-btn:hover {
   }
 
   .f-classroom-grid {
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    grid-template-columns: 1fr;
   }
 
-  .f-classroom-card-open-hint {
-    display: block;
+  .f-classroom-card-row {
+    flex-wrap: wrap;
   }
 
   .f-classroom-sheet-overlay {
@@ -9661,8 +9705,8 @@ button.f-next-event-action-btn:hover {
   .f-classroom-hero {
     flex-direction: column;
     align-items: stretch;
-    gap: 12px;
-    margin-bottom: 14px;
+    gap: 10px;
+    margin-bottom: 8px;
   }
 
   .f-classroom-title {
@@ -9676,13 +9720,22 @@ button.f-next-event-action-btn:hover {
   }
 
   .f-classroom-toolbar {
-    gap: 10px;
+    gap: 8px;
+    margin: 4px 0 10px;
+    padding: 8px 10px;
   }
 
-  .f-classroom-toolbar .f-hub-input {
+  .f-classroom-toolbar .f-hub-input,
+  .f-classroom-search {
     width: 100%;
+    max-width: none;
     min-height: 44px;
     font-size: 1rem;
+  }
+
+  .f-classroom-toolbar-right {
+    width: 100%;
+    margin-left: 0;
   }
 
   .f-classroom-filters {
@@ -9724,21 +9777,17 @@ button.f-next-event-action-btn:hover {
   }
 
   .f-classroom-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
+    grid-template-columns: 1fr;
+    gap: 8px;
   }
 
   .f-classroom-card {
-    padding: 14px 10px 12px;
-  }
-
-  .f-classroom-card-open-hint {
-    display: block;
+    padding: 10px;
   }
 
   .f-classroom-avatar-ring {
-    width: 64px;
-    height: 64px;
+    width: 48px;
+    height: 48px;
   }
 
   .f-classroom-points-bubble {
@@ -9918,5 +9967,19 @@ button.f-next-event-action-btn:hover {
   .f-avatar-picker-actions .f-ghost-btn {
     min-height: 44px;
   }
+}
+
+.f-topbar-undo {
+  min-width: 4.5rem;
+}
+
+.f-topbar-undo:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.f-classroom-thesis-thin {
+  margin: 0 0 10px;
+  font-size: 0.82rem;
 }
 

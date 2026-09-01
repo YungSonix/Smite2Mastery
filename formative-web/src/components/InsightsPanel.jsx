@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import InsightQuestionPreview from './InsightQuestionPreview';
+import InsightTooltip from './InsightTooltip';
 import { ColumnHistogram, Donut, KpiStrip, NextEventSection, VariantStackChart } from './HostCharts';
 import { promptPlain } from '../lib/promptPlain';
 import {
@@ -40,7 +41,17 @@ function scrollToInsightsSection(node) {
   node.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-export default function InsightsPanel({ questions, responses, timeLimitSeconds, onJumpToEditor, initialPreviewId }) {
+export default function InsightsPanel({
+  questions,
+  responses,
+  timeLimitSeconds,
+  quizSlug,
+  onJumpToEditor,
+  initialPreviewId,
+  quizId,
+  onAdjustQuestionCredit,
+  creditBusy = false,
+}) {
   const [preview, setPreview] = useState(null);
   const [sort, setSort] = useState({ col: 'pct', dir: 1 });
   const overviewRef = useRef(null);
@@ -70,8 +81,8 @@ export default function InsightsPanel({ questions, responses, timeLimitSeconds, 
   }, [initialPreviewId, indexById]);
 
   const stats = useMemo(
-    () => buildQuizInsights({ questions, responses, timeLimitSeconds }),
-    [questions, responses, timeLimitSeconds]
+    () => buildQuizInsights({ questions, responses, timeLimitSeconds, quizSlug }),
+    [questions, responses, timeLimitSeconds, quizSlug]
   );
 
   const takeaway = useMemo(() => buildInsightsTakeaway(stats), [stats]);
@@ -149,13 +160,63 @@ export default function InsightsPanel({ questions, responses, timeLimitSeconds, 
   }, [stats.perQuestion, sort]);
 
   const kpis = [
-    { label: 'Submissions', value: stats.n, hint: stats.uniqueDiscord != null ? `${stats.uniqueDiscord} unique Discord` : undefined, tone: 'cyan' },
+    {
+      label: 'Submissions',
+      value: stats.n,
+      hint: stats.uniqueDiscord != null ? `${stats.uniqueDiscord} unique Discord` : undefined,
+      tone: 'cyan',
+      tooltip: (
+        <>
+          <p>One row per finished take (practice takes hidden unless you toggle them on Responses).</p>
+          <p>Unique Discord counts distinct usernames — useful if someone retries under a new name.</p>
+        </>
+      ),
+    },
     stats.medianPct != null
-      ? { label: 'Median score', value: `${stats.medianPct}%`, hint: `avg ${stats.avg}%`, tone: 'gold' }
-      : { label: 'Avg score', value: `${stats.avg}%`, tone: 'gold' },
-    { label: 'Pass rate', value: `${stats.passPct}%`, hint: `${stats.passCount} of ${stats.n} at 70%+`, tone: 'teal' },
-    { label: 'Median finish', value: formatDuration(stats.medianDurationMs), tone: 'violet' },
+      ? {
+          label: 'Median score',
+          value: `${stats.medianPct}%`,
+          hint: `avg ${stats.avg}%`,
+          tone: 'gold',
+          tooltip: (
+            <>
+              <p>Median is the middle score — half scored above, half below. Less pulled around by one perfect or awful take than the average.</p>
+              <p>Average is the straight mean of all percentages.</p>
+            </>
+          ),
+        }
+      : {
+          label: 'Avg score',
+          value: `${stats.avg}%`,
+          tone: 'gold',
+          tooltip: <p>Mean of every submission&apos;s percentage. With few takes, one outlier moves this a lot.</p>,
+        },
+    {
+      label: 'Pass rate',
+      value: `${stats.passPct}%`,
+      hint: `${stats.passCount} of ${stats.n} at 70%+`,
+      tone: 'teal',
+      tooltip: (
+        <>
+          <p>Share of takers who scored 70% or higher on the whole quiz.</p>
+          <p>Good for prize cutoffs — not the same as per-question accuracy in the table below.</p>
+        </>
+      ),
+    },
+    {
+      label: 'Median finish',
+      value: formatDuration(stats.medianDurationMs),
+      tone: 'violet',
+      tooltip: (
+        <>
+          <p>How long people spent on the full quiz (start → submit), not per-question time.</p>
+          <p>Uses stored duration when present; older takes may lack timing.</p>
+        </>
+      ),
+    },
   ];
+
+  const variantCoverage = stats.variantMapCoverage || { recorded: 0, total: stats.n, inferred: 0 };
 
   const versionCaption = stats.variantQuestionCount
     ? `${stats.variantQuestionCount} question${
@@ -164,6 +225,10 @@ export default function InsightsPanel({ questions, responses, timeLimitSeconds, 
         stats.variantUsageParts.length
           ? stats.variantUsageParts.map((p) => `${p.label}: ${p.value} takes`).join(' · ')
           : 'no version assignments recorded yet'
+      }${
+        variantCoverage.inferred > 0
+          ? ` · ${variantCoverage.inferred} take${variantCoverage.inferred === 1 ? '' : 's'} estimated from Discord (map missing on submit)`
+          : ''
       }`
     : null;
 
@@ -255,7 +320,19 @@ export default function InsightsPanel({ questions, responses, timeLimitSeconds, 
         >
         <div className="f-analytics-grid f-analytics-grid--insights f-insights-grid-12">
           <div className="f-insights-span-5">
-            <Donut title="Score mix" parts={stats.bands} center={`${stats.medianPct ?? stats.avg}%`} glow size="lg" />
+            <Donut
+              title="Score mix"
+              parts={stats.bands}
+              center={`${stats.medianPct ?? stats.avg}%`}
+              glow
+              size="lg"
+              tooltip={
+                <>
+                  <p>How final scores cluster across your audience. Center number is median (or average if median is unavailable).</p>
+                  <p>Wide spread = some players crushed it and others struggled. A tall 61–80% band usually means the quiz landed near your target difficulty.</p>
+                </>
+              }
+            />
           </div>
           <div className="f-insights-span-7">
             <ColumnHistogram
@@ -268,6 +345,12 @@ export default function InsightsPanel({ questions, responses, timeLimitSeconds, 
                 stats.medianDurationMs != null
                   ? `Median finish: ${formatDuration(stats.medianDurationMs)}`
                   : null
+              }
+              tooltip={
+                <>
+                  <p>Total quiz time from Start to Submit — not time on a single question.</p>
+                  <p>A spike under 2 minutes can mean rushers or people who already knew the content. A long tail past 8 minutes often means people left the tab open or re-read hard questions.</p>
+                </>
               }
             />
           </div>
@@ -289,6 +372,22 @@ export default function InsightsPanel({ questions, responses, timeLimitSeconds, 
             minN={MIN_VARIANT_N}
             skewThreshold={SKEW_THRESHOLD_PP}
             hint={`Showing only questions where one version is at least ${SKEW_THRESHOLD_PP}pp easier than another, counting versions with ${MIN_VARIANT_N}+ takes.`}
+            tooltip={
+              <>
+                <p>
+                  Each player gets one version per question (A = base prompt, B/C/… = alternates you enabled in the editor).
+                  Assignment is deterministic from their Discord username — not truly random, but spread evenly across players.
+                </p>
+                <p>
+                  This chart only surfaces big gaps ({SKEW_THRESHOLD_PP}+ percentage points) where each version has at least{' '}
+                  {MIN_VARIANT_N} takes, so one lucky guess does not look like a broken version.
+                </p>
+                <p>
+                  If almost everyone shows as Version A, the stored <code>__variant_map</code> was probably missing on older
+                  submissions — not proof that assignment failed. Run the backfill script when you need to repair stored maps.
+                </p>
+              </>
+            }
           />
         </div>
       ) : null}
@@ -299,6 +398,12 @@ export default function InsightsPanel({ questions, responses, timeLimitSeconds, 
             data={stats.nextEvent}
             onItemClick={openInsightQuestion}
             promptText={(item) => shortPrompt(item.prompt)}
+            tooltip={
+              <>
+                <p>Auto-ranked edits before your next event. REWRITE = confusing wording or slow + low score. SWAP = too easy giveaway. REBALANCE = one version much easier than another.</p>
+                <p>Questions with fewer than {MIN_VARIANT_N} takes are skipped so noise does not drive changes.</p>
+              </>
+            }
           />
         </div>
       ) : null}
@@ -319,7 +424,20 @@ export default function InsightsPanel({ questions, responses, timeLimitSeconds, 
           id="insights-questions"
         >
         <div className="f-insights-list f-insights-question-table f-insights-panel">
-          <div className="f-insights-section-label">All questions</div>
+          <div className="f-insights-section-label">
+            All questions
+            <InsightTooltip label="About the question table">
+              <>
+                <p>Click any row to preview what players saw. % is correct rate; n is how many answered.</p>
+                <p>
+                  <strong>Disc</strong> (discrimination) compares top vs bottom scorers on that question — near 0 means everyone missed or everyone got it (weak skill signal). 40–60% accuracy with solid disc is the sweet spot.
+                </p>
+                <p>
+                  <strong>Time</strong> is median seconds on that question (new takes). Version pills show per-version accuracy when multiple versions exist.
+                </p>
+              </>
+            </InsightTooltip>
+          </div>
           {stats.hasTimings ? (
             <p className="f-insights-timing-note f-muted">
               Time = median seconds on that question (new takes only). Older submissions show n/a.
@@ -446,6 +564,8 @@ export default function InsightsPanel({ questions, responses, timeLimitSeconds, 
           onNext={() => stepPreview(1)}
           onClose={() => setPreview(null)}
           onOpenInEditor={onJumpToEditor}
+          onAdjustQuestionCredit={onAdjustQuestionCredit}
+          creditBusy={creditBusy}
         />
       ) : null}
     </div>

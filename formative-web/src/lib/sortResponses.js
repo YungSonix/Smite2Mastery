@@ -7,8 +7,8 @@ export const RESPONSE_SORT_OPTIONS = [
   { id: 'discord_za', label: 'Discord (Z–A)' },
   { id: 'ingame_az', label: 'In-Game (A–Z)' },
   { id: 'ingame_za', label: 'In-Game (Z–A)' },
-  { id: 'score_hi', label: 'Score % (Hi–Lo)' },
-  { id: 'score_lo', label: 'Score % (Lo–Hi)' },
+  { id: 'score_hi', label: 'Score % (Hi–Lo · earlier submit wins ties)' },
+  { id: 'score_lo', label: 'Score % (Lo–Hi · earlier submit wins ties)' },
   { id: 'time_hi', label: 'Time (longest first)' },
   { id: 'time_lo', label: 'Time (shortest first)' },
 ];
@@ -44,6 +44,13 @@ function submittedMs(r) {
   return Number.isFinite(t) ? t : null;
 }
 
+/** Same score % → earlier submit ranks higher (tie-break for leaderboards). */
+function cmpScoreWithSubmitTie(a, b, dir = -1) {
+  const pctDiff = (responsePercent(b) - responsePercent(a)) * dir;
+  if (pctDiff !== 0) return pctDiff;
+  return cmpNumNullLast(submittedMs(a), submittedMs(b), 1);
+}
+
 export function sortResponses(responses, sortId) {
   const list = [...(responses || [])];
   switch (sortId) {
@@ -56,9 +63,9 @@ export function sortResponses(responses, sortId) {
     case 'ingame_za':
       return list.sort((a, b) => cmpStr(a.ingame_name, b.ingame_name, -1));
     case 'score_hi':
-      return list.sort((a, b) => responsePercent(b) - responsePercent(a));
+      return list.sort((a, b) => cmpScoreWithSubmitTie(a, b, -1));
     case 'score_lo':
-      return list.sort((a, b) => responsePercent(a) - responsePercent(b));
+      return list.sort((a, b) => cmpScoreWithSubmitTie(a, b, 1));
     case 'time_hi':
       return list.sort((a, b) =>
         cmpNumNullLast(responseDurationMs(a), responseDurationMs(b), -1)

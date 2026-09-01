@@ -84,7 +84,7 @@ module.exports = async function handler(req, res) {
       let previousMap = null;
       const { data: session } = await sb
         .from('trivia_sessions')
-        .select('variant_map')
+        .select('id, variant_map')
         .eq('quiz_id', quiz.id)
         .ilike('discord_username', discord)
         .maybeSingle();
@@ -104,7 +104,10 @@ module.exports = async function handler(req, res) {
 
       let map;
       if (assign) {
-        map = buildVariantMap(rows, slug, discord, sessionMap || previousMap, String(Date.now()));
+        map = buildVariantMap(rows, slug, discord, sessionMap || previousMap, '');
+        if (map && Object.keys(map).length && session?.id) {
+          await sb.from('trivia_sessions').update({ variant_map: map }).eq('id', session.id);
+        }
       } else {
         map = sessionMap || buildVariantMap(rows, slug, discord, previousMap, '');
       }

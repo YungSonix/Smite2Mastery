@@ -81,7 +81,7 @@ const {
   LIFELINES_PER_ATTEMPT,
   HINTS_PER_QUESTION,
 } = require('../lib/server/triviaHints');
-const { answerKeyChanged, regradeOneResponse } = require('../lib/server/triviaRegrade');
+const { answerKeyChanged, regradeOneResponse, forceQuestionCreditOneResponse } = require('../lib/server/triviaRegrade');
 
 const DATA_ROOT = path.resolve(__dirname, '../app/data');
 const MEDIA_TYPES = {
@@ -165,6 +165,32 @@ function regradeMemoryQuiz(quiz, questions, questionIds) {
     updated += 1;
   }
   return { total: list.length, updated, unchanged, errors: 0 };
+}
+
+function forceCreditMemoryQuiz(quiz, questions, questionIds, mode) {
+  const list = responsesForQuiz(quiz.id);
+  let updated = 0;
+  let unchanged = 0;
+  for (const row of list) {
+    const result = forceQuestionCreditOneResponse({
+      questions,
+      response: row,
+      questionIds,
+      mode,
+    });
+    if (!result.changed) {
+      unchanged += 1;
+      continue;
+    }
+    Object.assign(row, {
+      per_question: result.perQuestion,
+      score: result.score,
+      max_score: result.maxScore,
+    });
+    db.responses.set(row.id, row);
+    updated += 1;
+  }
+  return { total: list.length, updated, unchanged, errors: 0, mode };
 }
 
 const PORT = Number(process.env.FORMATIVE_API_PORT || 3000);
@@ -699,6 +725,50 @@ async function handleHost(req, res, url) {
         : undefined;
       const regrade = regradeMemoryQuiz(quiz, questionsForQuiz(quiz.id), questionIds);
       return json(res, 200, { ok: true, regrade });
+    }
+    if (body.action === 'adjust_question_credit') {
+      const sb = trySupabase();
+      const key = body.quizId || body.id;
+      const questionId = String(body.questionId || body.question_id || '').trim();
+      const mode = String(body.mode || 'full').toLowerCase();
+      if (sb) {
+        try {
+          const { adjustQuestionCreditForQuiz } = require('../lib/server/triviaRegrade');
+          const { data: quizRow } = await sb
+            .from('trivia_quizzes')
+            .select('*')
+            .eq('owner_username', username)
+            .or(`id.eq.${key},slug.eq.${key}`)
+            .maybeSingle();
+          if (!quizRow) return json(res, 404, { error: 'Quiz not found' });
+          const { data: questions } = await sb
+            .from('trivia_questions')
+            .select('*')
+            .eq('quiz_id', quizRow.id)
+            .order('sort_order', { ascending: true });
+          const result = await adjustQuestionCreditForQuiz(sb, {
+            quiz: quizRow,
+            questions: questions || [],
+            questionIds: questionId ? [questionId] : [],
+            mode,
+          });
+          return json(res, 200, { ok: true, result });
+        } catch (e) {
+          return json(res, e.status || 500, { error: e.message });
+        }
+      }
+      const quiz = findOwnedQuiz(username, key);
+      if (!quiz) return json(res, 404, { error: 'Quiz not found' });
+      if (!questionId) return json(res, 400, { error: 'questionId required' });
+      if (mode === 'regrade') {
+        const regrade = regradeMemoryQuiz(quiz, questionsForQuiz(quiz.id), [questionId]);
+        return json(res, 200, { ok: true, result: { ...regrade, mode: 'regrade' } });
+      }
+      if (mode !== 'full' && mode !== 'zero') {
+        return json(res, 400, { error: 'mode must be full, zero, or regrade' });
+      }
+      const result = forceCreditMemoryQuiz(quiz, questionsForQuiz(quiz.id), [questionId], mode);
+      return json(res, 200, { ok: true, result });
     }
     if (body.action === 'update_response') {
       const row = db.responses.get(body.responseId);

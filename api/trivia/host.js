@@ -17,7 +17,7 @@ const { flushQuizDrafts } = require('../../lib/server/triviaCommit');
 const { mapResponseForHost } = require('../../lib/server/triviaResponseMeta');
 const { shouldPurgeLiveSessions, purgeLiveSessions } = require('../../lib/server/triviaWindow');
 const { checkTriviaPayload, formatPayloadCheckReport } = require('../../lib/server/triviaPayloadCheck');
-const { answerKeyChanged, regradeOwnedQuiz } = require('../../lib/server/triviaRegrade');
+const { answerKeyChanged, regradeOwnedQuiz, adjustQuestionCreditForQuiz } = require('../../lib/server/triviaRegrade');
 const { responseIsTestRow } = require('../../lib/server/triviaTestTake');
 const {
   fetchHostAnalytics,
@@ -621,6 +621,25 @@ module.exports = async function handler(req, res) {
           questionIds,
         });
         return send(res, 200, { ok: true, regrade });
+      }
+      if (body.action === 'adjust_question_credit') {
+        const key = body.quizId || body.id;
+        const { data: quiz } = await findOwnedQuiz(sb, username, key, '*');
+        if (!quiz) return send(res, 404, { error: 'Quiz not found' });
+        const { data: questions } = await sb
+          .from('trivia_questions')
+          .select('*')
+          .eq('quiz_id', quiz.id)
+          .order('sort_order', { ascending: true });
+        const questionId = String(body.questionId || body.question_id || '').trim();
+        const mode = String(body.mode || 'full').toLowerCase();
+        const result = await adjustQuestionCreditForQuiz(sb, {
+          quiz,
+          questions: questions || [],
+          questionIds: questionId ? [questionId] : [],
+          mode,
+        });
+        return send(res, 200, { ok: true, result });
       }
       if (body.action === 'reorder') {
         const orders = (Array.isArray(body.orders) ? body.orders : []).filter(

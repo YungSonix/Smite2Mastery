@@ -18,6 +18,8 @@ const THESIS_ENTITY_KEYS = [
   { id: 'skins', label: 'Skins' },
   { id: 'voice', label: 'Voice lines' },
   { id: 'ability_sfx', label: 'Ability SFX' },
+  { id: 'items', label: 'Items' },
+  { id: 'vgs', label: 'VGS' },
 ];
 
 function ThesisEntityBlock({ title, bag }) {
@@ -197,6 +199,11 @@ function PlayerDetail({ student, onAdjust, busy, onChangeAvatar }) {
 
       {thesis ? (
         <div className="f-classroom-thesis">
+          {thesis.sampleThin ? (
+            <p className="f-muted f-classroom-thesis-thin">
+              Only one trivia so far — style tags will sharpen after more attempts.
+            </p>
+          ) : null}
           <h4 className="f-player-detail-title">Style report card</h4>
           <div className="f-classroom-style-grid">
             {(thesis.styleCards || []).map((card) => (
@@ -369,35 +376,40 @@ function ClassroomCard({ student, active, onSelect, onAdjust, busy }) {
     <div
       className={`f-classroom-card-wrap ${active ? 'is-active' : ''} ${student.isRegular ? 'is-regular' : ''}`}
     >
-      <button
-        type="button"
-        className="f-classroom-card"
-        onClick={() => onSelect(student.discordKey)}
-      >
-        {student.isRegular ? <span className="f-classroom-regular-tag">Regular</span> : null}
-        <span className="f-classroom-points-bubble">
-          {formatClassPoints(student.classroomPoints)}
-        </span>
-        <div className="f-classroom-avatar-ring">
-          <img src={student.avatarUrl} alt="" className="f-classroom-avatar" loading="lazy" />
-        </div>
-        <div className="f-classroom-card-name">{student.ingame}</div>
-        <div className="f-classroom-card-discord">{student.discord}</div>
-        <div className="f-classroom-card-stats">
-          <span>
-            {student.triviasDone} trivia{student.triviasDone === 1 ? '' : 's'}
+      <div className="f-classroom-card-row">
+        <button
+          type="button"
+          className="f-classroom-card"
+          onClick={() => onSelect(student.discordKey)}
+        >
+          {student.isRegular ? <span className="f-classroom-regular-tag">Regular</span> : null}
+          <span className="f-classroom-points-bubble">
+            {formatClassPoints(student.classroomPoints)}
           </span>
-          <span>{student.avgPct != null ? `${student.avgPct}% avg` : '—'}</span>
-        </div>
-        <span className="f-classroom-card-open-hint">Tap for full report</span>
-        {student.flagged ? (
-          <span className="f-classroom-flag" title={`Review: ${student.flagLevel}`}>
-            ⚑
-          </span>
-        ) : null}
-      </button>
-      {/* Card roster: ±1 only — half points live in the profile sheet (cleaner mobile taps). */}
-      <PointControls student={student} onAdjust={onAdjust} busy={busy} steps={[1]} />
+          <div className="f-classroom-card-body">
+            <div className="f-classroom-avatar-ring">
+              <img src={student.avatarUrl} alt="" className="f-classroom-avatar" loading="lazy" />
+            </div>
+            <div className="f-classroom-card-text">
+              <div className="f-classroom-card-discord">{student.discord}</div>
+              <div className="f-classroom-card-name">{student.ingame}</div>
+              <div className="f-classroom-card-stats">
+                <span>
+                  {student.triviasDone} trivia{student.triviasDone === 1 ? '' : 's'}
+                </span>
+                <span>{student.avgPct != null ? `${student.avgPct}% avg` : '—'}</span>
+              </div>
+            </div>
+          </div>
+          {student.flagged ? (
+            <span className="f-classroom-flag" title={`Review: ${student.flagLevel}`}>
+              ⚑
+            </span>
+          ) : null}
+        </button>
+        {/* Card roster: ±1 only — half points live in the profile sheet (cleaner mobile taps). */}
+        <PointControls student={student} onAdjust={onAdjust} busy={busy} steps={[1]} />
+      </div>
     </div>
   );
 }
@@ -503,7 +515,11 @@ export default function DiscordClassroom() {
     });
 
     list = [...list].sort((a, b) => {
-      if (sort === 'points') return b.classroomPoints - a.classroomPoints;
+      if (sort === 'points') {
+        const ptsDiff = b.classroomPoints - a.classroomPoints;
+        if (ptsDiff !== 0) return ptsDiff;
+        return String(a.lastSubmittedAt || '').localeCompare(String(b.lastSubmittedAt || ''));
+      }
       if (sort === 'recent')
         return String(b.lastSubmittedAt || '').localeCompare(String(a.lastSubmittedAt || ''));
       if (sort === 'trivias') return b.triviasDone - a.triviasDone || b.eventsEntered - a.eventsEntered;
@@ -734,40 +750,42 @@ export default function DiscordClassroom() {
             <div className="f-classroom-toolbar">
               <input
                 type="search"
-                className="f-hub-input"
+                className="f-hub-input f-classroom-search"
                 placeholder="Find a student…"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
-              <div className="f-classroom-filters">
-                {[
-                  ['all', 'Everyone'],
-                  ['regulars', 'Regulars'],
-                  ['new', 'First-timers'],
-                ].map(([id, label]) => (
-                  <button
-                    key={id}
-                    type="button"
-                    className={filter === id ? 'is-active' : ''}
-                    onClick={() => setFilter(id)}
+              <div className="f-classroom-toolbar-right">
+                <div className="f-classroom-filters">
+                  {[
+                    ['all', 'Everyone'],
+                    ['regulars', 'Regulars'],
+                    ['new', 'First-timers'],
+                  ].map(([id, label]) => (
+                    <button
+                      key={id}
+                      type="button"
+                      className={filter === id ? 'is-active' : ''}
+                      onClick={() => setFilter(id)}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+                <label className="f-inline-field f-classroom-sort">
+                  Sort
+                  <select
+                    className="f-hub-select"
+                    value={sort}
+                    onChange={(e) => setSort(e.target.value)}
                   >
-                    {label}
-                  </button>
-                ))}
+                    <option value="regulars">Regulars first</option>
+                    <option value="trivias">Most trivias</option>
+                    <option value="points">Most points</option>
+                    <option value="recent">Recently active</option>
+                  </select>
+                </label>
               </div>
-              <label className="f-inline-field f-classroom-sort">
-                Sort
-                <select
-                  className="f-hub-select"
-                  value={sort}
-                  onChange={(e) => setSort(e.target.value)}
-                >
-                  <option value="regulars">Regulars first</option>
-                  <option value="trivias">Most trivias</option>
-                  <option value="points">Most points</option>
-                  <option value="recent">Recently active</option>
-                </select>
-              </label>
             </div>
 
             <div className="f-classroom-bulk">

@@ -241,6 +241,12 @@ export default function TakeQuiz() {
   const [ingame, setIngame] = useState('');
   const [answers, setAnswers] = useState({});
   const [variantMap, setVariantMap] = useState({});
+  const variantMapRef = useRef({});
+  const applyVariantMap = (next) => {
+    const map = next && typeof next === 'object' ? next : {};
+    variantMapRef.current = map;
+    setVariantMap(map);
+  };
   const [resumed, setResumed] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -290,7 +296,7 @@ export default function TakeQuiz() {
         setIsPracticeTake(Boolean(data.test_take));
         setQuiz(data.quiz);
         setQuestions(data.questions || []);
-        if (data.variant_map) setVariantMap(data.variant_map);
+        if (data.variant_map) applyVariantMap(data.variant_map);
         if (data.submission?.already_submitted) {
           if (saved?.discord) setDiscord(String(saved.discord));
           if (saved?.ingame) setIngame(String(saved.ingame));
@@ -314,7 +320,7 @@ export default function TakeQuiz() {
             ensureTakeSessionToken(takeSessionTokenRef, saved.takeSessionToken);
           }
           if (saved.startedAt && saved.variantMap && typeof saved.variantMap === 'object') {
-            setVariantMap(saved.variantMap);
+            applyVariantMap(saved.variantMap);
           }
           setResumed(true);
         }
@@ -347,7 +353,7 @@ export default function TakeQuiz() {
         const data = await res.json();
         if (!res.ok || !alive) return;
         if (data.questions) setQuestions(data.questions);
-        if (data.variant_map) setVariantMap(data.variant_map);
+        if (data.variant_map) applyVariantMap(data.variant_map);
         if (data.submission?.already_submitted) {
           applySubmissionResult(data.submission, setResult, slug);
         }
@@ -433,7 +439,7 @@ export default function TakeQuiz() {
       __lifelines: hintCounts,
       __duration_ms: startedAt ? Math.max(0, Date.now() - Number(startedAt)) : undefined,
     },
-    variantMap,
+    variantMap: Object.keys(variantMapRef.current).length ? variantMapRef.current : variantMap,
     startedAt,
     takeSessionToken: takeSessionTokenRef.current,
     testTakeToken: isPracticeTake && takeLink.token ? takeLink.token : '',
@@ -1025,7 +1031,7 @@ export default function TakeQuiz() {
                       const data = await res.json().catch(() => ({}));
                       if (res.ok) {
                         if (data.questions) setQuestions(data.questions);
-                        if (data.variant_map) setVariantMap(data.variant_map);
+                        if (data.variant_map) applyVariantMap(data.variant_map);
                       }
                     }
                     setShuffleSeed(`${slug}|${discord}|${ingame}|${Date.now()}`);

@@ -109,6 +109,7 @@ export default function Activity() {
   const [scrollToResponse, setScrollToResponse] = useState(null);
   const [saving, setSaving] = useState(false);
   const [regrading, setRegrading] = useState(false);
+  const [creditBusy, setCreditBusy] = useState(false);
   const [autoSaveHint, setAutoSaveHint] = useState('');
   const [quizDirty, setQuizDirty] = useState(false);
   const [bannerDirty, setBannerDirty] = useState(false);
@@ -502,10 +503,6 @@ export default function Activity() {
           setDraftWarning(
             'Local backup failed. Your browser storage is full. Click Save (top right) so the quiz is stored on the server.'
           );
-        } else if (result.status === 'lite' && !result.idb) {
-          setDraftWarning(
-            'Audio is saved on the server after you click Save. Local backup kept text only (WAV clips are too large for browser storage).'
-          );
         } else {
           setDraftWarning('');
         }
@@ -659,6 +656,48 @@ export default function Activity() {
   };
 
   const dismissUndo = (token) => setUndoStack((prev) => prev.filter((e) => e.token !== token));
+
+  const activeUndo = useMemo(
+    () => undoStack.find((entry) => entry.expiresAt > Date.now()) || null,
+    [undoStack]
+  );
+
+  const undoLatest = () => {
+    if (activeUndo) undoDeleteQuestion(activeUndo.token);
+  };
+
+  const adjustQuestionCredit = useCallback(
+    async (questionId, mode) => {
+      const labels = {
+        full: 'give full credit on this question for every submission',
+        zero: 'zero this question for every submission',
+        regrade: 're-score this question from the current answer keys (each player’s version)',
+      };
+      const label = labels[mode] || mode;
+      if (!window.confirm(`${label.charAt(0).toUpperCase()}${label.slice(1)}?`)) return;
+
+      setCreditBusy(true);
+      setError('');
+      try {
+        const data = await hostApi('/api/trivia/host', {
+          method: 'POST',
+          body: { action: 'adjust_question_credit', quizId, questionId, mode },
+        });
+        const r = data?.result || {};
+        await load();
+        setAutoSaveHint(
+          `${mode === 'regrade' ? 'Regraded' : 'Updated'} ${r.updated || 0} of ${r.total || 0} submission${(r.total || 0) === 1 ? '' : 's'}`
+        );
+        clearTimeout(autoHintTimerRef.current);
+        autoHintTimerRef.current = setTimeout(() => setAutoSaveHint(''), 5000);
+      } catch (e) {
+        setError(e.message || 'Could not adjust question credit');
+      } finally {
+        setCreditBusy(false);
+      }
+    },
+    [quizId, load]
+  );
 
   const undoDeleteQuestion = async (token) => {
     const entry = undoStack.find((e) => e.token === token);
@@ -1023,6 +1062,22 @@ export default function Activity() {
               {autoSaveHint}
             </span>
           ) : null}
+          <button
+            type="button"
+            className="f-outline-btn f-compact f-topbar-undo"
+            disabled={!activeUndo || saving}
+            title={
+              activeUndo
+                ? `Undo delete: Q${activeUndo.index + 1}${activeUndo.label ? ` — ${activeUndo.label}` : ''}`
+                : 'Nothing to undo'
+            }
+            onClick={undoLatest}
+          >
+            Undo
+            {activeUndo
+              ? ` (${Math.max(0, Math.ceil((activeUndo.expiresAt - Date.now()) / 1000))}s)`
+              : ''}
+          </button>
           <button
             type="button"
             className={`f-save-btn ${dirty ? 'is-dirty' : ''}`}
@@ -1733,7 +1788,11 @@ export default function Activity() {
           questions={questions}
           responses={visibleResponses}
           timeLimitSeconds={settings.time_limit_seconds}
+          quizSlug={quiz?.slug}
+          quizId={quizId}
           initialPreviewId={insightsPreviewId}
+          creditBusy={creditBusy}
+          onAdjustQuestionCredit={adjustQuestionCredit}
           onJumpToEditor={(id, variantIndex) => {
             setTab('edit');
             jumpToHostQuestion(id, variantIndex);
