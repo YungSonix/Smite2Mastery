@@ -142,7 +142,7 @@ for (const file of skinFiles) {
     if (!godName) continue;
     for (const skin of godBlock.skins || []) {
       const skinName = skin.skinName || skin.skinKey || '';
-      const iconPath = skin.assets?.icon;
+      const iconPath = skin.icon || skin.assets?.icon;
       if (iconPath && !seenSkinIcons.has(iconPath)) {
         seenSkinIcons.add(iconPath);
         const label = `${godName} — ${skinDisplayName(skinName)}`;

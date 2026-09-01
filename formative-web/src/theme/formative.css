@@ -10030,6 +10030,19 @@ button.f-next-event-action-btn:hover {
   flex-wrap: nowrap;
 }
 
+.f-avatar-picker-skin-toggle {
+  grid-column: 1 / -1;
+  border: 1px solid var(--f-border);
+  border-radius: 8px;
+  margin-top: 4px;
+  padding: 8px 12px;
+  background: rgba(8, 12, 22, 0.55);
+}
+
+.f-avatar-picker-skin-toggle.f-toggle-row {
+  border-bottom: none;
+}
+
 .f-avatar-picker-preview {
   display: flex;
   align-items: center;

@@ -105,6 +105,7 @@ export function mergeClassroomStudent(
     avatarRef: avatar.ref,
     avatarBadge: avatar.kind === 'badge' ? avatar.ref : profileRow?.avatar_badge || null,
     avatarUrl: avatar.url,
+    avatarFallbackUrl: avatar.fallbackUrl || null,
     badgeLabel: avatar.label,
     classroomAutoPoints,
     classroomAutoBreakdown: breakdown,
