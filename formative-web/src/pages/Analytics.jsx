@@ -10,6 +10,7 @@ import {
   filterGiveawayCandidates,
   playersToCsv,
 } from '../lib/triviaPlayerStats';
+import ClassroomSpinWheel from '../components/ClassroomSpinWheel';
 
 function downloadCsv(filename, text) {
   const blob = new Blob([text], { type: 'text/csv;charset=utf-8' });
@@ -447,6 +448,9 @@ export default function Analytics() {
               Export pool ({giveawayPool.length})
             </button>
           </div>
+
+          <ClassroomSpinWheel visibleStudents={giveawayPool} poolLabel="giveaway pool" />
+
           <div className="f-player-table-wrap">
             <table className="f-grid f-player-table">
               <thead>

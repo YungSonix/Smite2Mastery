@@ -50,7 +50,7 @@ function buildWheelGradient(count) {
   return `conic-gradient(${parts.join(', ')})`;
 }
 
-export default function ClassroomSpinWheel({ visibleStudents = [] }) {
+export default function ClassroomSpinWheel({ visibleStudents = [], poolLabel = 'filtered roster' }) {
   const [open, setOpen] = useState(true);
   const [poolState, setPoolState] = useState(loadWheelPool);
   const [nameInput, setNameInput] = useState('');
@@ -158,7 +158,7 @@ export default function ClassroomSpinWheel({ visibleStudents = [] }) {
       {open ? (
         <div className="f-classroom-wheel-body">
           <p className="f-muted f-classroom-wheel-hint">
-            Pick a random name from your filtered roster and/or a manual list. Pool saves in this
+            Pick a random name from your {poolLabel} and/or a manual list. Pool saves in this
             browser ({wheelNames.length} name{wheelNames.length === 1 ? '' : 's'}).
           </p>
 
@@ -206,7 +206,7 @@ export default function ClassroomSpinWheel({ visibleStudents = [] }) {
                     setPoolState((prev) => ({ ...prev, includeFiltered: e.target.checked }))
                   }
                 />
-                Include filtered students ({filteredStudentNames.length})
+                Include {poolLabel} ({filteredStudentNames.length})
               </label>
 
               <div className="f-classroom-wheel-add">
@@ -228,13 +228,15 @@ export default function ClassroomSpinWheel({ visibleStudents = [] }) {
                 </button>
               </div>
 
-              <input
-                type="search"
-                className="f-hub-input"
-                placeholder="Filter pool…"
-                value={poolSearch}
-                onChange={(e) => setPoolSearch(e.target.value)}
-              />
+              <div className="f-classroom-wheel-filter">
+                <input
+                  type="search"
+                  className="f-hub-input"
+                  placeholder="Filter pool…"
+                  value={poolSearch}
+                  onChange={(e) => setPoolSearch(e.target.value)}
+                />
+              </div>
 
               <ul className="f-classroom-wheel-pool">
                 {filteredPoolDisplay.length ? (

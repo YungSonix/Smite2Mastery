@@ -9,7 +9,6 @@ import { formatClassPoints, mergeClassroomStudent } from '../lib/classroomBadges
 import { attachThesesToStudents, buildClassNextTriviaRecipe } from '../lib/classroomThesis';
 import { formatWhenLocal } from '../lib/formatWhen';
 import ClassroomAvatarPicker from '../components/ClassroomAvatarPicker';
-import ClassroomSpinWheel from '../components/ClassroomSpinWheel';
 import ClassroomAutoPointsBreakdown from '../components/ClassroomAutoPointsBreakdown';
 import { PaginationBar, usePagination } from '../lib/usePagination';
 
@@ -816,8 +815,6 @@ export default function DiscordClassroom() {
                 ))}
               </div>
             </div>
-
-            <ClassroomSpinWheel visibleStudents={visible} />
 
             <PaginationBar
               page={page}

@@ -10215,10 +10215,25 @@ button.f-next-event-action-btn:hover {
   min-width: 0;
 }
 
+.f-classroom-wheel-filter {
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+.f-classroom-wheel-filter .f-hub-input {
+  flex: 0 0 auto;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  height: 38px;
+}
+
 .f-classroom-wheel-pool {
   list-style: none;
   margin: 0;
   padding: 0;
+  flex: 1 1 auto;
+  min-height: 0;
   max-height: 220px;
   overflow-y: auto;
   display: flex;
