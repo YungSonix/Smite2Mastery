@@ -26,6 +26,12 @@ const BULK_DELTAS = [
   { delta: -0.5, label: '−½ everyone' },
   { delta: 5, label: '+5 everyone' },
   { delta: -5, label: '−5 everyone' },
+  { delta: 50, label: '+50 everyone' },
+  { delta: -50, label: '−50 everyone' },
+  { delta: 100, label: '+100 everyone' },
+  { delta: -100, label: '−100 everyone' },
+  { delta: 200, label: '+200 everyone' },
+  { delta: -200, label: '−200 everyone' },
 ];
 
 function ClassroomCard({ student, onSelect }) {
@@ -444,19 +450,6 @@ export default function DiscordClassroom() {
                 pageSize={CLASSROOM_PAGE_SIZE}
               />
             )}
-
-            <p className="f-muted f-classroom-foot">
-              Open a student profile to adjust manual bonus with +/− (saved in Supabase), including
-              half points. Trivia auto-points recompute on profile sync (pass ≥70%, first-day,
-              placement, perfect, streak). Class points = auto + manual bonus. For ±½, run{' '}
-              <code>supabase/formative_trivia_classroom_bonus_half.sql</code> once.
-              {data.profileSync?.tableMissing ? (
-                <>
-                  {' '}
-                  Run <code>supabase/formative_trivia_player_profiles.sql</code> first.
-                </>
-              ) : null}
-            </p>
           </>
         ) : null}
       </div>
