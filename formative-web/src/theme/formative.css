@@ -9245,6 +9245,32 @@ button.f-next-event-action-btn:hover {
   background: rgba(15, 23, 42, 0.7);
   font-size: 0.78rem;
   color: #cbd5e1;
+  cursor: pointer;
+  font: inherit;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease;
+}
+
+.f-classroom-recipe-chip:hover:not(.is-active) {
+  border-color: rgba(125, 211, 252, 0.42);
+  background: rgba(15, 23, 42, 0.9);
+}
+
+.f-classroom-recipe-chip.is-active {
+  border-color: rgba(125, 211, 252, 0.72);
+  background: rgba(14, 116, 144, 0.22);
+  box-shadow:
+    0 0 0 1px rgba(125, 211, 252, 0.35),
+    0 0 12px rgba(56, 189, 248, 0.18);
+}
+
+.f-classroom-recipe-category-hint {
+  margin: 0 0 10px;
+  font-size: 0.8rem;
+  color: #94a3b8;
+  line-height: 1.35;
 }
 
 .f-classroom-recipe-chip-label {

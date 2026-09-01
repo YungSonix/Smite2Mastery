@@ -83,6 +83,7 @@ export default function DiscordClassroom() {
   const [syncBusy, setSyncBusy] = useState(false);
   const [syncNote, setSyncNote] = useState('');
   const [scoringHelpOpen, setScoringHelpOpen] = useState(readScoringHelpOpen);
+  const [recipeCategory, setRecipeCategory] = useState(null);
 
   const nextTrivia = useMemo(
     () =>
@@ -93,6 +94,13 @@ export default function DiscordClassroom() {
       }),
     [studentsWithThesis, data.questions, data.responses]
   );
+
+  const activeRecipeCategory = recipeCategory ?? nextTrivia.defaultCategory;
+  const recipeMixItem = nextTrivia.mix?.find((m) => m.id === activeRecipeCategory);
+  const recipeBullets =
+    activeRecipeCategory && nextTrivia.byCategory
+      ? nextTrivia.byCategory[activeRecipeCategory] || []
+      : nextTrivia.bullets || [];
 
   const visible = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -309,26 +317,41 @@ export default function DiscordClassroom() {
               <h2 className="f-classroom-recipe-title">What to put in next trivia</h2>
               <p className="f-classroom-recipe-headline">{nextTrivia.headline}</p>
               {nextTrivia.mix?.length ? (
-                <div className="f-classroom-recipe-mix" aria-label="Style mix">
-                  {nextTrivia.mix.map((m) => (
-                    <span
-                      key={m.id}
-                      className={`f-classroom-recipe-chip is-${String(m.verdict || 'thin')
-                        .toLowerCase()
-                        .replace(/\s+/g, '-')}`}
-                      title={`${m.seen} answers · ${m.questionCount} questions`}
-                    >
-                      <span className="f-classroom-recipe-chip-label">{m.label}</span>
-                      <span className="f-classroom-recipe-chip-pct">
-                        {m.pct != null ? `${m.pct}%` : '—'}
-                      </span>
-                    </span>
-                  ))}
+                <div className="f-classroom-recipe-mix" role="tablist" aria-label="Style mix by category">
+                  {nextTrivia.mix.map((m) => {
+                    const verdictClass = String(m.verdict || 'thin')
+                      .toLowerCase()
+                      .replace(/\s+/g, '-');
+                    const isActive = m.id === activeRecipeCategory;
+                    return (
+                      <button
+                        key={m.id}
+                        type="button"
+                        role="tab"
+                        aria-selected={isActive}
+                        className={`f-classroom-recipe-chip is-${verdictClass}${isActive ? ' is-active' : ''}`}
+                        title={`${m.seen} answers · ${m.questionCount} questions`}
+                        onClick={() => setRecipeCategory(m.id)}
+                      >
+                        <span className="f-classroom-recipe-chip-label">{m.label}</span>
+                        <span className="f-classroom-recipe-chip-pct">
+                          {m.pct != null ? `${m.pct}%` : '—'}
+                        </span>
+                      </button>
+                    );
+                  })}
                 </div>
               ) : null}
-              {nextTrivia.bullets?.length ? (
+              {recipeMixItem ? (
+                <p className="f-classroom-recipe-category-hint">
+                  {recipeMixItem.label} · {recipeMixItem.verdict}
+                  {recipeMixItem.pct != null ? ` · ${recipeMixItem.pct}% class avg` : ''}
+                  {recipeMixItem.seen ? ` · ${recipeMixItem.seen} answers` : ''}
+                </p>
+              ) : null}
+              {recipeBullets.length ? (
                 <ul className="f-classroom-recipe-list">
-                  {nextTrivia.bullets.map((b, idx) => {
+                  {recipeBullets.map((b, idx) => {
                     const action = String(b.action || 'KEEP').toUpperCase();
                     const actionClass = action.toLowerCase();
                     return (
@@ -342,7 +365,11 @@ export default function DiscordClassroom() {
                   })}
                 </ul>
               ) : (
-                <p className="f-muted">Not enough tagged answers yet for recipe tips.</p>
+                <p className="f-muted">
+                  {activeRecipeCategory
+                    ? `No specific tips for ${recipeMixItem?.label || 'this category'} yet — host more tagged questions or pick another style.`
+                    : 'Not enough tagged answers yet for recipe tips.'}
+                </p>
               )}
             </section>
 

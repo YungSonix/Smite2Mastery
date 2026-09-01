@@ -340,6 +340,78 @@ export function buildStudentThesis(player, questions) {
   };
 }
 
+function buildCategoryBullets(m, { students = [] } = {}) {
+  const bullets = [];
+  const { id, label, seen, pct, questionCount } = m;
+
+  if (seen >= 5 && pct != null && pct < 55) {
+    const add = pct < 40 ? 3 : 2;
+    bullets.push({
+      action: 'ADD',
+      kind: 'weak',
+      groupId: id,
+      text: `Add ${add}× ${label} — class at ${pct}% (${seen} answers)`,
+    });
+  }
+  if (seen === 0 || questionCount === 0) {
+    bullets.push({
+      action: 'ADD',
+      kind: 'untested',
+      groupId: id,
+      text: `Add 1–2× ${label} — untested in this host’s recent pool`,
+    });
+  }
+  if (seen >= 5 && pct != null && pct >= 80 && questionCount >= 4) {
+    bullets.push({
+      action: 'CUT',
+      kind: 'overtested',
+      groupId: id,
+      text: `Cut 1–2× ${label} — over-tested / too easy (${pct}%, ${questionCount} questions)`,
+    });
+  }
+  if (seen >= 5 && pct != null && pct >= 55 && pct < 80) {
+    bullets.push({
+      action: 'KEEP',
+      kind: 'middle',
+      groupId: id,
+      text: `Keep ${label} in the middle band (${pct}%) — good discriminator`,
+    });
+  }
+
+  if (id === 'gods') {
+    const godHits = new Map();
+    for (const s of students || []) {
+      for (const g of s.thesis?.recognizes?.gods || []) {
+        godHits.set(g.label, (godHits.get(g.label) || 0) + 1);
+      }
+    }
+    const topGods = [...godHits.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5)
+      .map(([name, n]) => `${name} (${n})`);
+    if (topGods.length) {
+      bullets.push({
+        action: 'FRESH',
+        kind: 'fresh',
+        groupId: id,
+        text: `Fresh gods — class already knows: ${topGods.join(', ')}`,
+      });
+    }
+  }
+
+  return bullets;
+}
+
+function pickDefaultRecipeCategory(mix) {
+  const shaky = [...(mix || [])]
+    .filter((m) => m.seen >= 3 && m.pct != null && m.pct < 55)
+    .sort((a, b) => (a.pct ?? 999) - (b.pct ?? 999));
+  if (shaky.length) return shaky[0].id;
+  const untested = (mix || []).find((m) => m.seen === 0 || m.questionCount === 0);
+  if (untested) return untested.id;
+  return mix?.[0]?.id || STYLE_GROUPS[0]?.id || 'gods';
+}
+
 export function buildClassNextTriviaRecipe({ students = [], questions = [], responses = [] } = {}) {
   const qById = new Map((questions || []).filter(isScoredQuestion).map((q) => [q.id, q]));
   const group = Object.fromEntries(
@@ -383,6 +455,10 @@ export function buildClassNextTriviaRecipe({ students = [], questions = [], resp
     };
   });
 
+  const byCategory = Object.fromEntries(
+    mix.map((m) => [m.id, buildCategoryBullets(m, { students })])
+  );
+
   const bullets = [];
   const byPctAsc = [...mix].filter((m) => m.seen >= 5).sort((a, b) => (a.pct ?? 999) - (b.pct ?? 999));
   const byPctDesc = [...mix].filter((m) => m.seen >= 5).sort((a, b) => (b.pct ?? 0) - (a.pct ?? 0));
@@ -390,57 +466,32 @@ export function buildClassNextTriviaRecipe({ students = [], questions = [], resp
 
   for (const m of byPctAsc.slice(0, 2)) {
     if (m.pct != null && m.pct < 55) {
-      const add = m.pct < 40 ? 3 : 2;
-      bullets.push({
-        action: 'ADD',
-        text: `Add ${add}× ${m.label} — class at ${m.pct}% (${m.seen} answers)`,
-      });
+      bullets.push(...(byCategory[m.id] || []).filter((b) => b.kind === 'weak'));
     }
   }
   for (const m of untested.slice(0, 2)) {
-    bullets.push({
-      action: 'ADD',
-      text: `Add 1–2× ${m.label} — untested in this host’s recent pool`,
-    });
+    bullets.push(...(byCategory[m.id] || []).filter((b) => b.kind === 'untested'));
   }
   for (const m of byPctDesc.slice(0, 2)) {
     if (m.pct != null && m.pct >= 80 && m.questionCount >= 4) {
-      bullets.push({
-        action: 'CUT',
-        text: `Cut 1–2× ${m.label} — over-tested / too easy (${m.pct}%, ${m.questionCount} questions)`,
-      });
+      bullets.push(...(byCategory[m.id] || []).filter((b) => b.kind === 'overtested'));
     }
   }
   const mid = mix.filter((m) => m.pct != null && m.pct >= 55 && m.pct < 80 && m.seen >= 5);
   for (const m of mid.slice(0, 1)) {
-    bullets.push({
-      action: 'KEEP',
-      text: `Keep ${m.label} in the middle band (${m.pct}%) — good discriminator`,
-    });
+    bullets.push(...(byCategory[m.id] || []).filter((b) => b.kind === 'middle'));
   }
-
-  const godHits = new Map();
-  for (const s of students || []) {
-    for (const g of s.thesis?.recognizes?.gods || []) {
-      godHits.set(g.label, (godHits.get(g.label) || 0) + 1);
-    }
-  }
-  const topGods = [...godHits.entries()]
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 5)
-    .map(([name, n]) => `${name} (${n})`);
-  if (topGods.length) {
-    bullets.push({
-      action: 'FRESH',
-      text: `Fresh gods — class already knows: ${topGods.join(', ')}`,
-    });
-  }
+  const freshGods = (byCategory.gods || []).filter((b) => b.kind === 'fresh');
+  if (freshGods.length) bullets.push(...freshGods);
 
   const studentCount = (students || []).length;
   const sampleOK = (responses || []).length >= 10;
+  const defaultCategory = pickDefaultRecipeCategory(mix);
 
   return {
     bullets: bullets.slice(0, 6),
+    byCategory,
+    defaultCategory,
     mix,
     studentCount,
     responseCount: (responses || []).length,
